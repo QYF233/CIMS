@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.hzvtc.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.hzvtc.pojo.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="user_operator_id" jdbcType="INTEGER" property="userOperatorId" />
+    <result column="user_operator_time" jdbcType="TIMESTAMP" property="userOperatorTime" />
+    <result column="user_type" jdbcType="INTEGER" property="userType" />
+    <result column="user_area_id" jdbcType="INTEGER" property="userAreaId" />
+    <!--多对一-->
+<!--    <association property="parentArea" resultMap="cn.edu.hzvtc.dao.AreaMapper.BaseResultMap">
+      <result column="id" property="id"/>
+      <result column="area_name" property="areaName"/>
+    </association>-->
+   <!-- <discriminator javaType="INTEGER" column="user_type">
+      <case value="2">
+        <collection property="area" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey" column="user_area_id"/>
+      </case>&lt;!&ndash;院校管理员&ndash;&gt;
+      <case value="3">
+        <collection property="area" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey" column="user_area_id"/>
+      </case>&lt;!&ndash;院校人员&ndash;&gt;
+    </discriminator>-->
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.hzvtc.pojo.User">
+    insert into sys_user (id, user_name, user_password, 
+      user_operator_id, user_operator_time, user_type, 
+      user_area_id)
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, 
+      #{userOperatorId,jdbcType=INTEGER}, #{userOperatorTime,jdbcType=TIMESTAMP}, #{userType,jdbcType=INTEGER}, 
+      #{userAreaId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.pojo.User">
+    update sys_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_operator_id = #{userOperatorId,jdbcType=INTEGER},
+      user_operator_time = #{userOperatorTime,jdbcType=TIMESTAMP},
+      user_type = #{userType,jdbcType=INTEGER},
+      user_area_id = #{userAreaId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_name, user_password, user_operator_id, user_operator_time, user_type, 
+    user_area_id
+    from sys_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_name, user_password, user_operator_id, user_operator_time, user_type, 
+    user_area_id
+    from sys_user
+  </select>
+  <select id="selectPwdByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!-- 按照用户名查找密码 -->
+    select id, user_name, user_password, user_operator_id, user_operator_time, user_type,
+    user_area_id
+    from sys_user
+    where user_name = #{user_name,jdbcType=VARCHAR}
+  </select>
+</mapper>

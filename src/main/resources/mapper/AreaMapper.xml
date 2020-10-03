@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.hzvtc.dao.AreaMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.hzvtc.pojo.Area">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="area_type" jdbcType="INTEGER" property="areaType" />
+    <result column="area_parent_id" jdbcType="INTEGER" property="areaParentId" />
+    <result column="area_sort_num" jdbcType="INTEGER" property="areaSortNum" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_area
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.hzvtc.pojo.Area">
+    insert into sys_area (id, area_name, area_type, 
+      area_parent_id, area_sort_num)
+    values (#{id,jdbcType=INTEGER}, #{areaName,jdbcType=VARCHAR}, #{areaType,jdbcType=INTEGER}, 
+      #{areaParentId,jdbcType=INTEGER}, #{areaSortNum,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.pojo.Area">
+    update sys_area
+    set area_name = #{areaName,jdbcType=VARCHAR},
+      area_type = #{areaType,jdbcType=INTEGER},
+      area_parent_id = #{areaParentId,jdbcType=INTEGER},
+      area_sort_num = #{areaSortNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, area_name, area_type, area_parent_id, area_sort_num
+    from sys_area
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, area_name, area_type, area_parent_id, area_sort_num
+    from sys_area
+  </select>
+</mapper>

@@ -1,0 +1,120 @@
+/* comment---start */
+body {
+	padding-top: 50px;
+	padding-bottom: 40px;
+}
+
+.main {
+	display: flex;
+	align-items: center;
+	height: 90vh;
+}
+
+.footer {
+	height: 40px;
+	line-height: 40px;
+	color: #999;
+	text-align: center;
+	background-color: #f9f9f9;
+	border-top: 1px solid #e5e5e5;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+
+button>span {
+	margin-right: 5px;
+
+}
+
+button {
+	text-align: center;
+}
+
+a>.glyphicon {
+	margin-right: 5px;
+}
+
+.pagination {
+	vertical-align: middle;
+}
+
+.box {
+	line-height: 40px;
+	height: 40px;
+}
+
+/* 清楚密码框的眼睛 */
+::-ms-clear,
+::-ms-reveal {
+	display: none;
+}
+
+/* comment---end */
+
+/* areaAdminManager.html---start */
+
+.area-table thead th {
+	text-align: center;
+}
+
+.area-table tbody tr td {
+	vertical-align: middle;
+}
+
+.area-table tbody td:first-child {
+	text-align: center;
+}
+
+.area-table tbody td:nth-child(n+4) {
+	text-align: center;
+}
+
+/* areaAdminManager.html---end */
+
+/* unitType.html---start */
+.padding-xl {
+	padding: 0 150px;
+}
+
+.unit-table thead tr th {
+	vertical-align: middle;
+	text-align: center;
+}
+
+.unit-table tbody tr td {
+	vertical-align: middle;
+}
+
+.unit-table tbody tr td:not(:nth-child(2)) {
+	text-align: center;
+}
+/* unitType.html---end */
+
+/* userManager.html---start */
+.panel input {
+	margin-right: 10px;
+}
+
+.panel label {
+	margin-right: 10px;
+}
+
+.collegeList label {
+	font-weight: normal;
+	display: block;
+}
+/* userManager.html---end */
+
+
+
+/* msgIndex.html */
+.bgChart{
+	padding: 20px;
+	margin: 20px;
+	background-color: #FFFFFF;
+}
+.noticeHeader{
+	display: flex;
+	justify-content: space-between;
+}

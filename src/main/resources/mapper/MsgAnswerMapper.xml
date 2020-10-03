@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.hzvtc.dao.MsgAnswerMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.hzvtc.pojo.MsgAnswer">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="msg_id" jdbcType="INTEGER" property="msgId" />
+    <result column="msg_receive_user_id" jdbcType="INTEGER" property="msgReceiveUserId" />
+    <result column="msg_state" jdbcType="INTEGER" property="msgState" />
+    <result column="msg_answer_time" jdbcType="TIMESTAMP" property="msgAnswerTime" />
+    <result column="msg_answer_content" jdbcType="VARCHAR" property="msgAnswerContent" />
+    <result column="msg_vote" jdbcType="INTEGER" property="msgVote" />
+    <result column="msg_vote_reason" jdbcType="VARCHAR" property="msgVoteReason" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from msg_answer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.hzvtc.pojo.MsgAnswer">
+    insert into msg_answer (id, msg_id, msg_receive_user_id, 
+      msg_state, msg_answer_time, msg_answer_content, 
+      msg_vote, msg_vote_reason)
+    values (#{id,jdbcType=INTEGER}, #{msgId,jdbcType=INTEGER}, #{msgReceiveUserId,jdbcType=INTEGER}, 
+      #{msgState,jdbcType=INTEGER}, #{msgAnswerTime,jdbcType=TIMESTAMP}, #{msgAnswerContent,jdbcType=VARCHAR}, 
+      #{msgVote,jdbcType=INTEGER}, #{msgVoteReason,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.pojo.MsgAnswer">
+    update msg_answer
+    set msg_id = #{msgId,jdbcType=INTEGER},
+      msg_receive_user_id = #{msgReceiveUserId,jdbcType=INTEGER},
+      msg_state = #{msgState,jdbcType=INTEGER},
+      msg_answer_time = #{msgAnswerTime,jdbcType=TIMESTAMP},
+      msg_answer_content = #{msgAnswerContent,jdbcType=VARCHAR},
+      msg_vote = #{msgVote,jdbcType=INTEGER},
+      msg_vote_reason = #{msgVoteReason,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, msg_id, msg_receive_user_id, msg_state, msg_answer_time, msg_answer_content, 
+    msg_vote, msg_vote_reason
+    from msg_answer
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, msg_id, msg_receive_user_id, msg_state, msg_answer_time, msg_answer_content, 
+    msg_vote, msg_vote_reason
+    from msg_answer
+  </select>
+</mapper>

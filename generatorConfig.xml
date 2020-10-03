@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <properties resource="dbconfig.properties"/>
+    <context id="MySQLTables" targetRuntime="MyBatis3Simple">
+        <!-- 注释 -->
+        <commentGenerator >
+            <property name="suppressAllComments" value="true"/><!-- 是否取消注释 -->
+            <property name="suppressDate" value="true" /> <!-- 是否生成注释代时间戳-->
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/cims?serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf8"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成实体类的包名和位置 注意targetProject的值为实体类放在工程中具体位置的相对路径，-->
+        <javaModelGenerator targetPackage="cn.edu.hzvtc.pojo" targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+            <!--生成构造方法-->
+            <property name="constructorBased" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成的SQLMapper映射文件包名和位置 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject=".\src\main\resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成DAO的包名和位置，这里配置将生成的dao类放在cn.edu.hzvtc.dao这个包下 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.edu.hzvtc.dao" targetProject=".\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 配置表信息 -->
+        <table tableName="sys_area" domainObjectName="Area"/>
+        <table tableName="sys_user" domainObjectName="User"/>
+        <table tableName="sys_user_unit" domainObjectName="UserUnit"/>
+        <table tableName="unit_info" domainObjectName="Unit"/>
+        <table tableName="unit_type" domainObjectName="UnitType"/>
+        <table tableName="msg_info" domainObjectName="Msg"/>
+        <table tableName="msg_answer" domainObjectName="MsgAnswer"/>
+
+    </context>
+
+</generatorConfiguration>

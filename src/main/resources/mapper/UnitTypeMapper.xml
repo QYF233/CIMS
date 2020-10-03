@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.hzvtc.dao.UnitTypeMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.hzvtc.pojo.UnitType">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="unit_type_name" jdbcType="VARCHAR" property="unitTypeName" />
+    <result column="unit_type_sort_num" jdbcType="INTEGER" property="unitTypeSortNum" />
+    <result column="unit_type_area_id" jdbcType="INTEGER" property="unitTypeAreaId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from unit_type
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.hzvtc.pojo.UnitType">
+    insert into unit_type (id, unit_type_name, unit_type_sort_num, 
+      unit_type_area_id)
+    values (#{id,jdbcType=INTEGER}, #{unitTypeName,jdbcType=VARCHAR}, #{unitTypeSortNum,jdbcType=INTEGER}, 
+      #{unitTypeAreaId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.pojo.UnitType">
+    update unit_type
+    set unit_type_name = #{unitTypeName,jdbcType=VARCHAR},
+      unit_type_sort_num = #{unitTypeSortNum,jdbcType=INTEGER},
+      unit_type_area_id = #{unitTypeAreaId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, unit_type_name, unit_type_sort_num, unit_type_area_id
+    from unit_type
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, unit_type_name, unit_type_sort_num, unit_type_area_id
+    from unit_type
+  </select>
+</mapper>

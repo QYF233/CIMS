@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <settings>
+        <!-- 设置日志输出为STDOUT_LOGGING -->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+        <!--将以下画线方式命名的数据库列映射到 Java 对象的驼峰式命名属性中-->
+        <setting name= "mapUnderscoreToCamelCase" value="true" />
+    </settings>
+    <!--简化类命名空间 -->
+    <typeAliases>
+        <package name="cn.edu.hzvtc.pojo" />
+    </typeAliases>
+
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"/>
+    </plugins>
+
+</configuration>
