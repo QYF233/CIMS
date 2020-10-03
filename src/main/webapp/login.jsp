@@ -32,17 +32,20 @@
                 <h2 class="text-center">欢迎登录</h2>
                 <div class="form-group has-feedback">
                     <label class="sr-only" for="username">用户名</label>
-                    <div class="input-group username-input" >
+                    <div class="input-group username-input">
                         <div class="input-group-addon">用户名</div>
-                        <input type="text" class="form-control" id="username" name="userName" placeholder="请输入用户名" aria-describedby="inputSuccess2Status">
-                        <span id="inputSuccess2Status" class="glyphicon glyphicon-ok form-control-feedback hidden" aria-hidden="true"></span>
+                        <input type="text" class="form-control" id="username" name="userName" placeholder="请输入用户名"
+                               aria-describedby="inputSuccess2Status">
+                        <span id="inputSuccess2Status" class="glyphicon glyphicon-ok form-control-feedback hidden"
+                              aria-hidden="true"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="sr-only" for="password">密码</label>
                     <div class="input-group password-input">
                         <div class="input-group-addon">密&nbsp;&nbsp;&nbsp;&nbsp;码</div>
-                        <input type="password" class="form-control" id="password" name="userPassword" placeholder="请输入密码">
+                        <input type="password" class="form-control" id="password" name="userPassword"
+                               placeholder="请输入密码">
                         <div class="input-group-addon" id="eye"><span id="icon"
                                                                       class="glyphicon glyphicon-eye-open"></span></div>
                     </div>
@@ -51,7 +54,8 @@
                     <button type="button" class="btn btn-primary" id="login-btn" style="width: 100%;">登录</button>
                 </div>
                 <div class="form-group">
-                    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true">&nbsp;<span class="msg"></span></span>
+                    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true">&nbsp;<span
+                            class="msg"></span></span>
                 </div>
             </form>
         </div>
@@ -72,7 +76,8 @@
 
 <script>
 
-    $("body").keydown(function() {
+    $("body").keydown(function () {
+
         if (event.keyCode == "13") {//keyCode=13是回车键
             $('#login-btn').click();//换成按钮的id即可
         }
@@ -95,32 +100,34 @@
     });
 
     /*失焦检测*/
-/*    $("#username").blur(function () {
-        $.ajax({
-            url: "user/login",
-            data: $("form").serialize(),
-            type: "POST",
-            dataType: "json",
-            success: function (result) {
-                if (null !== result.extend.fieldErrors){
-                    console.log(result.extend.fieldErrors);
-                    show_validation_msg(".password-input","error","密码错误");
-                }else{
-                    show_validation_msg(".username-input","error","用户不存在");
+    /*    $("#username").blur(function () {
+            $.ajax({
+                url: "user/login",
+                data: $("form").serialize(),
+                type: "POST",
+                dataType: "json",
+                success: function (result) {
+                    if (null !== result.extend.fieldErrors){
+                        console.log(result.extend.fieldErrors);
+                        show_validation_msg(".password-input","error","密码错误");
+                    }else{
+                        show_validation_msg(".username-input","error","用户不存在");
+                    }
                 }
-            }
 
-        })
-    });*/
+            })
+        });*/
 
 
     $("#login-btn").click(function () {
 
-        if($("#username").val()===""){
-            show_validation_msg(".username-input","error","请输入用户名");
-        }else if($("#password").val()===""){
-            show_validation_msg(".password-input","error","请输入密码");
-        }else{
+        if ($("#username").val() === "") {
+            $("#username").focus();
+            show_validation_msg(".username-input", "error", "请输入用户名");
+        } else if ($("#password").val() === "") {
+            $("#password").focus();
+            show_validation_msg(".password-input", "error", "请输入密码");
+        } else {
             /*登录请求*/
             $.ajax({
                 url: "user/login",
@@ -130,13 +137,16 @@
                 success: function (result) {
                     console.log(result)
                     if (result.code === 100) {
-                        window.location.href = result.target;
+                        $("#login-btn").html("正在登录中...");
+                        setTimeout(function () {
+                            window.location.href = result.target;
+                        }, 1000)
                     } else {
-                        if (undefined !== result.extend.fieldErrors){
+                        if (undefined !== result.extend.fieldErrors) {
                             console.log(result.extend.fieldErrors);
-                            show_validation_msg(".password-input","error","密码错误");
-                        }else{
-                            show_validation_msg(".username-input","error","用户不存在");
+                            show_validation_msg(".password-input", "error", "密码错误");
+                        } else {
+                            show_validation_msg(".username-input", "error", "用户不存在");
                         }
                     }
                 }
