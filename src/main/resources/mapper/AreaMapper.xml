@@ -8,6 +8,23 @@
     <result column="area_parent_id" jdbcType="INTEGER" property="areaParentId" />
     <result column="area_sort_num" jdbcType="INTEGER" property="areaSortNum" />
   </resultMap>
+  <!--登录map-->
+  <resultMap id="LoginResultMap" type="cn.edu.hzvtc.pojo.Area">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="area_type" jdbcType="INTEGER" property="areaType" />
+    <result column="area_parent_id" jdbcType="INTEGER" property="areaParentId" />
+    <result column="area_sort_num" jdbcType="INTEGER" property="areaSortNum" />
+    <discriminator javaType="INTEGER" column="area_type">
+      <case value="2">
+        <collection property="parentArea" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey" column="area_parent_id"/>
+      </case><!--院校管理员-->
+      <case value="3">
+        <collection property="parentArea" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey" column="area_parent_id"/>
+      </case><!--院校人员-->
+    </discriminator>
+  </resultMap>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_area
     where id = #{id,jdbcType=INTEGER}
@@ -26,7 +43,7 @@
       area_sort_num = #{areaSortNum,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="LoginResultMap">
     select id, area_name, area_type, area_parent_id, area_sort_num
     from sys_area
     where id = #{id,jdbcType=INTEGER}

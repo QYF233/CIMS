@@ -62,6 +62,16 @@ public class Area {
         this.areaSortNum = areaSortNum;
     }
 
+    public Area parentArea;
+
+    public Area getParentArea() {
+        return parentArea;
+    }
+
+    public void setParentArea(Area parentArea) {
+        this.parentArea = parentArea;
+    }
+
     @Override
     public String toString() {
         return "Area{" +
@@ -70,6 +80,7 @@ public class Area {
                 ", areaType=" + areaType +
                 ", areaParentId=" + areaParentId +
                 ", areaSortNum=" + areaSortNum +
+                ", parentArea=" + parentArea +
                 '}';
     }
 }

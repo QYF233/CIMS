@@ -23,16 +23,17 @@ public class UserTest {
     public UserService userService;
 
     @Test
-    public void test(){
+    public void test() {
 //        userMapper.insert(new User("sysadmin","123456",1,new Date(),1,null));
 //        userMapper.insert(new User("hzvtc","123456",1,new Date(),2,7));
 //        userMapper.insert(new User("zhangsan","123456",1,new Date(),3,7));
     }
 
     @Test
-    public void test_pwd(){
-        User loginUser = userService.login("hzvtc","123");
-        System.out.println(loginUser.getUserName());
-        System.out.println(userMapper.selectPwdByName("hzvtc"));
+    public void test_pwd() {
+        User loginUser = userService.login("hzvtc", "123");
+        System.out.println(loginUser.toString());
+//        System.out.println(userMapper.selectPwdByName("hzvtc"));
     }
+
 }

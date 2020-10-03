@@ -58,10 +58,10 @@
     </tx:advice>
 
 
-<aop:config>
-    <aop:pointcut id="txPointCut" expression="execution(* cn.edu.hzvtc.service.*.*(..))"/>
-    <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"/>
-</aop:config>
+    <aop:config>
+        <aop:pointcut id="txPointCut" expression="execution(* cn.edu.hzvtc.service.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"/>
+    </aop:config>
 
 
 </beans>

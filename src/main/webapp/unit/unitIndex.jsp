@@ -41,8 +41,8 @@
 						<li><a href="userManager.html">用户管理</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#"><span class="glyphicon glyphicon-user"></span>平台管理员：${loginUserName}</a></li>
-						<li><a href="../"><span class="glyphicon glyphicon-log-out"></span>注销</a></li>
+						<li><a href="#"><span class="glyphicon glyphicon-user"></span>平台管理员：<span id="loginUser_nav"></span></a></li>
+						<li id="logout_nav"><a href="#"><span class="glyphicon glyphicon-log-out"></span>注销</a></li>
 					</ul>
 				</div>
 			</div>
@@ -87,7 +87,10 @@
 		<script src="../commons/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 		<script src="../commons/bootstrap-treeview-1.2.0/dist/bootstrap-treeview.min.js"></script>
 		<script src="../commons/bootstrap-select-1.13.9/dist/js/bootstrap-select.js"></script>
+		<script src="../commons/js/com.js"></script>
+
 		<script>
+
 			var ctx = $("#myChart");
 			var ctx = document.getElementById("myChart");
 			var myChart = new Chart(ctx, {

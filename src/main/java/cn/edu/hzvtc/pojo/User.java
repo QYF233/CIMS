@@ -85,15 +85,17 @@ public class User {
     public void setUserAreaId(Integer userAreaId) {
         this.userAreaId = userAreaId;
     }
-    private Area parentArea;
+    private Area area;
 
-    public Area getParentArea() {
-        return parentArea;
+    public Area getArea() {
+        return area;
     }
 
-    public void setParentArea(Area parentArea) {
-        this.parentArea = parentArea;
+    public void setArea(Area area) {
+        this.area = area;
     }
+
+
     @Override
     public String toString() {
         return "User{" +
@@ -104,6 +106,7 @@ public class User {
                 ", userOperatorTime=" + userOperatorTime +
                 ", userType=" + userType +
                 ", userAreaId=" + userAreaId +
+                ", area=" + area +
                 '}';
     }
 }

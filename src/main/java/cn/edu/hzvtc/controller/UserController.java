@@ -1,5 +1,6 @@
 package cn.edu.hzvtc.controller;
 
+import cn.edu.hzvtc.pojo.Area;
 import cn.edu.hzvtc.pojo.ReturnMsg;
 import cn.edu.hzvtc.pojo.User;
 import cn.edu.hzvtc.service.UserService;
@@ -28,7 +29,9 @@ public class UserController {
         return "unit/unitIndex";
     }
 
-
+    /**
+     * 登录
+     */
     @RequestMapping("/login")
     @ResponseBody
     public ReturnMsg login(@RequestParam(value = "userName", required = true) String userName,
@@ -45,7 +48,7 @@ public class UserController {
 
         //登录成功
         if (loginUser != null) {
-            if(loginUser.getUserPassword().equals(userPassword)){
+            if (loginUser.getUserPassword().equals(userPassword)) {
                 session.setAttribute("loginUser", loginUser);
                 System.out.println(session.getId());
 
@@ -60,15 +63,51 @@ public class UserController {
                     returnMsg.setTarget("");
                 }
                 return returnMsg;
-            }else {
+            } else {
                 /*密码错误*/
                 return ReturnMsg.fail().add("fieldErrors", loginUser);
             }
-
         } else {
             /*用户不存在*/
             return ReturnMsg.fail();
         }
+    }
 
+    /**
+     * 获取登录用户信息
+     */
+    @RequestMapping("/loginUser")
+    @ResponseBody
+    public ReturnMsg loginUser(HttpSession session) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        System.out.println(session.getId());
+
+        /*添加所有地区*/
+        Area area = loginUser.getArea();
+        String areaAll = "";
+        do {
+            System.out.println(area.getAreaName());
+            areaAll = area.getAreaName() + " " + areaAll;
+            area = area.getParentArea();
+        } while (area != null);
+        /*清除最后一个空格*/
+        areaAll = areaAll.substring(0, areaAll.length() - 1);
+
+        return ReturnMsg.success().add("loginUser", loginUser).add("areaAll", areaAll);
+    }
+
+    /**
+     * 注销
+     */
+    @RequestMapping("/logout")
+    @ResponseBody
+    public ReturnMsg logout(HttpSession session) {
+        /*清楚session*/
+        session.invalidate();
+        /*重定向到登录页面的跳转方法*/
+        ReturnMsg returnMsg = ReturnMsg.success();
+        returnMsg.setTarget("../");
+
+        return returnMsg;
     }
 }

@@ -9,20 +9,31 @@
     <result column="user_operator_time" jdbcType="TIMESTAMP" property="userOperatorTime" />
     <result column="user_type" jdbcType="INTEGER" property="userType" />
     <result column="user_area_id" jdbcType="INTEGER" property="userAreaId" />
+  </resultMap>
+  <!--登录map-->
+  <resultMap id="LoginResultMap" type="cn.edu.hzvtc.pojo.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="user_operator_id" jdbcType="INTEGER" property="userOperatorId" />
+    <result column="user_operator_time" jdbcType="TIMESTAMP" property="userOperatorTime" />
+    <result column="user_type" jdbcType="INTEGER" property="userType" />
+    <result column="user_area_id" jdbcType="INTEGER" property="userAreaId" />
     <!--多对一-->
-<!--    <association property="parentArea" resultMap="cn.edu.hzvtc.dao.AreaMapper.BaseResultMap">
-      <result column="id" property="id"/>
-      <result column="area_name" property="areaName"/>
-    </association>-->
-   <!-- <discriminator javaType="INTEGER" column="user_type">
+    <!--    <association property="parentArea" resultMap="cn.edu.hzvtc.dao.AreaMapper.BaseResultMap">
+          <result column="id" property="id"/>
+          <result column="area_name" property="areaName"/>
+        </association>-->
+    <discriminator javaType="INTEGER" column="user_type">
       <case value="2">
         <collection property="area" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey" column="user_area_id"/>
-      </case>&lt;!&ndash;院校管理员&ndash;&gt;
+      </case><!--院校管理员-->
       <case value="3">
         <collection property="area" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey" column="user_area_id"/>
-      </case>&lt;!&ndash;院校人员&ndash;&gt;
-    </discriminator>-->
+      </case><!--院校人员-->
+    </discriminator>
   </resultMap>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_user
     where id = #{id,jdbcType=INTEGER}
@@ -56,7 +67,7 @@
     user_area_id
     from sys_user
   </select>
-  <select id="selectPwdByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectPwdByName" parameterType="java.lang.String" resultMap="LoginResultMap">
     <!-- 按照用户名查找密码 -->
     select id, user_name, user_password, user_operator_id, user_operator_time, user_type,
     user_area_id
