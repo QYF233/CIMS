@@ -30,10 +30,22 @@ public class UserTest {
     }
 
     @Test
-    public void test_pwd() {
+    public void test_user() {
         User loginUser = userService.login("hzvtc", "123");
         System.out.println(loginUser.toString());
-//        System.out.println(userMapper.selectPwdByName("hzvtc"));
+
+        /*User {
+            id = 3, userName = 'hzvtc', userPassword = '123456', userOperatorId = 1, userOperatorTime = Sat Sep 26 19:50:
+            42 CST 2020, userType = 2, userAreaId = 7, area = Area {
+                id = 7, areaName = '杭州职业技术学院', areaType = 3, areaParentId = 4, areaSortNum = 1, parentArea = Area {
+                    id = 4, areaName = '杭州市', areaType = 2, areaParentId = 1, areaSortNum = 1, parentArea = Area {
+                        id = 1, areaName = '浙江省', areaType = 1, areaParentId = null, areaSortNum = 1, parentArea = null
+                    }
+                }
+            }
+        }*/
+
     }
+
 
 }

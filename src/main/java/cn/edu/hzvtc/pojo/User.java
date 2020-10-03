@@ -85,6 +85,7 @@ public class User {
     public void setUserAreaId(Integer userAreaId) {
         this.userAreaId = userAreaId;
     }
+
     private Area area;
 
     public Area getArea() {

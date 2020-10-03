@@ -99,26 +99,6 @@
         })
     });
 
-    /*失焦检测*/
-    /*    $("#username").blur(function () {
-            $.ajax({
-                url: "user/login",
-                data: $("form").serialize(),
-                type: "POST",
-                dataType: "json",
-                success: function (result) {
-                    if (null !== result.extend.fieldErrors){
-                        console.log(result.extend.fieldErrors);
-                        show_validation_msg(".password-input","error","密码错误");
-                    }else{
-                        show_validation_msg(".username-input","error","用户不存在");
-                    }
-                }
-
-            })
-        });*/
-
-
     $("#login-btn").click(function () {
 
         if ($("#username").val() === "") {

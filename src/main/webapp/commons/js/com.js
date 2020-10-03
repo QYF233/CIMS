@@ -1,3 +1,16 @@
+/*input框 换颜色*/
+function show_validation_msg(str,type,msg) {
+
+    $(".password-input").removeClass('has-error');
+    $(".username-input").removeClass('has-error');
+
+    if(type===("error")){
+        $(str).addClass('has-error');
+        $(".glyphicon-warning-sign").show();
+        $(".msg").empty().html(msg);
+    }
+}
+
 $(function () {
     loadLoginUser();
 });
@@ -16,18 +29,7 @@ function loadLoginUser() {
         }
     })
 }
-/*input框 换颜色*/
-function show_validation_msg(str,type,msg) {
 
-    $(".password-input").removeClass('has-error');
-    $(".username-input").removeClass('has-error');
-
-    if(type===("error")){
-        $(str).addClass('has-error');
-        $(".glyphicon-warning-sign").show();
-        $(".msg").empty().html(msg);
-    }
-}
 
 $("#logout_nav").click(function () {
     logout();
