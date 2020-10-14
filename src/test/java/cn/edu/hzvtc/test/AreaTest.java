@@ -40,4 +40,10 @@ public class AreaTest {
 //        areaMapper.insert(new Area("南京大学",3,13,1));
 //        areaMapper.insert(new Area("苏州大学",3,14,1));
     }
+
+    @Test
+    public void testTree(){
+
+        System.out.println(areaMapper.selectAllForTree(4));
+    }
 }

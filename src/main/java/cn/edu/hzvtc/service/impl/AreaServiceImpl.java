@@ -31,4 +31,10 @@ public class AreaServiceImpl implements AreaService {
     public void index() {
 
     }
+
+    @Override
+    public List<Area> getTree(int parentId) {
+
+        return areaMapper.selectAllForTree(parentId);
+    }
 }

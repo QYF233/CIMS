@@ -19,4 +19,6 @@ public interface AreaService {
     public void insert();
 
     public void index();
+
+    public List<Area> getTree(int parentId);
 }

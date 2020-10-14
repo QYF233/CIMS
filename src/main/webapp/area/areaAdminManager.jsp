@@ -30,13 +30,13 @@
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<li><a href="areaIndex.html">首页</a></li>
-						<li><a href="areaManager.html">院校管理</a></li>
-						<li class="active"><a href="areaAdminManager.html">院校管理员管理</a></li>
+						<li><a href="areaIndex">首页</a></li>
+						<li><a href="areaManager">院校管理</a></li>
+						<li class="active"><a href="areaAdminManager">院校管理员管理</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="#"><span class="glyphicon glyphicon-user"></span>平台管理员：admin</a></li>
-						<li><a href="../login.html"><span class="glyphicon glyphicon-log-out"></span>注销</a></li>
+						<li><a href="../"><span class="glyphicon glyphicon-log-out"></span>注销</a></li>
 					</ul>
 				</div>
 			</div>

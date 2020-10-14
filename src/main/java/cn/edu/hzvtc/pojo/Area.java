@@ -1,5 +1,7 @@
 package cn.edu.hzvtc.pojo;
 
+import java.util.List;
+
 public class Area {
     private Integer id;
 
@@ -11,6 +13,9 @@ public class Area {
 
     private Integer areaSortNum;
 
+    private String text;
+
+    private List<Area> nodes;
     public Area(String areaName, Integer areaType, Integer areaParentId, Integer areaSortNum) {
         this.areaName = areaName;
         this.areaType = areaType;
@@ -72,6 +77,22 @@ public class Area {
         this.parentArea = parentArea;
     }
 
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public List<Area> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<Area> nodes) {
+        this.nodes = nodes;
+    }
+
     @Override
     public String toString() {
         return "Area{" +
@@ -80,6 +101,8 @@ public class Area {
                 ", areaType=" + areaType +
                 ", areaParentId=" + areaParentId +
                 ", areaSortNum=" + areaSortNum +
+                ", text='" + text + '\'' +
+                ", nodes=" + nodes +
                 ", parentArea=" + parentArea +
                 '}';
     }

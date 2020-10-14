@@ -46,6 +46,11 @@ public class UserTest {
         }*/
 
     }
+    @Test
+    public void test_user2() {
+        User loginUser = userService.login("hzvtc", "123");
+        System.out.println(loginUser.toString());
 
+    }
 
 }

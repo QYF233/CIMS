@@ -74,4 +74,11 @@
     from sys_user
     where user_name = #{user_name,jdbcType=VARCHAR}
   </select>
+  <select id="selectUserByName" parameterType="java.lang.String" resultMap="LoginResultMap">
+    <!-- 按照用户名查找用户信息 -->
+    select id, user_name, user_password, user_operator_id, user_operator_time, user_type,
+    user_area_id
+    from sys_user
+    where user_name = #{user_name,jdbcType=VARCHAR},user_password = #{user_password,jdbcType=VARCHAR}
+  </select>
 </mapper>
