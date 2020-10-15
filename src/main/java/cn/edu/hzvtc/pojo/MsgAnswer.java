@@ -1,7 +1,15 @@
 package cn.edu.hzvtc.pojo;
 
-import java.util.Date;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+import java.util.Date;
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class MsgAnswer {
     private Integer id;
 
@@ -29,9 +37,7 @@ public class MsgAnswer {
         this.msgVoteReason = msgVoteReason;
     }
 
-    public MsgAnswer() {
-        super();
-    }
+
 
     public Integer getId() {
         return id;
@@ -97,17 +103,4 @@ public class MsgAnswer {
         this.msgVoteReason = msgVoteReason == null ? null : msgVoteReason.trim();
     }
 
-    @Override
-    public String toString() {
-        return "MsgAnswer{" +
-                "id=" + id +
-                ", msgId=" + msgId +
-                ", msgReceiveUserId=" + msgReceiveUserId +
-                ", msgState=" + msgState +
-                ", msgAnswerTime=" + msgAnswerTime +
-                ", msgAnswerContent='" + msgAnswerContent + '\'' +
-                ", msgVote=" + msgVote +
-                ", msgVoteReason='" + msgVoteReason + '\'' +
-                '}';
-    }
 }

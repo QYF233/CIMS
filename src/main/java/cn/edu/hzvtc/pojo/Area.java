@@ -1,7 +1,15 @@
 package cn.edu.hzvtc.pojo;
 
-import java.util.List;
+import lombok.*;
 
+import java.util.List;
+/**
+ * @author kiko
+ */
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class Area {
     private Integer id;
 
@@ -15,18 +23,11 @@ public class Area {
 
     private Integer areaDelState;
 
+    public Area parentArea;
 
-    public Area() {
-        super();
-    }
+    private String text;
 
-    public Area(Integer id, String areaName, Integer areaType, Integer areaParentId, Integer areaSortNum) {
-        this.id = id;
-        this.areaName = areaName;
-        this.areaType = areaType;
-        this.areaParentId = areaParentId;
-        this.areaSortNum = areaSortNum;
-    }
+    private List<Area> nodes;
 
     public Area(String areaName, Integer areaType, Integer areaParentId, Integer areaSortNum) {
         this.areaName = areaName;
@@ -35,96 +36,12 @@ public class Area {
         this.areaSortNum = areaSortNum;
     }
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
+    public Area(Integer id, String areaName, Integer areaType, Integer areaParentId, Integer areaSortNum, Integer areaDelState) {
         this.id = id;
-    }
-
-    public String getAreaName() {
-        return areaName;
-    }
-
-    public void setAreaName(String areaName) {
-        this.areaName = areaName == null ? null : areaName.trim();
-    }
-
-    public Integer getAreaType() {
-        return areaType;
-    }
-
-    public void setAreaType(Integer areaType) {
+        this.areaName = areaName;
         this.areaType = areaType;
-    }
-
-    public Integer getAreaParentId() {
-        return areaParentId;
-    }
-
-    public void setAreaParentId(Integer areaParentId) {
         this.areaParentId = areaParentId;
-    }
-
-    public Integer getAreaSortNum() {
-        return areaSortNum;
-    }
-
-    public void setAreaSortNum(Integer areaSortNum) {
         this.areaSortNum = areaSortNum;
-    }
-
-    public Area parentArea;
-
-    public Area getParentArea() {
-        return parentArea;
-    }
-
-    public void setParentArea(Area parentArea) {
-        this.parentArea = parentArea;
-    }
-
-    private String text;
-
-    public Integer getAreaDelState() {
-        return areaDelState;
-    }
-
-    public void setAreaDelState(Integer areaDelState) {
         this.areaDelState = areaDelState;
-    }
-
-    private List<Area> nodes;
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public List<Area> getNodes() {
-        return nodes;
-    }
-
-    public void setNodes(List<Area> nodes) {
-        this.nodes = nodes;
-    }
-
-    @Override
-    public String toString() {
-        return "Area{" +
-                "id=" + id +
-                ", areaName='" + areaName + '\'' +
-                ", areaType=" + areaType +
-                ", areaParentId=" + areaParentId +
-                ", areaSortNum=" + areaSortNum +
-                ", text='" + text + '\'' +
-                ", nodes=" + nodes +
-                ", parentArea=" + parentArea +
-                '}';
     }
 }
