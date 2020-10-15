@@ -17,4 +17,5 @@ public interface UserMapper {
 
     User selectPwdByName(String name);
     User selectUserByName(String name);
+    List<User> selectAreaAdmins();
 }

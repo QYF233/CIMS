@@ -4,7 +4,6 @@ import cn.edu.hzvtc.pojo.Area;
 import cn.edu.hzvtc.pojo.ReturnMsg;
 import cn.edu.hzvtc.pojo.User;
 import cn.edu.hzvtc.service.UserService;
-import cn.edu.hzvtc.service.impl.UserServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;

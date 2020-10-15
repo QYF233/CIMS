@@ -1,8 +1,6 @@
 package cn.edu.hzvtc.controller;
 
 
-import cn.edu.hzvtc.pojo.Area;
-import cn.edu.hzvtc.pojo.User;
 import cn.edu.hzvtc.service.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

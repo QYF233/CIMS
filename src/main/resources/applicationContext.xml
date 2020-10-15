@@ -25,7 +25,6 @@
         <property name="acquireIncrement" value="${jdbc.acquireIncrement}"/>
         <property name="maxIdleTime" value="${jdbc.maxIdleTime}"/>
         <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}"/>
-
     </bean>
 
 

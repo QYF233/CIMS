@@ -2,15 +2,11 @@ package cn.edu.hzvtc.controller;
 
 import cn.edu.hzvtc.pojo.Area;
 import cn.edu.hzvtc.pojo.ReturnMsg;
-import cn.edu.hzvtc.pojo.User;
 import cn.edu.hzvtc.service.AreaService;
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

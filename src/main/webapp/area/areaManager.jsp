@@ -305,7 +305,6 @@
             var flag = true;
             var reg = /^(\d+)$/;
             var areaParentName = $("#areaParentName_modify_input").val();
-
             var areaName = $("#areaName_modify_input").val();
             var areaType = $("#areaType_modify_select").selectpicker('val');
             var areaSortNumber = $("#areaSortNumber_modify_input").val();

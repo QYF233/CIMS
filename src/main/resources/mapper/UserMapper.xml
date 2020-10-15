@@ -1,44 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.hzvtc.dao.UserMapper">
-  <resultMap id="BaseResultMap" type="cn.edu.hzvtc.pojo.User">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
-    <result column="user_operator_id" jdbcType="INTEGER" property="userOperatorId" />
-    <result column="user_operator_time" jdbcType="TIMESTAMP" property="userOperatorTime" />
-    <result column="user_type" jdbcType="INTEGER" property="userType" />
-    <result column="user_area_id" jdbcType="INTEGER" property="userAreaId" />
-  </resultMap>
-  <!--登录map-->
-  <resultMap id="LoginResultMap" type="cn.edu.hzvtc.pojo.User">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
-    <result column="user_operator_id" jdbcType="INTEGER" property="userOperatorId" />
-    <result column="user_operator_time" jdbcType="TIMESTAMP" property="userOperatorTime" />
-    <result column="user_type" jdbcType="INTEGER" property="userType" />
-    <result column="user_area_id" jdbcType="INTEGER" property="userAreaId" />
-    <!--多对一-->
-    <!--    <association property="parentArea" resultMap="cn.edu.hzvtc.dao.AreaMapper.BaseResultMap">
-          <result column="id" property="id"/>
-          <result column="area_name" property="areaName"/>
-        </association>-->
-    <discriminator javaType="INTEGER" column="user_type">
-      <case value="2">
-        <collection property="area" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey" column="user_area_id"/>
-      </case><!--院校管理员-->
-      <case value="3">
-        <collection property="area" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey" column="user_area_id"/>
-      </case><!--院校人员-->
-    </discriminator>
-  </resultMap>
-
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <resultMap id="BaseResultMap" type="cn.edu.hzvtc.pojo.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_password" jdbcType="VARCHAR" property="userPassword"/>
+        <result column="user_operator_id" jdbcType="INTEGER" property="userOperatorId"/>
+        <result column="user_operator_time" jdbcType="TIMESTAMP" property="userOperatorTime"/>
+        <result column="user_type" jdbcType="INTEGER" property="userType"/>
+        <result column="user_area_id" jdbcType="INTEGER" property="userAreaId"/>
+    </resultMap>
+    <!--登录map-->
+    <resultMap id="LoginResultMap" type="cn.edu.hzvtc.pojo.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_password" jdbcType="VARCHAR" property="userPassword"/>
+        <result column="user_operator_id" jdbcType="INTEGER" property="userOperatorId"/>
+        <result column="user_operator_time" jdbcType="TIMESTAMP" property="userOperatorTime"/>
+        <result column="user_type" jdbcType="INTEGER" property="userType"/>
+        <result column="user_area_id" jdbcType="INTEGER" property="userAreaId"/>
+        <discriminator javaType="INTEGER" column="user_type">
+            <case value="2">
+                <collection property="area" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey"
+                            column="user_area_id"/>
+            </case><!--院校管理员-->
+            <case value="3">
+                <collection property="area" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey"
+                            column="user_area_id"/>
+            </case><!--院校人员-->
+        </discriminator>
+    </resultMap>
+    <!--查询院校管理员列表-->
+    <resultMap id="AreaAdminResultMap" type="cn.edu.hzvtc.pojo.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_password" jdbcType="VARCHAR" property="userPassword"/>
+        <result column="user_operator_id" jdbcType="INTEGER" property="userOperatorId"/>
+        <result column="user_operator_time" jdbcType="TIMESTAMP" property="userOperatorTime"/>
+        <result column="user_type" jdbcType="INTEGER" property="userType"/>
+        <result column="user_area_id" jdbcType="INTEGER" property="userAreaId"/>
+        <collection property="userOperator" select="cn.edu.hzvtc.dao.UserMapper.selectByPrimaryKey"
+                    column="user_operator_id"/>
+        <collection property="area" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey"
+                    column="user_area_id"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.edu.hzvtc.pojo.User">
+    <insert id="insert" parameterType="cn.edu.hzvtc.pojo.User">
     insert into sys_user (id, user_name, user_password, 
       user_operator_id, user_operator_time, user_type, 
       user_area_id)
@@ -46,7 +56,7 @@
       #{userOperatorId,jdbcType=INTEGER}, #{userOperatorTime,jdbcType=TIMESTAMP}, #{userType,jdbcType=INTEGER}, 
       #{userAreaId,jdbcType=INTEGER})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.pojo.User">
+    <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.pojo.User">
     update sys_user
     set user_name = #{userName,jdbcType=VARCHAR},
       user_password = #{userPassword,jdbcType=VARCHAR},
@@ -56,29 +66,39 @@
       user_area_id = #{userAreaId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, user_name, user_password, user_operator_id, user_operator_time, user_type, 
     user_area_id
     from sys_user
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectAll" resultMap="BaseResultMap">
     select id, user_name, user_password, user_operator_id, user_operator_time, user_type, 
     user_area_id
     from sys_user
   </select>
-  <select id="selectPwdByName" parameterType="java.lang.String" resultMap="LoginResultMap">
     <!-- 按照用户名查找密码 -->
-    select id, user_name, user_password, user_operator_id, user_operator_time, user_type,
-    user_area_id
-    from sys_user
-    where user_name = #{user_name,jdbcType=VARCHAR}
-  </select>
-  <select id="selectUserByName" parameterType="java.lang.String" resultMap="LoginResultMap">
+    <select id="selectPwdByName" parameterType="java.lang.String" resultMap="LoginResultMap">
+
+        select id, user_name, user_password, user_operator_id, user_operator_time, user_type,
+        user_area_id
+        from sys_user
+        where user_name = #{user_name,jdbcType=VARCHAR}
+    </select>
     <!-- 按照用户名查找用户信息 -->
-    select id, user_name, user_password, user_operator_id, user_operator_time, user_type,
-    user_area_id
+    <select id="selectUserByName" parameterType="java.lang.String" resultMap="LoginResultMap">
+        select id, user_name, user_password, user_operator_id, user_operator_time, user_type,
+        user_area_id
+        from sys_user
+        where user_name = #{user_name,jdbcType=VARCHAR},user_password = #{user_password,jdbcType=VARCHAR}
+    </select>
+    <!--查询关联的操作人和所属区域信息-->
+    <select id="selectAreaAdmins" resultMap="AreaAdminResultMap">
+    select id, user_name, user_password, user_operator_id, user_operator_time, user_type, user_area_id,user_del_state
     from sys_user
-    where user_name = #{user_name,jdbcType=VARCHAR},user_password = #{user_password,jdbcType=VARCHAR}
+    where user_type = 2
+    and user_del_state = 0
+    order by user_area_id,id
   </select>
+
 </mapper>

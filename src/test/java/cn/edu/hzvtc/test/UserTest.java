@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
@@ -50,7 +51,15 @@ public class UserTest {
     public void test_user2() {
         User loginUser = userService.login("hzvtc", "123");
         System.out.println(loginUser.toString());
+    }
+    @Test
+    public void test_userList() {
+        List<User> loginUser = userService.getAreaAdmins();
+        for (User user: loginUser) {
+            System.out.println(user.toString());
+        }
+//        System.out.println(loginUser.toString());
+//        userMapper.selectAreaAdmins();
 
     }
-
 }
