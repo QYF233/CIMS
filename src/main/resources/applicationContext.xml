@@ -47,7 +47,7 @@
 
     <bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
         <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
-        <constructor-arg name="executorType" value="BATCH"/>
+        <constructor-arg name="executorType" value="SIMPLE"/>
     </bean>
 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">

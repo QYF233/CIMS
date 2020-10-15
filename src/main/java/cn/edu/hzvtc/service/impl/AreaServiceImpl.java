@@ -1,4 +1,5 @@
 package cn.edu.hzvtc.service.impl;
+
 import cn.edu.hzvtc.dao.AreaMapper;
 import cn.edu.hzvtc.pojo.Area;
 import cn.edu.hzvtc.service.*;
@@ -34,7 +35,23 @@ public class AreaServiceImpl implements AreaService {
 
     @Override
     public List<Area> getTree(int parentId) {
-
         return areaMapper.selectAllForTree(parentId);
+    }
+
+    @Override
+    public int addSchool(Area area) {
+        return areaMapper.insert(area);
+    }
+
+    @Override
+    public int updateSchool(Area area) {
+
+        return areaMapper.updateByPrimaryKey(area);
+    }
+
+    @Override
+    public int deleteSchool(int areaId) {
+        areaMapper.deleteByParentId(areaId);
+        return areaMapper.deleteByPrimaryKey(areaId);
     }
 }

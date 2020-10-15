@@ -1,10 +1,11 @@
 /*input框 换颜色*/
-function show_validation_msg(str,type,msg) {
+function show_validation_msg(str, type, msg) {
 
     $(".password-input").removeClass('has-error');
     $(".username-input").removeClass('has-error');
+    $(".areaSortNum_input").removeClass('has-error');
 
-    if(type===("error")){
+    if (type === ("error")) {
         $(str).addClass('has-error');
         $(".glyphicon-warning-sign").show();
         $(".msg").empty().html(msg);
@@ -22,9 +23,12 @@ function loadLoginUser() {
         type: "GET",
         dataType: "json",
         success: function (data) {
-            if(data.code ===100){
-                $("#loginUser_nav").append(data.extend.loginUser.userName)
-                    .append(" [").append($("<small></small>").append(data.extend.areaAll)).append("] ");
+            console.log("**************////////////////" + data);
+            if (data.code === 100) {
+                $("#loginUser_nav").append(data.extend.loginUser.userName);
+                if (data.extend.areaAll != []) {
+                    $("#loginUser_nav").append(" [").append($("<small></small>").append(data.extend.areaAll)).append("] ");
+                }
             }
         }
     })
@@ -42,7 +46,7 @@ function logout() {
         type: "GET",
         dataType: "json",
         success: function (data) {
-            if(data.code ===100){
+            if (data.code === 100) {
                 window.location.href = data.target;
             }
         }

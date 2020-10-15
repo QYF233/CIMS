@@ -13,9 +13,21 @@ public class Area {
 
     private Integer areaSortNum;
 
-    private String text;
+    private Integer areaDelState;
 
-    private List<Area> nodes;
+
+    public Area() {
+        super();
+    }
+
+    public Area(Integer id, String areaName, Integer areaType, Integer areaParentId, Integer areaSortNum) {
+        this.id = id;
+        this.areaName = areaName;
+        this.areaType = areaType;
+        this.areaParentId = areaParentId;
+        this.areaSortNum = areaSortNum;
+    }
+
     public Area(String areaName, Integer areaType, Integer areaParentId, Integer areaSortNum) {
         this.areaName = areaName;
         this.areaType = areaType;
@@ -23,9 +35,6 @@ public class Area {
         this.areaSortNum = areaSortNum;
     }
 
-    public Area() {
-        super();
-    }
 
     public Integer getId() {
         return id;
@@ -76,6 +85,18 @@ public class Area {
     public void setParentArea(Area parentArea) {
         this.parentArea = parentArea;
     }
+
+    private String text;
+
+    public Integer getAreaDelState() {
+        return areaDelState;
+    }
+
+    public void setAreaDelState(Integer areaDelState) {
+        this.areaDelState = areaDelState;
+    }
+
+    private List<Area> nodes;
 
     public String getText() {
         return text;

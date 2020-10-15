@@ -1,5 +1,8 @@
 package cn.edu.hzvtc.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class User {
@@ -11,11 +14,17 @@ public class User {
 
     private Integer userOperatorId;
 
+    /**
+     * 类型转换器
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private Date userOperatorTime;
 
     private Integer userType;
 
     private Integer userAreaId;
+
 
     public User(String userName, String userPassword, Integer userOperatorId, Date userOperatorTime, Integer userType, Integer userAreaId) {
         this.userName = userName;

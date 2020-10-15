@@ -80,6 +80,7 @@
 		<script src="../commons/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 		<script src="../commons/bootstrap-treeview-1.2.0/dist/bootstrap-treeview.min.js"></script>
 		<script src="../commons/bootstrap-select-1.13.9/dist/js/bootstrap-select.js"></script>
+		<script src="../commons/js/com.js"></script>
 		<script>
 			var ctx = document.getElementById("receiveChart");
 			var myChart = new Chart(ctx, {

@@ -21,4 +21,10 @@ public interface AreaService {
     public void index();
 
     public List<Area> getTree(int parentId);
+
+    public int addSchool(Area area);
+
+    public int updateSchool(Area area);
+
+    public int deleteSchool(int areaId);
 }

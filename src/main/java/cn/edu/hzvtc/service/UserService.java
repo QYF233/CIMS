@@ -26,5 +26,7 @@ public interface UserService {
     /**
      * 用获取用户列表
      */
-    public List getUserList();
+    public List<User> getUserList();
+
+    public List<User> getAreaAdmins();
 }

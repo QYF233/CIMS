@@ -34,11 +34,11 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">单位管理
 								<span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="unitType.html">单位类型</a></li>
-								<li><a href="unitManager.html">单位管理</a></li>
+								<li><a href="unitType">单位类型</a></li>
+								<li><a href="unitManager">单位管理</a></li>
 							</ul>
 						</li>
-						<li><a href="userManager.html">用户管理</a></li>
+						<li><a href="userManager">用户管理</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="#"><span class="glyphicon glyphicon-user"></span>平台管理员：<span id="loginUser_nav"></span></a></li>

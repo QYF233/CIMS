@@ -7,6 +7,7 @@
     <result column="area_type" jdbcType="INTEGER" property="areaType" />
     <result column="area_parent_id" jdbcType="INTEGER" property="areaParentId" />
     <result column="area_sort_num" jdbcType="INTEGER" property="areaSortNum" />
+    <result column="area_del_state" jdbcType="INTEGER" property="areaDelState" />
   </resultMap>
   <!--登录map-->
   <resultMap id="LoginResultMap" type="cn.edu.hzvtc.pojo.Area">
@@ -15,6 +16,7 @@
     <result column="area_type" jdbcType="INTEGER" property="areaType" />
     <result column="area_parent_id" jdbcType="INTEGER" property="areaParentId" />
     <result column="area_sort_num" jdbcType="INTEGER" property="areaSortNum" />
+    <result column="area_del_state" jdbcType="INTEGER" property="areaDelState" />
     <discriminator javaType="INTEGER" column="area_type">
       <case value="2">
         <collection property="parentArea" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey" column="area_parent_id"/>
@@ -33,6 +35,7 @@
     <result column="area_type" jdbcType="INTEGER" property="areaType" />
     <result column="area_parent_id" jdbcType="INTEGER" property="areaParentId" />
     <result column="area_sort_num" jdbcType="INTEGER" property="areaSortNum" />
+    <result column="area_del_state" jdbcType="INTEGER" property="areaDelState" />
     <discriminator javaType="INTEGER" column="area_type">
       <case value="1">
         <collection property="nodes" select="cn.edu.hzvtc.dao.AreaMapper.selectAllForTree" column="id"/>
@@ -42,7 +45,12 @@
       </case>
     </discriminator>
   </resultMap>
-
+  <!--删除-->
+  <delete id="deleteByParentId" parameterType="java.lang.Integer">
+    delete from sys_area
+    where area_parent_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <!--删除-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_area
     where id = #{id,jdbcType=INTEGER}
@@ -58,21 +66,22 @@
     set area_name = #{areaName,jdbcType=VARCHAR},
       area_type = #{areaType,jdbcType=INTEGER},
       area_parent_id = #{areaParentId,jdbcType=INTEGER},
-      area_sort_num = #{areaSortNum,jdbcType=INTEGER}
+      area_sort_num = #{areaSortNum,jdbcType=INTEGER},
+      area_del_state = #{areaDelState,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="LoginResultMap">
-    select id, area_name, area_type, area_parent_id, area_sort_num
+    select id, area_name, area_type, area_parent_id, area_sort_num, area_del_state
     from sys_area
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, area_name, area_type, area_parent_id, area_sort_num
+    select id, area_name, area_type, area_parent_id, area_sort_num, area_del_state
     from sys_area
   </select>
   <!--查找树-->
   <select id="selectAllForTree" resultMap="ChildrenResultMap">
-    select id, area_name, area_type, area_parent_id, area_sort_num
+    select id, area_name, area_type, area_parent_id, area_sort_num, area_del_state
     from sys_area
     where
     <if test="parentId == 0">
@@ -81,6 +90,7 @@
     <if test="parentId != 0">
       area_parent_id = #{parentId,jdbcType=INTEGER}
     </if>
+    and area_del_state != 1
     order by area_sort_num
   </select>
 

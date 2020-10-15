@@ -15,4 +15,6 @@ public interface AreaMapper {
     int updateByPrimaryKey(Area record);
 
     List<Area> selectAllForTree(int parentId);
+
+    int deleteByParentId(Integer id);
 }

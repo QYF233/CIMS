@@ -33,7 +33,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List getUserList() {
+    public List<User> getUserList() {
+        return null;
+    }
+
+    @Override
+    public List<User> getAreaAdmins() {
         return null;
     }
 }

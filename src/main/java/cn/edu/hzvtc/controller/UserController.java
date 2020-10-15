@@ -5,6 +5,8 @@ import cn.edu.hzvtc.pojo.ReturnMsg;
 import cn.edu.hzvtc.pojo.User;
 import cn.edu.hzvtc.service.UserService;
 import cn.edu.hzvtc.service.impl.UserServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @author kiko
@@ -80,18 +83,20 @@ public class UserController {
     @ResponseBody
     public ReturnMsg loginUser(HttpSession session) {
         User loginUser = (User) session.getAttribute("loginUser");
-        System.out.println(session.getId());
+        System.out.println("****************"+session.getId()+"********"+loginUser.toString());
 
         /*添加所有地区*/
         Area area = loginUser.getArea();
         String areaAll = "";
-        do {
-            System.out.println(area.getAreaName());
-            areaAll = area.getAreaName() + " " + areaAll;
-            area = area.getParentArea();
-        } while (area != null);
-        /*清除最后一个空格*/
-        areaAll = areaAll.substring(0, areaAll.length() - 1);
+        if(area!=null){
+            do {
+                System.out.println(area.getAreaName());
+                areaAll = area.getAreaName() + " " + areaAll;
+                area = area.getParentArea();
+            } while (area != null);
+            /*清除最后一个空格*/
+            areaAll = areaAll.substring(0, areaAll.length() - 1);
+        }
 
         return ReturnMsg.success().add("loginUser", loginUser).add("areaAll", areaAll);
     }
@@ -107,7 +112,26 @@ public class UserController {
         /*重定向到登录页面的跳转方法*/
         ReturnMsg returnMsg = ReturnMsg.success();
         returnMsg.setTarget("../");
-
         return returnMsg;
     }
+
+    /**
+     * 查询院校列表
+     * @param pn 页码
+     * @return
+     */
+    @RequestMapping("/areaAdmins")
+    @ResponseBody
+    public ReturnMsg getAreaAdmins(@RequestParam(value = "pn",defaultValue = "1") Integer pn){
+        //引入PageHelper分页插件
+        //在查询之前只需要传入页码以及每页的大小
+        PageHelper.startPage(pn,5);
+        //startPage方法紧跟第一个select查询就是一个分页查询
+        List<User> areaAdmins = userService.getAreaAdmins();
+        //使用PageInfo包装查询结果，封装了分页信息和查询出的数据，只需将pageInfo交给页面即可
+        PageInfo pageInfo = new PageInfo(areaAdmins,5);
+
+        return ReturnMsg.success().add("pageInfo",pageInfo);
+    }
+
 }
