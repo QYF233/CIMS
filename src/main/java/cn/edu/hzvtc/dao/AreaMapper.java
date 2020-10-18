@@ -16,5 +16,5 @@ public interface AreaMapper {
 
     List<Area> selectAllForTree(int parentId);
 
-    int deleteByParentId(Integer id);
+//    int deleteByParentId(Integer id);
 }

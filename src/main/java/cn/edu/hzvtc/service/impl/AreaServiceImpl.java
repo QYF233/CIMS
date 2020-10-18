@@ -45,13 +45,12 @@ public class AreaServiceImpl implements AreaService {
 
     @Override
     public int updateSchool(Area area) {
-
         return areaMapper.updateByPrimaryKey(area);
     }
 
-    @Override
-    public int deleteSchool(int areaId) {
-        areaMapper.deleteByParentId(areaId);
-        return areaMapper.deleteByPrimaryKey(areaId);
-    }
+//    @Override
+//    public int deleteSchool(int areaId) {
+//        areaMapper.deleteByParentId(areaId);
+//        return areaMapper.deleteByPrimaryKey(areaId);
+//    }
 }

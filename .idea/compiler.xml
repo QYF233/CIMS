@@ -10,5 +10,8 @@
         <module name="cims" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="cims" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -91,7 +91,7 @@
             <thead>
             <tr>
                 <th>
-                    <input type="checkbox" name="" id="" value=""/>
+                    <input class="checkAll" type="checkbox" name="" id="check_all" value=""/>
                 </th>
                 <th>用户名</th>
                 <th>所属区域</th>
@@ -160,6 +160,19 @@
                         </button>
                     </div>
                 </td>
+
+
+                <td>
+                    <div class="btn-group"></div>
+                    <button class="btn btn-primary update_btn" data-toggle="modal" data-target="#editModal"
+                            delete_id="6"><span class="glyphicon glyphicon-edit" aria-hidden="true">修改</span></button>
+                    <button class="btn btn-lock reset_btn" delete_id="6"><span class="glyphicon glyphicon-edit"
+                                                                               aria-hidden="true">重置</span></button>
+                    <button class="btn btn-danger delete_btn" delete_id="6"><span class="glyphicon glyphicon-remove"
+                                                                                  aria-hidden="true">删除</span></button>
+                </td>
+
+
             </tr>
             </tbody>
             <tfoot>
@@ -334,23 +347,16 @@
         to_page(currPage);
     });
 
-
+    /*构建tfoot*/
     function build_page_nav(result) {
         $("#areaAdmins-table tfoot").empty();
+        /*左边的操作按钮组*/
+        var addBtn = $("<button></button>").addClass("btn btn-default areaAdmin_add_btn").attr("data-toggle", "modal").attr("data-target", "#addModal").append($("<span></span>").addClass("glyphicon glyphicon-plus").attr("aria-hidden", "true")).append("添加");
+        var delAllBtn = $("<button></button>").addClass("btn btn-default areaAdmin_delete_all_btn").append($("<span></span>").addClass("glyphicon glyphicon-remove").attr("aria-hidden", "true")).append("删除");
 
-        var left = $("<div class=\"left col-lg-4 text-left\">\n" +
-            "                            <div class=\"btn-group\">\n" +
-            "                                <button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\"\n" +
-            "                                        data-target=\"#addModal\">\n" +
-            "                                    <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span>添加\n" +
-            "                                </button>\n" +
-            "                                <button type=\"button\" class=\"btn btn-default\">\n" +
-            "                                    <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>删除\n" +
-            "                                </button>\n" +
-            "                            </div>\n" +
-            "                        </div>");
-        var center = $("<div class=\"center col-lg-4 text-center\"></div>");
-        var right = $("<div class=\"right col-lg-4 text-right\"></div>");
+        var left = $("<div></div>").addClass("left col-lg-4 text-left").append($("<div class=\"btn-group\"></div>").append(addBtn).append(delAllBtn));
+        var center = $("<div></div>").addClass("center col-lg-4 text-center");
+        var right = $("<div></div>").addClass("right col-lg-4 text-center");
 
         right.append("当前第" + result.extend.pageInfo.pageNum + "页，总" + result.extend.pageInfo.pages + "页，总" + result.extend.pageInfo.total + "条记录");
         var pageUI = $("<ul></ul>").addClass("pagination").attr("style", "margin:0");
@@ -415,9 +421,42 @@
         $("<tr></tr>").append(ul).appendTo("#areaAdmins-table tfoot");
     }
 
+
+    /*构建表单*/
+    function build_areaAdmins_table(result) {
+        $("#areaAdmins-table tbody").empty();
+
+        var areaAdmins = result.extend.pageInfo.list;
+        $.each(areaAdmins, function (index, areaAdmin) {
+
+            var checkbox = $("<td></td>").append($("<input>").attr({"type": "checkbox"}).addClass("check_item").val(areaAdmin.id));
+            var name = $("<td></td>").append(areaAdmin.userName);
+            var parentAreaList = '';
+            var areaList = areaAdmin.area;
+            while (areaList != null) {
+                // console.log(areaList.areaName)
+                parentAreaList = areaList.areaName + " " + parentAreaList;
+                areaList = areaList.parentArea;
+            }
+            var area = $("<td></td>").append(parentAreaList);
+            var userOperator = $("<td></td>").append(areaAdmin.userOperator.userName);
+            var userOperatorTime = $("<td></td>").append(areaAdmin.userOperatorTime);
+
+            var updateBtn = $("<button></button>").addClass("btn btn-primary update_btn").attr("data-toggle", "modal").attr("data-target", "#editModal").attr("delete_id", areaAdmin.id).append($("<span></span>").addClass("glyphicon glyphicon-edit").attr("aria-hidden", "true")).append("修改");
+            var resetBtn = $("<button></button>").addClass("btn btn-lock reset_btn").attr("delete_id", areaAdmin.id).append($("<span></span>").addClass("glyphicon glyphicon-edit").attr("aria-hidden", "true")).append("重置密码");
+            var delBtn = $("<button></button>").addClass("btn btn-danger delete_btn").attr("delete_id", areaAdmin.id).append($("<span></span>").addClass("glyphicon glyphicon-remove").attr("aria-hidden", "true")).append("删除");
+
+            var operation = $("<td></td>").append($("<div class='btn-group'></div>").append(updateBtn).append(resetBtn).append(delBtn));
+
+            var base = $("<tr></tr>").append(checkbox).append(name).append(area).append(userOperator).append(userOperatorTime).append(operation);
+            $("#areaAdmins-table tbody").append(base);
+        });
+    }
+
     function to_page(pn) {
         $.ajax({
             url: "../user/areaAdmins",
+            data: {"pn": pn},
             type: "GET",
             dataType: "json",
             beforeSend: function () {
@@ -445,48 +484,69 @@
                 $("#areaAdmins-table tfoot").empty();
                 $("#areaAdmins-table tbody").append("<tr><td colspan='6'>查询出错，请稍后再试！</td></tr>");
             }
-        })
+        });
     }
 
-    /*
+    /*全选*/
+    $("#check_all").click(function () {
+        $(".check_item").prop("checked", $(this).prop("checked"));
+    });
+    $(document).on("click", ".check_item", function () {
+        var flag = $(".check_item").length == $(".check_item:checked").length;
+        $("#check_all").prop("checked", flag)
+    })
 
+    /*删除院校管理员*/
+    $(document).on("click", ".delete_btn", function () {
+        var userName = $(this).parents("tr").find("td:eq(1)").text();
+        if (confirm("确认删除[" + userName + "]吗?")) {
+            $.ajax({
+                url: "../user/areaAdmin/" + $(this).attr("delete_id"),
+                type: "DELETE",
+                dataType: "json",
+                success: function (result) {
+                    alert(result.msg);
+                    if (result.code == 100) {
+                        to_page(1);
+                    }
+                }
+            });
+        }
+    })
+    /*删除所有选中管理员*/
+    $(document).on("click", ".areaAdmin_delete_all_btn", function () {
+        var userName = "", ids = "";
+        $.each($(".check_item:checked"), function () {
+            userName = userName + $(this).parents("tr").find("td:eq(1)").text() + ",";
+            ids = ids + $(this).parents("tr").find("td:eq(5)").find(".delete_btn").attr("delete_id") + "-";
+        })
+        userNames = userName.substring(0,userName.length-1);
+        ids = ids.substring(0,ids.length-1);
+        if (confirm("确认删除[" + userNames + "]吗?")) {
+            $.ajax({
+                url: "../user/areaAdmin/" + ids,
+                type: "DELETE",
+                dataType: "json",
+                success: function (result) {
+                    alert(result.msg);
+                    if (result.code == 100) {
+                        to_page(1);
+                        $("#check_all").prop("checked",false);
+                    }
+                }
+            });
+        }
+    })
 
+    /*新增管理员*/
+    function getAreaList(element,txt,parentId,selText) {
+        var url = "list";
+        if(parentId != null){
+            url = url + "?parentId=" + parentId;
+        }
+        $.ajax({
 
-    * */
-    function build_areaAdmins_table(result) {
-        $("#areaAdmins-table tbody").empty();
-
-        var areaAdmins = result.extend.pageInfo.list;
-        $.each(areaAdmins, function (index, areaAdmin) {
-            var checkbox = $("<td></td>").append($("<input>").attr({"type": "checkbox"}).addClass("check_item").val(areaAdmin.id));
-            var name = $("<td></td>").append(areaAdmin.userName);
-            var parentAreaList = '';
-            var areaList = areaAdmin.area;
-            while (areaList != null) {
-                console.log(areaList.areaName)
-                parentAreaList = areaList.areaName + " " + parentAreaList;
-                areaList = areaList.parentArea;
-            }
-            var area = $("<td></td>").append(parentAreaList);
-            var userOperator = $("<td></td>").append(areaAdmin.userOperator.userName);
-            var userOperatorTime = $("<td></td>").append(areaAdmin.userOperatorTime);
-            var operation = $("<td><div class=\"btn-group\">\n" +
-                "      <button type=\"button\" class=\"btn  btn-primary\" data-toggle=\"modal\" data-target=\"#editModal\">\n" +
-                "             <span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\"></span>修改\n" +
-                "       </button>\n" +
-                "       <button type=\"button\" class=\"btn  btn-default\" style=\"background-color:#D4D4D4\">\n" +
-                "            <span class=\"glyphicon glyphicon-lock\" aria-hidden=\"true\"></span>重置密码\n" +
-                "       </button>\n" +
-                "       <button type=\"button\" class=\"btn  btn-danger\">\n" +
-                "             <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>删除\n" +
-                "       </button>\n" +
-                "       </div>\n" +
-                "  </td>");
-
-            var base = $("<tr></tr>").append(checkbox).append(name).append(area).append(userOperator).append(userOperatorTime).append(operation);
-            $("#areaAdmins-table tbody").append(base);
-        });
-
+        })
 
     }
 </script>

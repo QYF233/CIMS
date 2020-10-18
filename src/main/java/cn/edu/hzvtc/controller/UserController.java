@@ -8,9 +8,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -131,6 +129,14 @@ public class UserController {
         PageInfo pageInfo = new PageInfo(areaAdmins,5);
 
         return ReturnMsg.success().add("pageInfo",pageInfo);
+    }
+    @RequestMapping(value = "/areaAdmin/{ids}",method = RequestMethod.DELETE)
+    @ResponseBody
+    public ReturnMsg delAreaAdmin(@PathVariable("ids") String ids){
+        if(userService.delAreaAdmin(ids)){
+            return ReturnMsg.success();
+        }
+        return ReturnMsg.fail();
     }
 
 }

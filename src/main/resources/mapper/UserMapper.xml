@@ -44,10 +44,16 @@
         <collection property="area" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey"
                     column="user_area_id"/>
     </resultMap>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from sys_user
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+    <!--删除-->
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        update sys_user
+        set user_del_state = 1
+        where id = #{id,jdbcType=INTEGER}
+  </update>
+<!--    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">-->
+<!--    delete from sys_user-->
+<!--    where id = #{id,jdbcType=INTEGER}-->
+<!--  </delete>-->
     <insert id="insert" parameterType="cn.edu.hzvtc.pojo.User">
     insert into sys_user (id, user_name, user_password, 
       user_operator_id, user_operator_time, user_type, 
@@ -100,5 +106,12 @@
     and user_del_state = 0
     order by user_area_id,id
   </select>
-
+    <!--批量删除-->
+    <update id="deleteByPrimaryKeyList">
+        update sys_user
+        set user_del_state = 1
+        <foreach collection="list" item="id" separator="," open="where id in (" close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>

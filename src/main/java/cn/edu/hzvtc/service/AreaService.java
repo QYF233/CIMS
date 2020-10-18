@@ -26,5 +26,5 @@ public interface AreaService {
 
     public int updateSchool(Area area);
 
-    public int deleteSchool(int areaId);
+//    public int deleteSchool(int areaId);
 }

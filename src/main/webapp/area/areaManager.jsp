@@ -186,7 +186,7 @@
         $("#add_area_div").hide();//添加的div
         $("#modify_area_div").hide();//修改的div
     })
-
+    /*****************************加载树******************************/
     function loadAreaTree() {
         const treeData = [{
             text: "院校配置",
@@ -205,7 +205,7 @@
                     data: treeData,
                     levels: 2,
                     onNodeSelected: function (event, node) {
-                        console.log("************************")
+
                         $("#add_area_frm")[0].reset();//添加的form
                         $("#add_area_div").hide();//添加的div
                         $("#modify_area_frm")[0].reset();//修改的form
@@ -213,7 +213,6 @@
 
                         $("#add_area_btn").attr("disabled", "disabled");//添加按钮
                         $("#delete_area_btn").attr("disabled", "disabled");//删除按钮
-
 
                         if (node.areaType < 3) {
                             $("#add_area_btn").removeAttr("disabled")
@@ -239,14 +238,12 @@
                             $("#areaSortNumber_modify_input").val(node.areaSortNum);
                             $("#submit_modify_btn").attr("edit-id", node.id);
                         }
-
                     },
                     onNodeUnselected: function (event, node) {
                         $("#add_area_frm")[0].reset();
                         $("#add_area_div").hide();
                         $("#modify_area_frm")[0].reset();
                         $("#modify_area_div").hide();
-
                         $("#add_area_btn").attr("disabled", "disabled");
                         $("#delete_area_btn").attr("disabled", "disabled");
                     }
@@ -262,7 +259,6 @@
                 $("#add_area_div").hide();
                 $("#modify_area_frm")[0].reset();
                 $("#modify_area_div").hide();
-
                 $("#add_area_div").show();
                 $("#areaParentName_add_input").val(nodesSelected[0].text);
                 $("#areaParentId_add_input").val(nodesSelected[0].id);
@@ -272,7 +268,7 @@
             }
         });
 
-        /**********添加验证**********/
+        /**********添加-验证**********/
         function validateAdd() {
             var flag = true;
             var reg = /^(\d+)$/;
@@ -300,7 +296,7 @@
             return flag;
         }
 
-        /**********修改验证**********/
+        /**********修改-验证**********/
         function validateUpdate() {
             var flag = true;
             var reg = /^(\d+)$/;
@@ -311,7 +307,6 @@
             if (areaParentName == null || areaName == null || !reg.test(areaSortNumber) || areaType == null) {
                 flag = false;
             }
-
             /*将select选中的id绑定到隐藏域*/
             var areaTypeId;
             if (areaType === "省")
@@ -327,7 +322,6 @@
 
         /**********添加**********/
         $("#submit_add_btn").click(function () {
-
             if (validateAdd()) {
                 //添加
                 $.ajax({
@@ -356,7 +350,7 @@
         /**********修改**********/
         $("#submit_modify_btn").click(function () {
             console.log(validateUpdate())
-            var parentId = $("#areaParentId_modify_input")
+            // var parentId = $("#areaParentId_modify_input")
             if (validateUpdate()) {
                 //修改
                 $.ajax({
@@ -367,7 +361,7 @@
                     success: function (result) {
                         if (result.code === 100) {
                             //修改成功，刷新所有地域信息
-                            alert("修改成功！");
+                            console.log();
                             loadAreaTree();
                         }
                     }
