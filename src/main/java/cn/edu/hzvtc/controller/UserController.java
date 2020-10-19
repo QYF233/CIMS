@@ -80,12 +80,12 @@ public class UserController {
     @ResponseBody
     public ReturnMsg loginUser(HttpSession session) {
         User loginUser = (User) session.getAttribute("loginUser");
-        System.out.println("****************"+session.getId()+"********"+loginUser.toString());
+        System.out.println("****************" + session.getId() + "********" + loginUser.toString());
 
         /*添加所有地区*/
         Area area = loginUser.getArea();
         String areaAll = "";
-        if(area!=null){
+        if (area != null) {
             do {
                 System.out.println(area.getAreaName());
                 areaAll = area.getAreaName() + " " + areaAll;
@@ -114,26 +114,34 @@ public class UserController {
 
     /**
      * 查询院校列表
+     *
      * @param pn 页码
      * @return
      */
     @RequestMapping("/areaAdmins")
     @ResponseBody
-    public ReturnMsg getAreaAdmins(@RequestParam(value = "pn",defaultValue = "1") Integer pn){
+    public ReturnMsg getAreaAdmins(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         //引入PageHelper分页插件
         //在查询之前只需要传入页码以及每页的大小
-        PageHelper.startPage(pn,5);
+        PageHelper.startPage(pn, 5);
         //startPage方法紧跟第一个select查询就是一个分页查询
         List<User> areaAdmins = userService.getAreaAdmins();
         //使用PageInfo包装查询结果，封装了分页信息和查询出的数据，只需将pageInfo交给页面即可
-        PageInfo pageInfo = new PageInfo(areaAdmins,5);
+        PageInfo pageInfo = new PageInfo(areaAdmins, 5);
 
-        return ReturnMsg.success().add("pageInfo",pageInfo);
+        return ReturnMsg.success().add("pageInfo", pageInfo);
     }
-    @RequestMapping(value = "/areaAdmin/{ids}",method = RequestMethod.DELETE)
+
+    /**
+     * 删除院校管理员及其关联的他表信息
+     *
+     * @param ids 管理员id
+     * @return
+     */
+    @RequestMapping(value = "/areaAdmin/{ids}", method = RequestMethod.DELETE)
     @ResponseBody
-    public ReturnMsg delAreaAdmin(@PathVariable("ids") String ids){
-        if(userService.delAreaAdmin(ids)){
+    public ReturnMsg delAreaAdmin(@PathVariable("ids") String ids) {
+        if (userService.delAreaAdmin(ids)) {
             return ReturnMsg.success();
         }
         return ReturnMsg.fail();

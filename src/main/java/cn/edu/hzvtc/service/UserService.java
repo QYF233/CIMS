@@ -48,4 +48,6 @@ public interface UserService {
      * @return true、false
      */
     public boolean delAreaAdmin(String ids);
+
+
 }

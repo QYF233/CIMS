@@ -9,6 +9,7 @@
         <result column="user_operator_time" jdbcType="TIMESTAMP" property="userOperatorTime"/>
         <result column="user_type" jdbcType="INTEGER" property="userType"/>
         <result column="user_area_id" jdbcType="INTEGER" property="userAreaId"/>
+        <result column="user_del_state" jdbcType="INTEGER" property="userDelState"/>
     </resultMap>
     <!--登录map-->
     <resultMap id="LoginResultMap" type="cn.edu.hzvtc.pojo.User">
@@ -19,6 +20,7 @@
         <result column="user_operator_time" jdbcType="TIMESTAMP" property="userOperatorTime"/>
         <result column="user_type" jdbcType="INTEGER" property="userType"/>
         <result column="user_area_id" jdbcType="INTEGER" property="userAreaId"/>
+        <result column="user_del_state" jdbcType="INTEGER" property="userDelState"/>
         <discriminator javaType="INTEGER" column="user_type">
             <case value="2">
                 <collection property="area" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey"
@@ -39,21 +41,17 @@
         <result column="user_operator_time" jdbcType="TIMESTAMP" property="userOperatorTime"/>
         <result column="user_type" jdbcType="INTEGER" property="userType"/>
         <result column="user_area_id" jdbcType="INTEGER" property="userAreaId"/>
+        <result column="user_del_state" jdbcType="INTEGER" property="userDelState"/>
         <collection property="userOperator" select="cn.edu.hzvtc.dao.UserMapper.selectByPrimaryKey"
                     column="user_operator_id"/>
         <collection property="area" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey"
                     column="user_area_id"/>
     </resultMap>
-    <!--删除-->
-    <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        update sys_user
-        set user_del_state = 1
-        where id = #{id,jdbcType=INTEGER}
-  </update>
-<!--    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">-->
-<!--    delete from sys_user-->
-<!--    where id = #{id,jdbcType=INTEGER}-->
-<!--  </delete>-->
+
+    <!--    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">-->
+    <!--    delete from sys_user-->
+    <!--    where id = #{id,jdbcType=INTEGER}-->
+    <!--  </delete>-->
     <insert id="insert" parameterType="cn.edu.hzvtc.pojo.User">
     insert into sys_user (id, user_name, user_password, 
       user_operator_id, user_operator_time, user_type, 
@@ -77,11 +75,13 @@
     user_area_id
     from sys_user
     where id = #{id,jdbcType=INTEGER}
+    and user_del_state = 0
   </select>
     <select id="selectAll" resultMap="BaseResultMap">
     select id, user_name, user_password, user_operator_id, user_operator_time, user_type, 
     user_area_id
     from sys_user
+    where user_del_state = 0
   </select>
     <!-- 按照用户名查找密码 -->
     <select id="selectPwdByName" parameterType="java.lang.String" resultMap="LoginResultMap">
@@ -90,6 +90,7 @@
         user_area_id
         from sys_user
         where user_name = #{user_name,jdbcType=VARCHAR}
+        and user_del_state = 0
     </select>
     <!-- 按照用户名查找用户信息 -->
     <select id="selectUserByName" parameterType="java.lang.String" resultMap="LoginResultMap">
@@ -97,6 +98,7 @@
         user_area_id
         from sys_user
         where user_name = #{user_name,jdbcType=VARCHAR},user_password = #{user_password,jdbcType=VARCHAR}
+        and user_del_state = 0
     </select>
     <!--查询关联的操作人和所属区域信息-->
     <select id="selectAreaAdmins" resultMap="AreaAdminResultMap">
@@ -114,4 +116,10 @@
             #{id}
         </foreach>
     </update>
+    <!--删除-->
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        update sys_user
+        set user_del_state = 1
+        where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

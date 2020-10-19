@@ -26,5 +26,6 @@ public class Msg {
 
     private Date msgSendTime;
 
+    private Integer msgDelState;
 
 }

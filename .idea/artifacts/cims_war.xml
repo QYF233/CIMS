@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="cims:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>cims</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="cims.war">
+      <element id="artifact" artifact-name="cims:war exploded" />
+    </root>
+  </artifact>
+</component>

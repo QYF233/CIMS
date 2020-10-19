@@ -5,6 +5,8 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="unit_id" jdbcType="INTEGER" property="unitId" />
+    <result column="user_unit_del_state" jdbcType="INTEGER" property="userUnitDelState" />
+
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_user_unit
@@ -26,9 +28,24 @@
     select id, user_id, unit_id
     from sys_user_unit
     where id = #{id,jdbcType=INTEGER}
+    and user_unit_del_state = 0
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, user_id, unit_id
     from sys_user_unit
   </select>
+  <!--按user_id删除信息-->
+  <update id="deleteByUserKey" parameterType="cn.edu.hzvtc.pojo.UserUnit">
+    update sys_user_unit
+    set user_unit_del_state = 1
+    where user_id = #{user_id,jdbcType=INTEGER}
+  </update>
+  <!--批量删除-->
+  <update id="deleteByUserKeyList" parameterType="cn.edu.hzvtc.pojo.UserUnit">
+    update sys_user_unit
+    set user_unit_del_state = 1
+    <foreach collection="list" item="id" separator="," open="where user_id in (" close=")">
+      #{id,jdbcType=INTEGER}
+    </foreach>
+  </update>
 </mapper>

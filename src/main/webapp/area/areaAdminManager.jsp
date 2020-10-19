@@ -101,7 +101,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <%--<tr>
                 <td><input type="checkbox" name="" id="" value=""/></td>
                 <td>张三</td>
                 <td>浙江省 杭州市 杭州职业技术学院</td>
@@ -160,8 +160,6 @@
                         </button>
                     </div>
                 </td>
-
-
                 <td>
                     <div class="btn-group"></div>
                     <button class="btn btn-primary update_btn" data-toggle="modal" data-target="#editModal"
@@ -171,12 +169,10 @@
                     <button class="btn btn-danger delete_btn" delete_id="6"><span class="glyphicon glyphicon-remove"
                                                                                   aria-hidden="true">删除</span></button>
                 </td>
-
-
-            </tr>
+            </tr>--%>
             </tbody>
             <tfoot>
-            <tr>
+            <%--<tr>
                 <td class="tfoot row" colspan="6">
                     <div class="box">
                         <div class="left col-lg-4 text-left">
@@ -211,7 +207,7 @@
                         </div>
                     </div>
                 </td>
-            </tr>
+            </tr>--%>
             </tfoot>
         </table>
     </div>
@@ -351,8 +347,10 @@
     function build_page_nav(result) {
         $("#areaAdmins-table tfoot").empty();
         /*左边的操作按钮组*/
-        var addBtn = $("<button></button>").addClass("btn btn-default areaAdmin_add_btn").attr("data-toggle", "modal").attr("data-target", "#addModal").append($("<span></span>").addClass("glyphicon glyphicon-plus").attr("aria-hidden", "true")).append("添加");
-        var delAllBtn = $("<button></button>").addClass("btn btn-default areaAdmin_delete_all_btn").append($("<span></span>").addClass("glyphicon glyphicon-remove").attr("aria-hidden", "true")).append("删除");
+        var addBtn = $("<button></button>").addClass("btn btn-default areaAdmin_add_btn").attr("data-toggle", "modal").attr("data-target", "#addModal")
+            .append($("<span></span>").addClass("glyphicon glyphicon-plus").attr("aria-hidden", "true")).append("添加");
+        var delAllBtn = $("<button></button>").addClass("btn btn-default areaAdmin_delete_all_btn")
+            .append($("<span></span>").addClass("glyphicon glyphicon-remove").attr("aria-hidden", "true")).append("删除");
 
         var left = $("<div></div>").addClass("left col-lg-4 text-left").append($("<div class=\"btn-group\"></div>").append(addBtn).append(delAllBtn));
         var center = $("<div></div>").addClass("center col-lg-4 text-center");
@@ -442,9 +440,12 @@
             var userOperator = $("<td></td>").append(areaAdmin.userOperator.userName);
             var userOperatorTime = $("<td></td>").append(areaAdmin.userOperatorTime);
 
-            var updateBtn = $("<button></button>").addClass("btn btn-primary update_btn").attr("data-toggle", "modal").attr("data-target", "#editModal").attr("delete_id", areaAdmin.id).append($("<span></span>").addClass("glyphicon glyphicon-edit").attr("aria-hidden", "true")).append("修改");
-            var resetBtn = $("<button></button>").addClass("btn btn-lock reset_btn").attr("delete_id", areaAdmin.id).append($("<span></span>").addClass("glyphicon glyphicon-edit").attr("aria-hidden", "true")).append("重置密码");
-            var delBtn = $("<button></button>").addClass("btn btn-danger delete_btn").attr("delete_id", areaAdmin.id).append($("<span></span>").addClass("glyphicon glyphicon-remove").attr("aria-hidden", "true")).append("删除");
+            var updateBtn = $("<button></button>").addClass("btn btn-primary update_btn").attr("data-toggle", "modal").attr("data-target", "#editModal").attr("delete_id", areaAdmin.id)
+                .append($("<span></span>").addClass("glyphicon glyphicon-edit").attr("aria-hidden", "true")).append("修改");
+            var resetBtn = $("<button></button>").addClass("btn btn-lock reset_btn").attr("delete_id", areaAdmin.id)
+                .append($("<span></span>").addClass("glyphicon glyphicon-edit").attr("aria-hidden", "true")).append("重置密码");
+            var delBtn = $("<button></button>").addClass("btn btn-danger delete_btn").attr("delete_id", areaAdmin.id)
+                .append($("<span></span>").addClass("glyphicon glyphicon-remove").attr("aria-hidden", "true")).append("删除");
 
             var operation = $("<td></td>").append($("<div class='btn-group'></div>").append(updateBtn).append(resetBtn).append(delBtn));
 
@@ -495,7 +496,6 @@
         var flag = $(".check_item").length == $(".check_item:checked").length;
         $("#check_all").prop("checked", flag)
     })
-
     /*删除院校管理员*/
     $(document).on("click", ".delete_btn", function () {
         var userName = $(this).parents("tr").find("td:eq(1)").text();

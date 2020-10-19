@@ -17,5 +17,5 @@ public class UserUnit {
 
     private Integer unitId;
 
-
+    private Integer userUnitDelState;
 }

@@ -74,10 +74,12 @@
     select id, area_name, area_type, area_parent_id, area_sort_num, area_del_state
     from sys_area
     where id = #{id,jdbcType=INTEGER}
+    and area_del_state = 0
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, area_name, area_type, area_parent_id, area_sort_num, area_del_state
     from sys_area
+    where area_del_state = 0
   </select>
   <!--查找树-->
   <select id="selectAllForTree" resultMap="ChildrenResultMap">
@@ -90,7 +92,7 @@
     <if test="parentId != 0">
       area_parent_id = #{parentId,jdbcType=INTEGER}
     </if>
-    and area_del_state != 1
+    and area_del_state = 0
     order by area_sort_num
   </select>
 

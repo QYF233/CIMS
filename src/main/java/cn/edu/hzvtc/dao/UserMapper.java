@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
+
     int deleteByPrimaryKeyList(List<Integer> ids);
+
     int insert(User record);
 
     User selectByPrimaryKey(Integer id);
@@ -16,6 +18,8 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User selectPwdByName(String name);
+
     User selectUserByName(String name);
+
     List<User> selectAreaAdmins();
 }

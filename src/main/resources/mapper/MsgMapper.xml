@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.hzvtc.dao.MsgMapper">
-  <resultMap id="BaseResultMap" type="cn.edu.hzvtc.pojo.Msg">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="msg_title" jdbcType="VARCHAR" property="msgTitle" />
-    <result column="msd_content" jdbcType="VARCHAR" property="msdContent" />
-    <result column="msg_type" jdbcType="INTEGER" property="msgType" />
-    <result column="msg_send_user_id" jdbcType="INTEGER" property="msgSendUserId" />
-    <result column="msg_send_time" jdbcType="TIMESTAMP" property="msgSendTime" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <resultMap id="BaseResultMap" type="cn.edu.hzvtc.pojo.Msg">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="msg_title" jdbcType="VARCHAR" property="msgTitle"/>
+        <result column="msd_content" jdbcType="VARCHAR" property="msdContent"/>
+        <result column="msg_type" jdbcType="INTEGER" property="msgType"/>
+        <result column="msg_send_user_id" jdbcType="INTEGER" property="msgSendUserId"/>
+        <result column="msg_send_time" jdbcType="TIMESTAMP" property="msgSendTime"/>
+        <result column="msg_del_state" jdbcType="INTEGER" property="msgDelState"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from msg_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.edu.hzvtc.pojo.Msg">
+    <insert id="insert" parameterType="cn.edu.hzvtc.pojo.Msg">
     insert into msg_info (id, msg_title, msd_content, 
       msg_type, msg_send_user_id, msg_send_time
       )
@@ -21,7 +22,7 @@
       #{msgType,jdbcType=INTEGER}, #{msgSendUserId,jdbcType=INTEGER}, #{msgSendTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.pojo.Msg">
+    <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.pojo.Msg">
     update msg_info
     set msg_title = #{msgTitle,jdbcType=VARCHAR},
       msd_content = #{msdContent,jdbcType=VARCHAR},
@@ -30,13 +31,27 @@
       msg_send_time = #{msgSendTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, msg_title, msd_content, msg_type, msg_send_user_id, msg_send_time
     from msg_info
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectAll" resultMap="BaseResultMap">
     select id, msg_title, msd_content, msg_type, msg_send_user_id, msg_send_time
     from msg_info
   </select>
+    <!--按msg_send_user_id删除信息-->
+    <update id="deleteByUserKey" parameterType="cn.edu.hzvtc.pojo.Msg">
+    update msg_info
+    set msg_del_state = 1
+    where msg_send_user_id = #{msgSendUserId,jdbcType=INTEGER}
+  </update>
+    <!--批量删除-->
+    <update id="deleteByUserKeyList" parameterType="cn.edu.hzvtc.pojo.Msg">
+        update msg_info
+        set msg_del_state = 1
+        <foreach collection="list" item="id" separator="," open="where msg_send_user_id in (" close=")">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </update>
 </mapper>

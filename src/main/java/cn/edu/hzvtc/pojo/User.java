@@ -31,6 +31,8 @@ public class User {
 
     private Integer userAreaId;
 
+    private Integer userDelState;
+
     private User userOperator;
 
     private Area area;

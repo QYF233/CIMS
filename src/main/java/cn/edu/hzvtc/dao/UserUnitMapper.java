@@ -1,6 +1,7 @@
 package cn.edu.hzvtc.dao;
 
 import cn.edu.hzvtc.pojo.UserUnit;
+
 import java.util.List;
 
 public interface UserUnitMapper {
@@ -13,4 +14,8 @@ public interface UserUnitMapper {
     List<UserUnit> selectAll();
 
     int updateByPrimaryKey(UserUnit record);
+
+    int deleteByUserKey(Integer userId);
+
+    int deleteByUserKeyList(List<Integer> ids);
 }
