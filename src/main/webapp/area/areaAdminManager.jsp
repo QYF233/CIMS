@@ -220,7 +220,8 @@
 <!-- -------------------模态框---------------------- -->
 <!-- ----------------------------------------------- -->
 
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+<div class="modal fade" id="areaAdmin_add_modal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -228,51 +229,57 @@
                 <h4 class="modal-title" id="addModalLabel">新增院校管理员</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="" method="">
+                <form class="form-horizontal" action="" method="" id="areaAdmin_add_frm">
                     <div class="form-group">
                         <label class="col-lg-2 control-label">用户名</label>
                         <div class="col-lg-10">
-                            <input class="form-control" type="text" name="" id="" value=""/>
+                            <input class="form-control" type="text" name="userName" id="userName_add_modal" value=""
+                                   placeholder="请输入用户名"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label">密码</label>
                         <div class="col-lg-10">
-                            <input class="form-control" type="password" name="" id="" value=""/>
+                            <input class="form-control" type="password" name="userPassword" id="password_add_modal"
+                                   placeholder="请输入密码"
+                                   value=""/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label">省</label>
                         <div class="col-lg-10">
-                            <select class="selectpicker" id="type" title="请选择省" data-width="100%">
-                                <option>1</option>
-                                <option>2</option>
+                            <select class="selectpicker" id="provinceSelect_add_modal" title="请选择省" data-width="100%">
+
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label">市</label>
                         <div class="col-lg-10">
-                            <select class="selectpicker" id="type" title="请选择市" data-width="100%">
-                                <option>1</option>
-                                <option>2</option>
+                            <select class="selectpicker" id="citySelect_add_modal" title="请选择市" data-width="100%">
+
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label">院校</label>
                         <div class="col-lg-10">
-                            <select class="selectpicker" id="type" title="请选择院校" data-width="100%">
-                                <option>1</option>
-                                <option>2</option>
+                            <select class="selectpicker" id="schoolSelect_add_modal" name="userAreaId" title="请选择院校"
+                                    data-width="100%">
                             </select>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="help-block col-lg-10 col-lg-offset-2" style="color: red">
+
+                        </div>
+                    </div>
+
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-primary" id="areaAdmin_save_btn">保存</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
@@ -294,11 +301,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">省</label>
+                        <label class="col-lg-2 control-label" for="">省</label>
                         <div class="col-lg-10">
                             <select class="selectpicker" id="" title="请选择省" data-width="100%">
-                                <option>1</option>
-                                <option>2</option>
+
                             </select>
                         </div>
                     </div>
@@ -306,8 +312,6 @@
                         <label class="col-lg-2 control-label">市</label>
                         <div class="col-lg-10">
                             <select class="selectpicker" id="" title="请选择市" data-width="100%">
-                                <option>1</option>
-                                <option>2</option>
                             </select>
                         </div>
                     </div>
@@ -315,8 +319,6 @@
                         <label class="col-lg-2 control-label">院校</label>
                         <div class="col-lg-10">
                             <select class="selectpicker" id="" title="请选择院校" data-width="100%">
-                                <option>1</option>
-                                <option>2</option>
                             </select>
                         </div>
                     </div>
@@ -347,9 +349,9 @@
     function build_page_nav(result) {
         $("#areaAdmins-table tfoot").empty();
         /*左边的操作按钮组*/
-        var addBtn = $("<button></button>").addClass("btn btn-default areaAdmin_add_btn").attr("data-toggle", "modal").attr("data-target", "#addModal")
+        var addBtn = $("<button></button>").addClass("btn btn-default").attr("id", "areaAdmin_add_btn").attr("data-toggle", "modal").attr("data-target", "#areaAdmin_add_modal")
             .append($("<span></span>").addClass("glyphicon glyphicon-plus").attr("aria-hidden", "true")).append("添加");
-        var delAllBtn = $("<button></button>").addClass("btn btn-default areaAdmin_delete_all_btn")
+        var delAllBtn = $("<button></button>").addClass("btn btn-default").attr("id", "areaAdmin_delete_all_btn")
             .append($("<span></span>").addClass("glyphicon glyphicon-remove").attr("aria-hidden", "true")).append("删除");
 
         var left = $("<div></div>").addClass("left col-lg-4 text-left").append($("<div class=\"btn-group\"></div>").append(addBtn).append(delAllBtn));
@@ -467,17 +469,22 @@
             },
             success: function (result) {
                 if (result.code == 100) {
-                    console.log(result)
-                    //查询成功，解析并显示数据
-                    //1、显示院校管理员信息
-                    build_areaAdmins_table(result);
-                    //显示分页信息
-                    build_page_nav(result);
-                    currPage = result.extend.pageInfo.pageNum;
-                    $("#pn").val(currPage);
-                    $("#checkAll").prop("checked", false);
+                    if(result.extend.pageInfo.total==0){
+                        $("#areaAdmins-table tfoot").empty();
+                        $("#areaAdmins-table tbody").empty();
+                        $("#areaAdmins-table tbody").append("<tr><td colspan='6'>数据为空...</td></tr>");
+                    }else{
+                        //查询成功，解析并显示数据
+                        //1、显示院校管理员信息
+                        build_areaAdmins_table(result);
+                        //显示分页信息
+                        build_page_nav(result);
+                        currPage = result.extend.pageInfo.pageNum;
+                        $("#pn").val(currPage);
+                        $("#checkAll").prop("checked", false);
+                    }
                 } else {
-
+                    alert("获取信息失败")
                 }
             },
             error: function () {
@@ -514,14 +521,14 @@
         }
     })
     /*删除所有选中管理员*/
-    $(document).on("click", ".areaAdmin_delete_all_btn", function () {
-        var userName = "", ids = "";
+    $(document).on("click", "#areaAdmin_delete_all_btn", function () {
+        var userNames = "", ids = "";
         $.each($(".check_item:checked"), function () {
-            userName = userName + $(this).parents("tr").find("td:eq(1)").text() + ",";
+            userNames = userNames + $(this).parents("tr").find("td:eq(1)").text() + ",";
             ids = ids + $(this).parents("tr").find("td:eq(5)").find(".delete_btn").attr("delete_id") + "-";
         })
-        userNames = userName.substring(0,userName.length-1);
-        ids = ids.substring(0,ids.length-1);
+        userNames = userNames.substring(0, userNames.length - 1);
+        ids = ids.substring(0, ids.length - 1);
         if (confirm("确认删除[" + userNames + "]吗?")) {
             $.ajax({
                 url: "../user/areaAdmin/" + ids,
@@ -531,7 +538,7 @@
                     alert(result.msg);
                     if (result.code == 100) {
                         to_page(1);
-                        $("#check_all").prop("checked",false);
+                        $("#check_all").prop("checked", false);
                     }
                 }
             });
@@ -539,15 +546,114 @@
     })
 
     /*新增管理员*/
-    function getAreaList(element,txt,parentId,selText) {
+    function getAreaList(element, txt, parentId, selText) {
         var url = "list";
-        if(parentId != null){
+        if (parentId != null) {
             url = url + "?parentId=" + parentId;
         }
         $.ajax({
-
+            url: url,
+            type: "GET",
+            dataType: "json",
+            success: function (result) {
+                console.log(result)
+                $(element).empty();
+                if (txt != "") {
+                    optionElement = $("<option></option>").append(txt).attr({"value": 0});
+                    optionElement.append($(element));
+                }
+                $.each(result.extend.areaList, function (index, area) {
+                    optionElement = $("<option></option>").append(area.areaName).attr({"value": area.id});
+                    optionElement.appendTo($(element));
+                });
+                $(element).removeAttr("disabled");
+                $(element).selectpicker("refresh");
+                if (selText != "") {
+                    $(element).next().prop("title", selText);
+                    $(element).next().find("div.filter-option-inner-inner").html(selText);
+                    $(element).next().removeClass("bs-placeholder");
+                }
+            }
         })
+    }
 
+    $(document).on("click", "#areaAdmin_add_btn", function () {
+        getAreaList("#provinceSelect_add_modal", "", "", "");
+        $("#areaAdmin_add_modal").modal({
+            "backdrop": "static"
+        });
+    });
+    /*省、市、院校联动*/
+    $("#provinceSelect_add_modal").on("changed.bs.select", function () {
+        $("#citySelect_add_modal").empty();
+        $("#citySelect_add_modal").attr("disabled", "disabled");
+        $("#citySelect_add_modal").selectpicker("refresh");
+        $("#schoolSelect_add_modal").empty();
+        $("#schoolSelect_add_modal").attr("disabled", "disabled");
+        $("#schoolSelect_add_modal").selectpicker("refresh");
+        getAreaList("#citySelect_add_modal", "", $(this).val(), "");
+    });
+    $("#citySelect_add_modal").on("changed.bs.select", function () {
+        $("#schoolSelect_add_modal").empty();
+        $("#schoolSelect_add_modal").attr("disabled", "disabled");
+        $("#schoolSelect_add_modal").selectpicker("refresh");
+        if ($(this).val() > 0) {
+            getAreaList("#schoolSelect_add_modal", "", $(this).val(), "");
+        }
+    });
+    /*模态框隐藏，重置窗体*/
+    $(document).on('hidden.bs.modal', '.modal', function () {
+        $("#areaAdmin_add_modal form")[0].reset();
+        $("#areaAdmin_add_modal form").find("*").removeClass("has-error has-success");
+        $("#areaAdmin_add_modal form").find(".help-block").text("");
+        $(".modal .selectpicker").empty();
+        $(".modal .selectpicker").attr("disabled", "disabled");
+        $(".modal .selectpicker").selectpicker("refresh");
+    });
+    /*新增院校管理员模态框保存操作*/
+    $("#areaAdmin_save_btn").click(function () {
+        /*数据校验*/
+        if (valid_modal()) {
+            /*新增院校管理员的异步请求*/
+            $.ajax({
+                url: "../user/areaAdmin/",
+                data: $("#areaAdmin_add_frm").serialize(),
+                type: "post",
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == 100) {
+                        $("#areaAdmin_add_modal").modal('hide');
+                        alert("院校管理员添加成功！");
+                        to_page(1);
+                        $("#check_all").prop("checked", false);
+                    } else {
+                        //删除失败
+                        alert(result.msg);
+                    }
+                }
+            })
+        }
+    })
+
+    function valid_modal() {
+        var flag = true;
+        var userName = $("#userName_add_modal").val();
+        var password = $("#password_add_modal").val();
+        var school = $("#schoolSelect_add_modal").val();
+        if (userName == '') {
+            $("#userName_add_modal").parent().addClass("has-error");
+            $(".help-block").text("用户名不能为空");
+            flag = false;
+        } else if (password == '') {
+            $("#password_add_modal").parent().addClass("has-error");
+            $(".help-block").text("密码不能为空");
+            flag = false;
+        } else if (school == '') {
+            $("#schoolSelect_add_modal").parent().addClass("has-error");
+            $(".help-block").text("院校不能为空");
+            flag = false;
+        }
+        return flag;
     }
 </script>
 

@@ -50,4 +50,10 @@ public interface UserService {
     public boolean delAreaAdmin(String ids);
 
 
+    /**
+     * 添加院校管理员
+     * @param user
+     * @return
+     */
+    public boolean addAreaAdmin(User user);
 }

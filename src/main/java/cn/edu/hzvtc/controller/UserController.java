@@ -7,10 +7,14 @@ import cn.edu.hzvtc.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -144,6 +148,30 @@ public class UserController {
         if (userService.delAreaAdmin(ids)) {
             return ReturnMsg.success();
         }
+        return ReturnMsg.fail();
+    }
+
+    /**
+     * 新增院校管理员
+     * @param user
+     * @param result
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/areaAdmin", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnMsg save(@Valid User user, BindingResult result, HttpSession session) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        user.setUserOperatorId(loginUser.getId());
+        user.setUserOperatorTime(new Date());
+        user.setUserType(2);
+        user.setUserDelState(0);
+
+        System.out.println(user.toString());
+        if(userService.addAreaAdmin(user)){
+            return ReturnMsg.success();
+        }
+
         return ReturnMsg.fail();
     }
 

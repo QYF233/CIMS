@@ -2,6 +2,7 @@ package cn.edu.hzvtc.service;
 
 import cn.edu.hzvtc.dao.AreaMapper;
 import cn.edu.hzvtc.pojo.Area;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,4 +28,6 @@ public interface AreaService {
     public int updateSchool(Area area);
 
 //    public int deleteSchool(int areaId);
+
+//    public List<Area> getList(int parentId);
 }

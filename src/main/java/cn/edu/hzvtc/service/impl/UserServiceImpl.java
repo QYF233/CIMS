@@ -90,4 +90,13 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    /**
+     * 添加院校管理员
+     * @param user
+     * @return
+     */
+    @Override
+    public boolean addAreaAdmin(User user) {
+        return userMapper.insert(user) > 0;
+    }
 }

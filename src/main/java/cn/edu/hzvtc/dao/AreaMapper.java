@@ -1,6 +1,8 @@
 package cn.edu.hzvtc.dao;
 
 import cn.edu.hzvtc.pojo.Area;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface AreaMapper {
@@ -17,4 +19,6 @@ public interface AreaMapper {
     List<Area> selectAllForTree(int parentId);
 
 //    int deleteByParentId(Integer id);
+
+//    List<Area> selectByType(int parentId);
 }

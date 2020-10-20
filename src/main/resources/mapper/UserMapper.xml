@@ -52,6 +52,7 @@
     <!--    delete from sys_user-->
     <!--    where id = #{id,jdbcType=INTEGER}-->
     <!--  </delete>-->
+    <!--添加院校管理员-->
     <insert id="insert" parameterType="cn.edu.hzvtc.pojo.User">
     insert into sys_user (id, user_name, user_password, 
       user_operator_id, user_operator_time, user_type, 

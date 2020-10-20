@@ -6,6 +6,7 @@ import cn.edu.hzvtc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,9 +49,4 @@ public class AreaServiceImpl implements AreaService {
         return areaMapper.updateByPrimaryKey(area);
     }
 
-//    @Override
-//    public int deleteSchool(int areaId) {
-//        areaMapper.deleteByParentId(areaId);
-//        return areaMapper.deleteByPrimaryKey(areaId);
-//    }
 }

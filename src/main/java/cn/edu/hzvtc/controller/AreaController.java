@@ -6,7 +6,9 @@ import cn.edu.hzvtc.service.AreaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +37,7 @@ public class AreaController {
 
     /**
      * 查询树列表
+     *
      * @return
      */
     @RequestMapping("/tree")
@@ -46,6 +49,7 @@ public class AreaController {
 
     /**
      * 添加
+     *
      * @param area 添加的院校
      * @return
      */
@@ -62,6 +66,7 @@ public class AreaController {
 
     /**
      * 修改
+     *
      * @param area 修改的院校
      * @return
      */
@@ -78,6 +83,7 @@ public class AreaController {
 
     /**
      * 删除
+     *
      * @param id 院校id
      * @return
      */
@@ -93,6 +99,21 @@ public class AreaController {
         }
     }
 
-
+    /**
+     * 获取院校列表
+     * @param parentId 父级院校id
+     * @return
+     */
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnMsg listByParentId(@RequestParam Integer parentId) {
+        List<Area> areas;
+        if (parentId == null) {
+            areas = areaService.getTree(0);
+        } else {
+            areas = areaService.getTree(parentId);
+        }
+        return ReturnMsg.success().add("areaList", areas);
+    }
 
 }

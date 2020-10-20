@@ -1,67 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.hzvtc.dao.AreaMapper">
-  <resultMap id="BaseResultMap" type="cn.edu.hzvtc.pojo.Area">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
-    <result column="area_type" jdbcType="INTEGER" property="areaType" />
-    <result column="area_parent_id" jdbcType="INTEGER" property="areaParentId" />
-    <result column="area_sort_num" jdbcType="INTEGER" property="areaSortNum" />
-    <result column="area_del_state" jdbcType="INTEGER" property="areaDelState" />
-  </resultMap>
-  <!--登录map-->
-  <resultMap id="LoginResultMap" type="cn.edu.hzvtc.pojo.Area">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
-    <result column="area_type" jdbcType="INTEGER" property="areaType" />
-    <result column="area_parent_id" jdbcType="INTEGER" property="areaParentId" />
-    <result column="area_sort_num" jdbcType="INTEGER" property="areaSortNum" />
-    <result column="area_del_state" jdbcType="INTEGER" property="areaDelState" />
-    <discriminator javaType="INTEGER" column="area_type">
-      <case value="2">
-        <collection property="parentArea" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey" column="area_parent_id"/>
-      </case><!--院校管理员-->
-      <case value="3">
-        <collection property="parentArea" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey" column="area_parent_id"/>
-      </case><!--院校人员-->
-    </discriminator>
-  </resultMap>
+    <resultMap id="BaseResultMap" type="cn.edu.hzvtc.pojo.Area">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="area_name" jdbcType="VARCHAR" property="areaName"/>
+        <result column="area_type" jdbcType="INTEGER" property="areaType"/>
+        <result column="area_parent_id" jdbcType="INTEGER" property="areaParentId"/>
+        <result column="area_sort_num" jdbcType="INTEGER" property="areaSortNum"/>
+        <result column="area_del_state" jdbcType="INTEGER" property="areaDelState"/>
+    </resultMap>
+    <!--登录map-->
+    <resultMap id="LoginResultMap" type="cn.edu.hzvtc.pojo.Area">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="area_name" jdbcType="VARCHAR" property="areaName"/>
+        <result column="area_type" jdbcType="INTEGER" property="areaType"/>
+        <result column="area_parent_id" jdbcType="INTEGER" property="areaParentId"/>
+        <result column="area_sort_num" jdbcType="INTEGER" property="areaSortNum"/>
+        <result column="area_del_state" jdbcType="INTEGER" property="areaDelState"/>
+        <discriminator javaType="INTEGER" column="area_type">
+            <case value="2">
+                <collection property="parentArea" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey"
+                            column="area_parent_id"/>
+            </case><!--院校管理员-->
+            <case value="3">
+                <collection property="parentArea" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey"
+                            column="area_parent_id"/>
+            </case><!--院校人员-->
+        </discriminator>
+    </resultMap>
 
-  <!---->
-  <resultMap id="ChildrenResultMap" type="cn.edu.hzvtc.pojo.Area">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
-    <result column="area_name" jdbcType="VARCHAR" property="text" />
-    <result column="area_type" jdbcType="INTEGER" property="areaType" />
-    <result column="area_parent_id" jdbcType="INTEGER" property="areaParentId" />
-    <result column="area_sort_num" jdbcType="INTEGER" property="areaSortNum" />
-    <result column="area_del_state" jdbcType="INTEGER" property="areaDelState" />
-    <discriminator javaType="INTEGER" column="area_type">
-      <case value="1">
-        <collection property="nodes" select="cn.edu.hzvtc.dao.AreaMapper.selectAllForTree" column="id"/>
-      </case>
-      <case value="2">
-        <collection property="nodes" select="cn.edu.hzvtc.dao.AreaMapper.selectAllForTree" column="id"/>
-      </case>
-    </discriminator>
-  </resultMap>
-  <!--删除-->
-<!--  <delete id="deleteByParentId" parameterType="java.lang.Integer">
-    delete from sys_area
-    where area_parent_id = #{id,jdbcType=INTEGER}
-  </delete>-->
-  <!--删除-->
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!---->
+    <resultMap id="ChildrenResultMap" type="cn.edu.hzvtc.pojo.Area">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="area_name" jdbcType="VARCHAR" property="areaName"/>
+        <result column="area_name" jdbcType="VARCHAR" property="text"/>
+        <result column="area_type" jdbcType="INTEGER" property="areaType"/>
+        <result column="area_parent_id" jdbcType="INTEGER" property="areaParentId"/>
+        <result column="area_sort_num" jdbcType="INTEGER" property="areaSortNum"/>
+        <result column="area_del_state" jdbcType="INTEGER" property="areaDelState"/>
+        <discriminator javaType="INTEGER" column="area_type">
+            <case value="1">
+                <collection property="nodes" select="cn.edu.hzvtc.dao.AreaMapper.selectAllForTree" column="id"/>
+            </case>
+            <case value="2">
+                <collection property="nodes" select="cn.edu.hzvtc.dao.AreaMapper.selectAllForTree" column="id"/>
+            </case>
+        </discriminator>
+    </resultMap>
+    <!--删除-->
+    <!--  <delete id="deleteByParentId" parameterType="java.lang.Integer">
+        delete from sys_area
+        where area_parent_id = #{id,jdbcType=INTEGER}
+      </delete>-->
+    <!--删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_area
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.edu.hzvtc.pojo.Area">
+    <insert id="insert" parameterType="cn.edu.hzvtc.pojo.Area">
     insert into sys_area (id, area_name, area_type, 
       area_parent_id, area_sort_num)
     values (#{id,jdbcType=INTEGER}, #{areaName,jdbcType=VARCHAR}, #{areaType,jdbcType=INTEGER}, 
       #{areaParentId,jdbcType=INTEGER}, #{areaSortNum,jdbcType=INTEGER})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.pojo.Area">
+    <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.pojo.Area">
     update sys_area
     set area_name = #{areaName,jdbcType=VARCHAR},
       area_type = #{areaType,jdbcType=INTEGER},
@@ -70,30 +72,30 @@
       area_del_state = #{areaDelState,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="LoginResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="LoginResultMap">
     select id, area_name, area_type, area_parent_id, area_sort_num, area_del_state
     from sys_area
     where id = #{id,jdbcType=INTEGER}
     and area_del_state = 0
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectAll" resultMap="BaseResultMap">
     select id, area_name, area_type, area_parent_id, area_sort_num, area_del_state
     from sys_area
     where area_del_state = 0
   </select>
-  <!--查找树-->
-  <select id="selectAllForTree" resultMap="ChildrenResultMap">
-    select id, area_name, area_type, area_parent_id, area_sort_num, area_del_state
-    from sys_area
-    where
-    <if test="parentId == 0">
-      area_parent_id is NULL
-    </if>
-    <if test="parentId != 0">
-      area_parent_id = #{parentId,jdbcType=INTEGER}
-    </if>
-    and area_del_state = 0
-    order by area_sort_num
-  </select>
+    <!--查找树-->
+    <select id="selectAllForTree" resultMap="ChildrenResultMap">
+        select id, area_name, area_type, area_parent_id, area_sort_num, area_del_state
+        from sys_area
+        where
+        <if test="parentId == 0">
+            area_parent_id is NULL
+        </if>
+        <if test="parentId != 0">
+            area_parent_id = #{parentId,jdbcType=INTEGER}
+        </if>
+        and area_del_state = 0
+        order by area_sort_num
+    </select>
 
 </mapper>
