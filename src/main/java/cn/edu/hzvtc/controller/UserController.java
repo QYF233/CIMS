@@ -9,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.DigestUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,13 +47,13 @@ public class UserController {
         if (userName == null || userPassword == null) {
             return ReturnMsg.fail();
         }
-
+        String pwd = DigestUtils.md5DigestAsHex(userPassword.getBytes());
         //从数据库中获取用户名和密码后进行判断
-        User loginUser = userService.login(userName, userPassword);
+        User loginUser = userService.login(userName, pwd);
 
         //登录成功
         if (loginUser != null) {
-            if (loginUser.getUserPassword().equals(userPassword)) {
+            if (loginUser.getUserPassword().equals(pwd)) {
                 session.setAttribute("loginUser", loginUser);
                 System.out.println(session.getId());
 
@@ -69,11 +70,11 @@ public class UserController {
                 return returnMsg;
             } else {
                 /*密码错误*/
-                return ReturnMsg.fail().add("fieldErrors", loginUser);
+                return ReturnMsg.fail().add("fieldErrors", "密码错误");
             }
         } else {
             /*用户不存在*/
-            return ReturnMsg.fail();
+            return ReturnMsg.fail().add("fieldErrors", "用户不存在");
         }
     }
 
@@ -152,7 +153,24 @@ public class UserController {
     }
 
     /**
+     * 修改前获取用户信息
+     *
+     * @param id 查询的用户id
+     * @return
+     */
+    @RequestMapping(value = "/areaAdmin", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnMsg getAreaAdmin(@RequestParam(value = "id") Integer id) {
+        User areaAdmin = userService.getUserById(id);
+        if (areaAdmin != null) {
+            return ReturnMsg.success().add("areaAdmin", areaAdmin);
+        }
+        return ReturnMsg.fail();
+    }
+
+    /**
      * 新增院校管理员
+     *
      * @param user
      * @param result
      * @param session
@@ -166,13 +184,62 @@ public class UserController {
         user.setUserOperatorTime(new Date());
         user.setUserType(2);
         user.setUserDelState(0);
-
+        String pwd = DigestUtils.md5DigestAsHex(user.getUserPassword().getBytes());
+        user.setUserPassword(pwd);
         System.out.println(user.toString());
-        if(userService.addAreaAdmin(user)){
+        if (userService.addAreaAdmin(user)) {
             return ReturnMsg.success();
         }
 
         return ReturnMsg.fail();
+    }
+
+    /**
+     * 修改院校管理员信息
+     *
+     * @param areaAdminId 管理员id
+     * @param user        修改信息
+     * @param result
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/areaAdmin/{areaAdminId}", method = RequestMethod.PUT)
+    @ResponseBody
+    public ReturnMsg update(@PathVariable("areaAdminId") Integer areaAdminId, @Valid User user, BindingResult result, HttpSession session) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        user.setId(areaAdminId);
+        user.setUserOperatorId(loginUser.getId());
+        user.setUserOperatorTime(new Date());
+        user.setUserType(2);
+        user.setUserDelState(0);
+        System.out.println(areaAdminId + " 需要修改：" + user.toString());
+        if (userService.modifyAreaAdmin(user)) {
+            return ReturnMsg.success();
+        }
+        return ReturnMsg.fail();
+    }
+
+    @RequestMapping(value = "/validName", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnMsg validName(@RequestParam(value = "username") String username) {
+        User user = userService.getUserByUsername(username);
+        if (user != null) {
+            return ReturnMsg.success().add("user", user);
+        } else {
+            return ReturnMsg.fail().add("fieldErrors", "用户不存在");
+        }
+    }
+
+    @RequestMapping(value = "/passwordReset", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnMsg passwordReset(@RequestParam(value = "id") Integer id) {
+        String pwd = DigestUtils.md5DigestAsHex("123456".getBytes());
+        System.out.println();
+        if (userService.passwordReset(id,pwd)) {
+            return ReturnMsg.success();
+        } else {
+            return ReturnMsg.fail();
+        }
     }
 
 }

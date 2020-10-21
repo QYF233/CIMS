@@ -22,17 +22,17 @@ public interface UserService {
 
     /**
      * 用获取用户
-     *
-     * @return 登录用户
+     * @param username 用户姓名
+     * @return
      */
-    public User getUser();
+    public User getUserByUsername(String username);
 
     /**
-     * 用获取用户列表
-     *
-     * @return 用户列表
+     * 用获取用户
+     * @param id 用户id
+     * @return
      */
-    public List<User> getUserList();
+    public User getUserById(Integer id);
 
     /**
      * 获取院校管理员列表
@@ -56,4 +56,8 @@ public interface UserService {
      * @return
      */
     public boolean addAreaAdmin(User user);
+
+    public boolean modifyAreaAdmin(User user);
+
+    public boolean passwordReset(Integer id,String pwd);
 }

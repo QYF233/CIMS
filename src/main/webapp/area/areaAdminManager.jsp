@@ -16,11 +16,6 @@
     <!-- 自定义全局样式 -->
     <link rel="stylesheet" href="../commons/css/me.css">
 
-    <style>
-        .jumbotron {
-            margin-top: 50px;
-        }
-    </style>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -51,20 +46,20 @@
         <form action="" method="post">
             <div class="header">
                 <div class="col-lg-3">
-                    <label for="">省：</label>
-                    <select class="selectpicker" data-width="80%" title="请选择省份">
+                    <label for="provinceSelect">省：</label>
+                    <select class="selectpicker" id="provinceSelect" data-width="80%" title="请选择省份">
                         <option>Mustard</option>
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <label for="">市：</label>
-                    <select class="selectpicker" data-width="80%" title="请选择市">
+                    <label for="citySelect">市：</label>
+                    <select class="selectpicker" id="citySelect" data-width="80%" title="请选择市">
                         <option>Mustard</option>
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <label for="">院校：</label>
-                    <select class="selectpicker" data-width="80%" title="请选择院校">
+                    <label for="schoolSelect">院校：</label>
+                    <select class="selectpicker" id="schoolSelect" data-width="80%" title="请选择院校">
                         <option>Mustard</option>
                     </select>
                 </div>
@@ -101,113 +96,8 @@
             </tr>
             </thead>
             <tbody>
-            <%--<tr>
-                <td><input type="checkbox" name="" id="" value=""/></td>
-                <td>张三</td>
-                <td>浙江省 杭州市 杭州职业技术学院</td>
-                <td>admin</td>
-                <td>2020-9-16 17:14</td>
-                <td>
-                    <div class="btn-group">
-                        <button type="button" class="btn  btn-primary" data-toggle="modal" data-target="#editModal">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>修改
-                        </button>
-                        <button type="button" class="btn  btn-default" style="background-color:#D4D4D4">
-                            <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>重置密码
-                        </button>
-                        <button type="button" class="btn  btn-danger">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" name="" id="" value=""/></td>
-                <td>张三</td>
-                <td>浙江省 杭州市 杭州职业技术学院</td>
-                <td>admin</td>
-                <td>2020-9-16 17:14</td>
-                <td>
-                    <div class="btn-group">
-                        <button type="button" class="btn  btn-primary" data-toggle="modal" data-target="#editModal">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>修改
-                        </button>
-                        <button type="button" class="btn  btn-default" style="background-color:#D4D4D4">
-                            <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>重置密码
-                        </button>
-                        <button type="button" class="btn  btn-danger">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" name="" id="" value=""/></td>
-                <td>张三</td>
-                <td>浙江省 杭州市 杭州职业技术学院</td>
-                <td>admin</td>
-                <td>2020-9-16 17:14</td>
-                <td>
-                    <div class="btn-group">
-                        <button type="button" class="btn  btn-primary" data-toggle="modal" data-target="#editModal">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>修改
-                        </button>
-                        <button type="button" class="btn  btn-default" style="background-color:#D4D4D4">
-                            <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>重置密码
-                        </button>
-                        <button type="button" class="btn  btn-danger">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-                        </button>
-                    </div>
-                </td>
-                <td>
-                    <div class="btn-group"></div>
-                    <button class="btn btn-primary update_btn" data-toggle="modal" data-target="#editModal"
-                            delete_id="6"><span class="glyphicon glyphicon-edit" aria-hidden="true">修改</span></button>
-                    <button class="btn btn-lock reset_btn" delete_id="6"><span class="glyphicon glyphicon-edit"
-                                                                               aria-hidden="true">重置</span></button>
-                    <button class="btn btn-danger delete_btn" delete_id="6"><span class="glyphicon glyphicon-remove"
-                                                                                  aria-hidden="true">删除</span></button>
-                </td>
-            </tr>--%>
             </tbody>
             <tfoot>
-            <%--<tr>
-                <td class="tfoot row" colspan="6">
-                    <div class="box">
-                        <div class="left col-lg-4 text-left">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default" data-toggle="modal"
-                                        data-target="#addModal">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
-                                </button>
-                                <button type="button" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-                                </button>
-                            </div>
-                        </div>
-                        <div class="center col-lg-4 text-center">
-                            <ul class="pagination" style="margin: 0;">
-                                <li class="disabled"><a href="#" aria-label="Previous"><span
-                                        aria-hidden="true">首页</span></a></li>
-                                <li class="disabled"><a href="#" aria-label="Previous"><span
-                                        aria-hidden="true">&laquo;</span></a></li>
-                                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                                <li class=""><a href="#">2 <span class="sr-only">(current)</span></a></li>
-                                <li class=""><a href="#">3 <span class="sr-only">(current)</span></a></li>
-                                <li class=""><a href="#">4 <span class="sr-only">(current)</span></a></li>
-                                <li class="disabled"><a href="#" aria-label="Previous"><span
-                                        aria-hidden="true">&raquo;</span></a></li>
-                                <li class="disabled"><a href="#" aria-label="Previous"><span
-                                        aria-hidden="true">尾页</span></a></li>
-                            </ul>
-                        </div>
-                        <div class="right col-lg-4 text-right">
-                            当前第<span>2</span>页，总<span>3</span>页，总<span>12</span>条记录
-                        </div>
-                    </div>
-                </td>
-            </tr>--%>
             </tfoot>
         </table>
     </div>
@@ -229,32 +119,32 @@
                 <h4 class="modal-title" id="addModalLabel">新增院校管理员</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="" method="" id="areaAdmin_add_frm">
+                <form class="form-horizontal" id="areaAdmin_add_frm">
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">用户名</label>
+                        <label class="col-lg-2 control-label" for="userName_add_modal">用户名</label>
                         <div class="col-lg-10">
-                            <input class="form-control" type="text" name="userName" id="userName_add_modal" value=""
-                                   placeholder="请输入用户名"/>
+                            <input class="form-control userName_modal" type="text" name="userName"
+                                   id="userName_add_modal" value=""
+                                   placeholder="请输入用户名" onblur="vail_username_modal(this.value);"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">密码</label>
+                        <label class="col-lg-2 control-label" for="password_add_modal">密码</label>
                         <div class="col-lg-10">
-                            <input class="form-control" type="password" name="userPassword" id="password_add_modal"
-                                   placeholder="请输入密码"
-                                   value=""/>
+                            <input class="form-control password_modal" type="password" name="userPassword"
+                                   id="password_add_modal"
+                                   placeholder="请输入密码" onblur="vail_password_modal();"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">省</label>
+                        <label class="col-lg-2 control-label" for="provinceSelect_add_modal">省</label>
                         <div class="col-lg-10">
                             <select class="selectpicker" id="provinceSelect_add_modal" title="请选择省" data-width="100%">
-
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">市</label>
+                        <label class="col-lg-2 control-label" for="citySelect_add_modal">市</label>
                         <div class="col-lg-10">
                             <select class="selectpicker" id="citySelect_add_modal" title="请选择市" data-width="100%">
 
@@ -262,19 +152,18 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">院校</label>
+                        <label class="col-lg-2 control-label" for="schoolSelect_add_modal">院校</label>
                         <div class="col-lg-10">
-                            <select class="selectpicker" id="schoolSelect_add_modal" name="userAreaId" title="请选择院校"
+                            <select class="selectpicker schoolSelect_modal" id="schoolSelect_add_modal"
+                                    name="userAreaId" title="请选择院校"
                                     data-width="100%">
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="help-block col-lg-10 col-lg-offset-2" style="color: red">
-
                         </div>
                     </div>
-
                 </form>
             </div>
             <div class="modal-footer">
@@ -285,7 +174,8 @@
     </div><!-- /.modal -->
 </div>
 <!-- 修改 -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+<div class="modal fade" id="areaAdmin_edit_modal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -293,40 +183,48 @@
                 <h4 class="modal-title" id="editModalLabel">修改院校管理员</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="" method="">
+                <form class="form-horizontal" id="areaAdmin_edit_frm">
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">用户名</label>
+                        <label class="col-lg-2 control-label" for="userName_edit_modal">用户名</label>
                         <div class="col-lg-10">
-                            <input class="form-control" type="text" name="" id="" value="张三"/>
+                            <input class="form-control userName_modal" type="text" name="userName"
+                                   id="userName_edit_modal"
+                                   value="张三" onblur="vail_username_modal(this.value);"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label" for="">省</label>
+                        <label class="col-lg-2 control-label" for="provinceSelect_edit_modal">省</label>
                         <div class="col-lg-10">
-                            <select class="selectpicker" id="" title="请选择省" data-width="100%">
+                            <select class="selectpicker" id="provinceSelect_edit_modal" title="请选择省" data-width="100%">
 
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">市</label>
+                        <label class="col-lg-2 control-label" for="citySelect_edit_modal">市</label>
                         <div class="col-lg-10">
-                            <select class="selectpicker" id="" title="请选择市" data-width="100%">
+                            <select class="selectpicker" id="citySelect_edit_modal" title="请选择市" data-width="100%">
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">院校</label>
+                        <label class="col-lg-2 control-label" for="schoolSelect_edit_modal">院校</label>
                         <div class="col-lg-10">
-                            <select class="selectpicker" id="" title="请选择院校" data-width="100%">
+                            <select class="selectpicker schoolSelect_modal" id="schoolSelect_edit_modal"
+                                    name="userAreaId" title="请选择院校"
+                                    data-width="100%">
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="help-block col-lg-10 col-lg-offset-2" style="color: red">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-primary" id="areaAdmin_edit_btn">保存</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
@@ -340,6 +238,8 @@
 <script src="../commons/js/com.js"></script>
 
 <script>
+    var flag = false;
+    var edit_username;
     var currPage = $("#pn").val();
     $(function () {
         to_page(currPage);
@@ -442,11 +342,11 @@
             var userOperator = $("<td></td>").append(areaAdmin.userOperator.userName);
             var userOperatorTime = $("<td></td>").append(areaAdmin.userOperatorTime);
 
-            var updateBtn = $("<button></button>").addClass("btn btn-primary update_btn").attr("data-toggle", "modal").attr("data-target", "#editModal").attr("delete_id", areaAdmin.id)
+            var updateBtn = $("<button></button>").addClass("btn btn-primary edit_btn").attr("data-toggle", "modal").attr("data-target", "#areaAdmin_edit_modal").attr("edit-id", areaAdmin.id)
                 .append($("<span></span>").addClass("glyphicon glyphicon-edit").attr("aria-hidden", "true")).append("修改");
-            var resetBtn = $("<button></button>").addClass("btn btn-lock reset_btn").attr("delete_id", areaAdmin.id)
+            var resetBtn = $("<button></button>").addClass("btn btn-lock reset_btn").attr("reset-id", areaAdmin.id)
                 .append($("<span></span>").addClass("glyphicon glyphicon-edit").attr("aria-hidden", "true")).append("重置密码");
-            var delBtn = $("<button></button>").addClass("btn btn-danger delete_btn").attr("delete_id", areaAdmin.id)
+            var delBtn = $("<button></button>").addClass("btn btn-danger delete_btn").attr("delete-id", areaAdmin.id)
                 .append($("<span></span>").addClass("glyphicon glyphicon-remove").attr("aria-hidden", "true")).append("删除");
 
             var operation = $("<td></td>").append($("<div class='btn-group'></div>").append(updateBtn).append(resetBtn).append(delBtn));
@@ -469,11 +369,11 @@
             },
             success: function (result) {
                 if (result.code == 100) {
-                    if(result.extend.pageInfo.total==0){
+                    if (result.extend.pageInfo.total == 0) {
                         $("#areaAdmins-table tfoot").empty();
                         $("#areaAdmins-table tbody").empty();
                         $("#areaAdmins-table tbody").append("<tr><td colspan='6'>数据为空...</td></tr>");
-                    }else{
+                    } else {
                         //查询成功，解析并显示数据
                         //1、显示院校管理员信息
                         build_areaAdmins_table(result);
@@ -495,6 +395,10 @@
         });
     }
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
     /*全选*/
     $("#check_all").click(function () {
         $(".check_item").prop("checked", $(this).prop("checked"));
@@ -508,7 +412,7 @@
         var userName = $(this).parents("tr").find("td:eq(1)").text();
         if (confirm("确认删除[" + userName + "]吗?")) {
             $.ajax({
-                url: "../user/areaAdmin/" + $(this).attr("delete_id"),
+                url: "../user/areaAdmin/" + $(this).attr("delete-id"),
                 type: "DELETE",
                 dataType: "json",
                 success: function (result) {
@@ -525,7 +429,7 @@
         var userNames = "", ids = "";
         $.each($(".check_item:checked"), function () {
             userNames = userNames + $(this).parents("tr").find("td:eq(1)").text() + ",";
-            ids = ids + $(this).parents("tr").find("td:eq(5)").find(".delete_btn").attr("delete_id") + "-";
+            ids = ids + $(this).parents("tr").find("td:eq(5)").find(".delete_btn").attr("delete-id") + "-";
         })
         userNames = userNames.substring(0, userNames.length - 1);
         ids = ids.substring(0, ids.length - 1);
@@ -545,9 +449,13 @@
         }
     })
 
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
     /*新增管理员*/
     function getAreaList(element, txt, parentId, selText) {
-        var url = "list";
+        var url = "list", optionElement;
         if (parentId != null) {
             url = url + "?parentId=" + parentId;
         }
@@ -556,7 +464,6 @@
             type: "GET",
             dataType: "json",
             success: function (result) {
-                console.log(result)
                 $(element).empty();
                 if (txt != "") {
                     optionElement = $("<option></option>").append(txt).attr({"value": 0});
@@ -569,6 +476,7 @@
                 $(element).removeAttr("disabled");
                 $(element).selectpicker("refresh");
                 if (selText != "") {
+                    console.log("---------" + selText);
                     $(element).next().prop("title", selText);
                     $(element).next().find("div.filter-option-inner-inner").html(selText);
                     $(element).next().removeClass("bs-placeholder");
@@ -603,17 +511,24 @@
     });
     /*模态框隐藏，重置窗体*/
     $(document).on('hidden.bs.modal', '.modal', function () {
-        $("#areaAdmin_add_modal form")[0].reset();
-        $("#areaAdmin_add_modal form").find("*").removeClass("has-error has-success");
-        $("#areaAdmin_add_modal form").find(".help-block").text("");
+        $(".modal form")[0].reset();
+        $(".modal form").find("*").removeClass("has-error has-success");
+        $(".modal form").find(".help-block").text("");
         $(".modal .selectpicker").empty();
         $(".modal .selectpicker").attr("disabled", "disabled");
         $(".modal .selectpicker").selectpicker("refresh");
     });
+
+
     /*新增院校管理员模态框保存操作*/
     $("#areaAdmin_save_btn").click(function () {
+        var username = $("#userName_add_modal").val();
+        var password = $("#password_add_modal").val();
+        if (username != '' && password != null) {
+            vail_school_modal();
+        }
         /*数据校验*/
-        if (valid_modal()) {
+        if (flag) {
             /*新增院校管理员的异步请求*/
             $.ajax({
                 url: "../user/areaAdmin/",
@@ -632,29 +547,179 @@
                     }
                 }
             })
+        } else {
+            alert("请输入数据")
         }
     })
 
-    function valid_modal() {
-        var flag = true;
-        var userName = $("#userName_add_modal").val();
-        var password = $("#password_add_modal").val();
-        var school = $("#schoolSelect_add_modal").val();
+    function vail_username_modal(val) {
+        var userName = val;
+        console.log(userName)
         if (userName == '') {
             $("#userName_add_modal").parent().addClass("has-error");
+            $("#userName_edit_modal").parent().addClass("has-error");
             $(".help-block").text("用户名不能为空");
+            console.log("用户名不能为空")
             flag = false;
-        } else if (password == '') {
-            $("#password_add_modal").parent().addClass("has-error");
+        } else {
+            validName(userName);
+        }
+        if (flag) {
+            $(".modal form").find("*").removeClass("has-error has-success");
+            $(".help-block").text("");
+            console.log("用户名正常")
+        }
+    }
+
+    function vail_password_modal() {
+        var password = $("#password_add_modal").val();
+        if (password == '') {
+            $(".password_modal").parent().addClass("has-error");
             $(".help-block").text("密码不能为空");
             flag = false;
-        } else if (school == '') {
-            $("#schoolSelect_add_modal").parent().addClass("has-error");
+        } else {
+            $(".modal form").find("*").removeClass("has-error has-success");
+            $(".help-block").text("");
+            flag = true;
+        }
+    }
+
+    function vail_school_modal() {
+        var school = $("#schoolSelect_add_modal").val();
+        if (school == '') {
+            $(".schoolSelect_modal").parent().addClass("has-error");
             $(".help-block").text("院校不能为空");
             flag = false;
+        } else {
+            $(".modal form").find("*").removeClass("has-error has-success");
+            $(".help-block").text("");
+            flag = true;
         }
-        return flag;
     }
+
+    /*判断用户名是否重复*/
+    function validName(val) {
+        var userName = val;
+        console.log("username:" + userName);
+        $.ajax({
+            url: "../user/validName/",
+            data: {username: userName},
+            type: "post",
+            dataType: "json",
+            success: function (result) {
+                console.log(result)
+                if (result.code == 100) {
+                    console.log(edit_username)
+                    if (result.extend.user.userName == edit_username) {
+                        $(".help-block").text("用户名:" + result.extend.user.userName);
+                        $("#userName_add_modal").parent().removeClass("has-error");
+                        $(".help-block").text("");
+                        flag = true;
+                    } else {
+                        console.log(result.code)
+                        $("#userName_add_modal").parent().addClass("has-error");
+                        $(".help-block").text("用户名重复");
+                        flag = false;
+                    }
+                } else {
+                    $("#userName_add_modal").parent().removeClass("has-error");
+                    $(".help-block").text("");
+                    flag = true;
+                }
+            }
+        })
+    }
+
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+
+    $(document).on("click", ".edit_btn", function () {
+        $.ajax({
+            url: "../user/areaAdmin",
+            data: {id: $(this).attr("edit-id")},
+            type: "GET",
+            dataType: "json",
+            success: function (result) {
+                // console.log(result.extend);
+                if (result.code == 100) {
+                    $("#userName_edit_modal").val(result.extend.areaAdmin.userName);
+                    edit_username = result.extend.areaAdmin.userName;
+                    getAreaList("#provinceSelect_edit_modal", "", "", result.extend.areaAdmin.area.parentArea.parentArea.areaName);
+                    getAreaList("#citySelect_edit_modal", "", result.extend.areaAdmin.area.parentArea.parentArea.id, result.extend.areaAdmin.area.parentArea.areaName);
+                    getAreaList("#schoolSelect_edit_modal", "", result.extend.areaAdmin.area.parentArea.id, result.extend.areaAdmin.area.areaName);
+                }
+            }
+        });
+        $("#areaAdmin_edit_btn").attr("edit-id", $(this).attr("edit-id"));
+        $("#areaAdmin_edit_modal").modal({
+            "backdrop": "static"
+        });
+    });
+    /*修改*/
+    $("#areaAdmin_edit_btn").click(function () {
+        /*数据校验*/
+        if (flag) {
+            /*新增院校管理员的异步请求*/
+            $.ajax({
+                url: "../user/areaAdmin/" + $(this).attr("edit-id"),
+                data: $("#areaAdmin_edit_frm").serialize(),
+                type: "put",
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == 100) {
+                        $("#areaAdmin_edit_modal").modal('hide');
+                        alert("院校管理员修改成功！");
+                        to_page(1);
+                        $("#check_all").prop("checked", false);
+                    } else {
+                        //删除失败
+                        alert(result.msg);
+                    }
+                }
+            })
+        }else{
+            alert("您未修改！")
+        }
+
+    })
+    $("#provinceSelect_edit_modal").on("changed.bs.select", function () {
+        $("#citySelect_edit_modal").empty();
+        $("#citySelect_edit_modal").attr("disabled", "disabled");
+        $("#citySelect_edit_modal").selectpicker("refresh");
+        $("#schoolSelect_edit_modal").empty();
+        $("#schoolSelect_edit_modal").attr("disabled", "disabled");
+        $("#schoolSelect_edit_modal").selectpicker("refresh");
+        getAreaList("#citySelect_edit_modal", "", $(this).val(), "");
+    });
+    $("#citySelect_edit_modal").on("changed.bs.select", function () {
+        $("#schoolSelect_edit_modal").empty();
+        $("#schoolSelect_edit_modal").attr("disabled", "disabled");
+        $("#schoolSelect_edit_modal").selectpicker("refresh");
+        if ($(this).val() > 0) {
+            getAreaList("#schoolSelect_edit_modal", "", $(this).val(), "");
+        }
+    });
+
+    /*重置密码*/
+    $(document).on("click", ".reset_btn", function () {
+        $.ajax({
+            url: "../user/passwordReset",
+            data: {
+                "id": $(this).attr("reset-id")
+            },
+            type: "post",
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 100) {
+                    alert("密码重置成功")
+                } else {
+                    //删除失败
+                    alert("重制失败");
+                }
+            }
+        })
+    })
 </script>
 
 

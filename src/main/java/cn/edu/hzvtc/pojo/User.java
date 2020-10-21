@@ -37,6 +37,10 @@ public class User {
 
     private Area area;
 
+    public User(String userName, Integer userAreaId) {
+        this.userName = userName;
+        this.userAreaId = userAreaId;
+    }
 
     public User(String userName, String userPassword, Integer userOperatorId, Date userOperatorTime, Integer userType, Integer userAreaId) {
         this.userName = userName;

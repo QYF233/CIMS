@@ -28,6 +28,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private MsgMapper msgMapper;
 
+    /**
+     * 登录
+     *
+     * @return 登录用户信息
+     */
     @Override
     public User login(String username, String password) {
         User user = new User();
@@ -35,27 +40,53 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    /**
+     * 用获取用户密码
+     */
     @Override
     public void getPassword() {
 
     }
 
+    /**
+     * 用获取用户
+     *
+     * @param username 用户姓名
+     * @return
+     */
     @Override
-    public User getUser() {
-        return null;
+    public User getUserByUsername(String username) {
+
+        return userMapper.selectPwdByName(username);
     }
 
+    /**
+     * 用获取用户
+     *
+     * @param id 用户id
+     * @return
+     */
     @Override
-    public List<User> getUserList() {
-        return null;
+    public User getUserById(Integer id) {
+        return userMapper.getUserById(id);
     }
 
+    /**
+     * 获取院校管理员列表
+     *
+     * @return 院校管理员用户列表
+     */
     @Override
     public List<User> getAreaAdmins() {
-
         return userMapper.selectAreaAdmins();
     }
 
+    /**
+     * 删除院校管理员账号
+     *
+     * @param ids id列表
+     * @return true、false
+     */
     @Override
     public boolean delAreaAdmin(String ids) {
         boolean result = false;
@@ -92,11 +123,28 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 添加院校管理员
+     *
      * @param user
      * @return
      */
     @Override
     public boolean addAreaAdmin(User user) {
         return userMapper.insert(user) > 0;
+    }
+
+    /**
+     * 修改院校管理员
+     *
+     * @param user
+     * @return
+     */
+    @Override
+    public boolean modifyAreaAdmin(User user) {
+        return userMapper.updateById(user) > 0;
+    }
+
+    @Override
+    public boolean passwordReset(Integer id, String pwd) {
+        return userMapper.resetPwd(id,pwd) > 0;
     }
 }

@@ -122,8 +122,7 @@
                             window.location.href = result.target;
                         }, 1000)
                     } else {
-                        if (undefined !== result.extend.fieldErrors) {
-                            console.log(result.extend.fieldErrors);
+                        if (result.extend.fieldErrors== "密码错误") {
                             show_validation_msg(".password-input", "error", "密码错误");
                         } else {
                             show_validation_msg(".username-input", "error", "用户不存在");

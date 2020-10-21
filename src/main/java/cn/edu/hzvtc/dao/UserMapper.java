@@ -1,6 +1,7 @@
 package cn.edu.hzvtc.dao;
 
 import cn.edu.hzvtc.pojo.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,9 +18,15 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    User selectPwdByName(String name);
+    User selectPwdByName(@Param("username")String name);
 
-    User selectUserByName(String name);
+    User selectUserByNameAndPwd(@Param("username") String name, @Param("password") String password);
 
     List<User> selectAreaAdmins();
+
+    User getUserById(Integer id);
+
+    int updateById(User record);
+
+    int resetPwd(@Param("id")Integer id,@Param("pwd") String pwd);
 }
