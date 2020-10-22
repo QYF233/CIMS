@@ -39,7 +39,7 @@ public interface UserService {
      *
      * @return 院校管理员用户列表
      */
-    public List<User> getAreaAdmins();
+    public List<User> getAreaAdmins(Integer provinceId,Integer cityId,Integer schoolId,String userName);
 
     /**
      * 删除院校管理员账号

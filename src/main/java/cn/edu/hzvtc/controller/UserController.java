@@ -125,12 +125,16 @@ public class UserController {
      */
     @RequestMapping("/areaAdmins")
     @ResponseBody
-    public ReturnMsg getAreaAdmins(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+    public ReturnMsg getAreaAdmins(@RequestParam(value = "provinceId",required = false) Integer provinceId,
+                                   @RequestParam(value = "cityId",required = false) Integer cityId,
+                                   @RequestParam(value = "schoolId",required = false) Integer schoolId,
+                                   @RequestParam(value = "userName",required = false) String userName,
+                                   @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         //引入PageHelper分页插件
         //在查询之前只需要传入页码以及每页的大小
         PageHelper.startPage(pn, 5);
         //startPage方法紧跟第一个select查询就是一个分页查询
-        List<User> areaAdmins = userService.getAreaAdmins();
+        List<User> areaAdmins = userService.getAreaAdmins(provinceId,cityId,schoolId,userName);
         //使用PageInfo包装查询结果，封装了分页信息和查询出的数据，只需将pageInfo交给页面即可
         PageInfo pageInfo = new PageInfo(areaAdmins, 5);
 
@@ -184,8 +188,7 @@ public class UserController {
         user.setUserOperatorTime(new Date());
         user.setUserType(2);
         user.setUserDelState(0);
-        String pwd = DigestUtils.md5DigestAsHex(user.getUserPassword().getBytes());
-        user.setUserPassword(pwd);
+
         System.out.println(user.toString());
         if (userService.addAreaAdmin(user)) {
             return ReturnMsg.success();
@@ -199,8 +202,6 @@ public class UserController {
      *
      * @param areaAdminId 管理员id
      * @param user        修改信息
-     * @param result
-     * @param session
      * @return
      */
     @RequestMapping(value = "/areaAdmin/{areaAdminId}", method = RequestMethod.PUT)
@@ -219,6 +220,12 @@ public class UserController {
         return ReturnMsg.fail();
     }
 
+    /**
+     * 判断用户名是否重复
+     *
+     * @param username
+     * @return
+     */
     @RequestMapping(value = "/validName", method = RequestMethod.POST)
     @ResponseBody
     public ReturnMsg validName(@RequestParam(value = "username") String username) {
@@ -230,12 +237,17 @@ public class UserController {
         }
     }
 
+    /**
+     * 重置密码
+     *
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/passwordReset", method = RequestMethod.POST)
     @ResponseBody
     public ReturnMsg passwordReset(@RequestParam(value = "id") Integer id) {
         String pwd = DigestUtils.md5DigestAsHex("123456".getBytes());
-        System.out.println();
-        if (userService.passwordReset(id,pwd)) {
+        if (userService.passwordReset(id, pwd)) {
             return ReturnMsg.success();
         } else {
             return ReturnMsg.fail();

@@ -8,6 +8,7 @@ import cn.edu.hzvtc.pojo.User;
 import cn.edu.hzvtc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,17 +49,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    /**
-     * 用获取用户
-     *
-     * @param username 用户姓名
-     * @return
-     */
-    @Override
-    public User getUserByUsername(String username) {
 
-        return userMapper.selectPwdByName(username);
-    }
 
     /**
      * 用获取用户
@@ -77,8 +68,9 @@ public class UserServiceImpl implements UserService {
      * @return 院校管理员用户列表
      */
     @Override
-    public List<User> getAreaAdmins() {
-        return userMapper.selectAreaAdmins();
+    public List<User> getAreaAdmins(Integer provinceId,Integer cityId,Integer schoolId,String userName) {
+        userName = "%" + userName +"%";
+        return userMapper.selectAreaAdmins(provinceId,cityId,schoolId,userName);
     }
 
     /**
@@ -129,6 +121,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean addAreaAdmin(User user) {
+        String pwd = DigestUtils.md5DigestAsHex(user.getUserPassword().getBytes());
+        user.setUserPassword(pwd);
         return userMapper.insert(user) > 0;
     }
 
@@ -142,7 +136,23 @@ public class UserServiceImpl implements UserService {
     public boolean modifyAreaAdmin(User user) {
         return userMapper.updateById(user) > 0;
     }
+    /**
+     * 用获取用户
+     *
+     * @param username 用户姓名
+     * @return
+     */
+    @Override
+    public User getUserByUsername(String username) {
 
+        return userMapper.selectPwdByName(username);
+    }
+    /**
+     * 重置密码
+     * @param id
+     * @param pwd
+     * @return
+     */
     @Override
     public boolean passwordReset(Integer id, String pwd) {
         return userMapper.resetPwd(id,pwd) > 0;

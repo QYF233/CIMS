@@ -48,27 +48,24 @@
                 <div class="col-lg-3">
                     <label for="provinceSelect">省：</label>
                     <select class="selectpicker" id="provinceSelect" data-width="80%" title="请选择省份">
-                        <option>Mustard</option>
                     </select>
                 </div>
                 <div class="col-lg-3">
                     <label for="citySelect">市：</label>
                     <select class="selectpicker" id="citySelect" data-width="80%" title="请选择市">
-                        <option>Mustard</option>
                     </select>
                 </div>
                 <div class="col-lg-3">
                     <label for="schoolSelect">院校：</label>
                     <select class="selectpicker" id="schoolSelect" data-width="80%" title="请选择院校">
-                        <option>Mustard</option>
                     </select>
                 </div>
                 <div class="col-lg-3">
                     <div class="form-group">
                         <div class="input-group" role="group">
-                            <input type="text" class="form-control" placeholder="请输入用户名">
+                            <input type="text" id="userName_search_input" class="form-control" placeholder="请输入用户名">
                             <span class="input-group-btn">
-										<button type="button" class="btn btn-primary"><span
+										<button type="button" class="btn btn-primary" id="search_btn"><span
                                                 class="glyphicon glyphicon-search" aria-hidden="true"></span>搜索</button>
 										<button type="button" class="btn btn-warning"><span
                                                 class="glyphicon glyphicon-refresh"
@@ -238,11 +235,13 @@
 <script src="../commons/js/com.js"></script>
 
 <script>
+    var provinceId=0,cityId=0,schoolId=0,userName='',pn;
     var flag = false;
     var edit_username;
     var currPage = $("#pn").val();
     $(function () {
         to_page(currPage);
+        getAreaList("#provinceSelect", "", "", "");
     });
 
     /*构建tfoot*/
@@ -359,7 +358,7 @@
     function to_page(pn) {
         $.ajax({
             url: "../user/areaAdmins",
-            data: {"pn": pn},
+            data: {"provinceId":provinceId,"cityId":cityId,"schoolId":schoolId,"userName":userName,"pn": pn},
             type: "GET",
             dataType: "json",
             beforeSend: function () {
@@ -467,10 +466,11 @@
                 $(element).empty();
                 if (txt != "") {
                     optionElement = $("<option></option>").append(txt).attr({"value": 0});
-                    optionElement.append($(element));
+                    optionElement.appendTo($(element));
                 }
                 $.each(result.extend.areaList, function (index, area) {
                     optionElement = $("<option></option>").append(area.areaName).attr({"value": area.id});
+                    console.log("areaId:"+area.id)
                     optionElement.appendTo($(element));
                 });
                 $(element).removeAttr("disabled");
@@ -659,6 +659,7 @@
     /*修改*/
     $("#areaAdmin_edit_btn").click(function () {
         /*数据校验*/
+        // $("#schoolSelect_edit_modal").selectpicker("refresh");
         if (flag) {
             /*新增院校管理员的异步请求*/
             $.ajax({
@@ -681,8 +682,8 @@
         }else{
             alert("您未修改！")
         }
-
     })
+
     $("#provinceSelect_edit_modal").on("changed.bs.select", function () {
         $("#citySelect_edit_modal").empty();
         $("#citySelect_edit_modal").attr("disabled", "disabled");
@@ -720,6 +721,46 @@
             }
         })
     })
+
+    /*************************************************/
+
+
+    $("#provinceSelect").on("changed.bs.select",function () {
+        console.log("5555555555555")
+        $("#citySelect").empty().attr("disabled","disabled").selectpicker("refresh");
+        $("#schoolSelect").empty().attr("disabled","disabled").selectpicker("refresh");
+        if($(this).val()>0){
+            console.log($(this).val())
+            getAreaList("#citySelect","全部城市",$(this).val(),"");
+        }
+    })
+    $("#citySelect").on("changed.bs.select",function () {
+        $("#schoolSelect").empty().attr("disabled","disabled").selectpicker("refresh");
+        if($(this).val()>0){
+            getAreaList("#schoolSelect","全部院校",$(this).val(),"");
+        }
+    })
+
+    $("#search_btn").click(function () {
+        if($("#provinceSelect").val() == ""){
+            provinceId = 0;
+        }else {
+            provinceId = $("#provinceSelect").val();
+        }
+        if($("#citySelect").val() == ""){
+             cityId = 0;
+        }else {
+            cityId = $("#citySelect").val();
+        }
+        if($("#schoolSelect").val() == ""){
+            schoolId = 0;
+        }else {
+            schoolId = $("#schoolSelect").val();
+        }
+        userName = $("#userName_search_input").val();
+        to_page(pn);
+    })
+
 </script>
 
 

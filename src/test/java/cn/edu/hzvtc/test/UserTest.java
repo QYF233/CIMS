@@ -41,9 +41,8 @@ public class UserTest {
                 id = 7, areaName = '杭州职业技术学院', areaType = 3, areaParentId = 4, areaSortNum = 1, parentArea = Area {
                     id = 4, areaName = '杭州市', areaType = 2, areaParentId = 1, areaSortNum = 1, parentArea = Area {
                         id = 1, areaName = '浙江省', areaType = 1, areaParentId = null, areaSortNum = 1, parentArea = null
-                    }
-                }
-            }
+                    }e
+            }e
         }*/
 
     }
@@ -54,7 +53,7 @@ public class UserTest {
     }
     @Test
     public void test_userList() {
-        List<User> loginUser = userService.getAreaAdmins();
+        List<User> loginUser = userService.getAreaAdmins(0,0,0,"");
         for (User user: loginUser) {
             System.out.println(user.toString());
         }

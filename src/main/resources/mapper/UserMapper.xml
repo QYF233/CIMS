@@ -84,14 +84,7 @@
     from sys_user
     where user_del_state = 0
   </select>
-    <!-- 按照用户名查找密码 -->
-    <select id="selectPwdByName" parameterType="java.lang.String" resultMap="LoginResultMap">
-        select id, user_name, user_password, user_operator_id, user_operator_time, user_type,
-        user_area_id
-        from sys_user
-        where user_name = #{username,jdbcType=VARCHAR}
-        and user_del_state = 0
-    </select>
+
     <!-- 按照用户名查找用户信息 -->
     <select id="selectUserByNameAndPwd" parameterType="java.lang.String" resultMap="LoginResultMap">
         select id, user_name, user_password, user_operator_id, user_operator_time, user_type,
@@ -102,12 +95,30 @@
     </select>
     <!--查询关联的操作人和所属区域信息-->
     <select id="selectAreaAdmins" resultMap="AreaAdminResultMap">
-    select id, user_name, user_password, user_operator_id, user_operator_time, user_type, user_area_id,user_del_state
-    from sys_user
-    where user_type = 2
-    and user_del_state = 0
-    order by user_area_id,id
-  </select>
+        select id, user_name, user_password, user_operator_id, user_operator_time, user_type,
+        user_area_id,user_del_state
+        from sys_user
+        where user_type = 2
+        <if test="userName != null &amp;&amp; userName != &quot;&quot;">
+            and user_name like #{userName,jdbcType=VARCHAR}
+        </if>
+        <choose>
+            <when test="schoolId > 0">
+                and user_area_id = #{schoolId,jdbcType=INTEGER}
+            </when>
+            <when test="cityId > 0">
+                and user_area_id in (select id from sys_area where  area_del_state = 0 and area_parent_id = #{cityId} )
+            </when>
+            <when test="provinceId > 0">
+                and user_area_id in
+                (select id from sys_area where  area_del_state = 0 and area_parent_id in
+                    (select id from sys_area where area_del_state = 0 and area_parent_id =#{provinceId})
+                )
+            </when>
+        </choose>
+        and user_del_state = 0
+        order by user_area_id,id
+    </select>
     <!--批量删除-->
     <update id="deleteByPrimaryKeyList">
         update sys_user
@@ -139,6 +150,15 @@
       user_area_id = #{userAreaId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <!-- 按照用户名查找密码 -->
+    <select id="selectPwdByName" parameterType="java.lang.String" resultMap="LoginResultMap">
+        select id, user_name, user_password, user_operator_id, user_operator_time, user_type,
+        user_area_id
+        from sys_user
+        where user_name = #{username,jdbcType=VARCHAR}
+        and user_del_state = 0
+    </select>
+    <!--重置密码-->
     <update id="resetPwd" parameterType="cn.edu.hzvtc.pojo.User">
     update sys_user
     set user_password = #{pwd,jdbcType=VARCHAR}

@@ -18,15 +18,18 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    User selectPwdByName(@Param("username")String name);
+    User selectPwdByName(@Param("username") String name);
 
     User selectUserByNameAndPwd(@Param("username") String name, @Param("password") String password);
 
-    List<User> selectAreaAdmins();
+    List<User> selectAreaAdmins(@Param("provinceId") Integer provinceId,
+                                @Param("cityId") Integer cityId,
+                                @Param("schoolId") Integer schoolId,
+                                @Param("userName") String userName);
 
     User getUserById(Integer id);
 
     int updateById(User record);
 
-    int resetPwd(@Param("id")Integer id,@Param("pwd") String pwd);
+    int resetPwd(@Param("id") Integer id, @Param("pwd") String pwd);
 }
