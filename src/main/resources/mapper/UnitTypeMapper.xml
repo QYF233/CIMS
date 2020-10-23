@@ -33,4 +33,14 @@
     select id, unit_type_name, unit_type_sort_num, unit_type_area_id
     from unit_type
   </select>
+  <select id="selectAllByType" resultMap="BaseResultMap">
+    select id, unit_type_name, unit_type_sort_num, unit_type_area_id
+    from unit_type
+    where unit_type_area_id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getCount" resultType="java.lang.Long">
+    select count(*)
+    from unit_type
+    where unit_type_area_id = #{id,jdbcType=INTEGER}
+  </select>
 </mapper>

@@ -13,4 +13,8 @@ public interface UnitTypeMapper {
     List<UnitType> selectAll();
 
     int updateByPrimaryKey(UnitType record);
+
+    List<UnitType> selectAllByType(Integer id);
+
+    Long getCount(Integer id);
 }
