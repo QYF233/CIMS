@@ -3,6 +3,7 @@ package cn.edu.hzvtc.controller;
 import cn.edu.hzvtc.pojo.Area;
 import cn.edu.hzvtc.pojo.ReturnMsg;
 import cn.edu.hzvtc.pojo.User;
+import cn.edu.hzvtc.service.AreaService;
 import cn.edu.hzvtc.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -27,6 +28,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private AreaService areaService;
 
     @RequestMapping("/test")
     public String test() {
@@ -125,16 +128,16 @@ public class UserController {
      */
     @RequestMapping("/areaAdmins")
     @ResponseBody
-    public ReturnMsg getAreaAdmins(@RequestParam(value = "provinceId",required = false) Integer provinceId,
-                                   @RequestParam(value = "cityId",required = false) Integer cityId,
-                                   @RequestParam(value = "schoolId",required = false) Integer schoolId,
-                                   @RequestParam(value = "userName",required = false) String userName,
+    public ReturnMsg getAreaAdmins(@RequestParam(value = "provinceId", required = false) Integer provinceId,
+                                   @RequestParam(value = "cityId", required = false) Integer cityId,
+                                   @RequestParam(value = "schoolId", required = false) Integer schoolId,
+                                   @RequestParam(value = "userName", required = false) String userName,
                                    @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         //引入PageHelper分页插件
         //在查询之前只需要传入页码以及每页的大小
         PageHelper.startPage(pn, 5);
         //startPage方法紧跟第一个select查询就是一个分页查询
-        List<User> areaAdmins = userService.getAreaAdmins(provinceId,cityId,schoolId,userName);
+        List<User> areaAdmins = userService.getAreaAdmins(provinceId, cityId, schoolId, userName);
         //使用PageInfo包装查询结果，封装了分页信息和查询出的数据，只需将pageInfo交给页面即可
         PageInfo pageInfo = new PageInfo(areaAdmins, 5);
 
@@ -206,13 +209,18 @@ public class UserController {
      */
     @RequestMapping(value = "/areaAdmin/{areaAdminId}", method = RequestMethod.PUT)
     @ResponseBody
-    public ReturnMsg update(@PathVariable("areaAdminId") Integer areaAdminId, @Valid User user, BindingResult result, HttpSession session) {
+    public ReturnMsg update(@PathVariable("areaAdminId") Integer areaAdminId,
+                            @RequestParam(value = "userAreaIdOld") Integer userAreaIdOld,
+                            @Valid User user, BindingResult result, HttpSession session) {
         User loginUser = (User) session.getAttribute("loginUser");
         user.setId(areaAdminId);
         user.setUserOperatorId(loginUser.getId());
         user.setUserOperatorTime(new Date());
         user.setUserType(2);
         user.setUserDelState(0);
+        if (user.getUserAreaId() == null) {
+            user.setUserAreaId(userAreaIdOld);
+        }
         System.out.println(areaAdminId + " 需要修改：" + user.toString());
         if (userService.modifyAreaAdmin(user)) {
             return ReturnMsg.success();
@@ -253,5 +261,6 @@ public class UserController {
             return ReturnMsg.fail();
         }
     }
+
 
 }

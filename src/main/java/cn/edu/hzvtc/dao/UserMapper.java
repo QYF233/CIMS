@@ -32,4 +32,6 @@ public interface UserMapper {
     int updateById(User record);
 
     int resetPwd(@Param("id") Integer id, @Param("pwd") String pwd);
+
+    Long getCount();
 }

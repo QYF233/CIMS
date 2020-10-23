@@ -20,5 +20,6 @@ public interface AreaMapper {
 
 //    int deleteByParentId(Integer id);
 
-//    List<Area> selectByType(int parentId);
+    //    List<Area> selectByType(int parentId);
+    Long getCount(Integer type);
 }

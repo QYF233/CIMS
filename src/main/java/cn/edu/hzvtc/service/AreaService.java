@@ -30,4 +30,5 @@ public interface AreaService {
 //    public int deleteSchool(int areaId);
 
 //    public List<Area> getList(int parentId);
+    public Long getCount(Integer type);
 }

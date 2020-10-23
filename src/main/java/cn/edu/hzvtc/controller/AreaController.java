@@ -3,6 +3,7 @@ package cn.edu.hzvtc.controller;
 import cn.edu.hzvtc.pojo.Area;
 import cn.edu.hzvtc.pojo.ReturnMsg;
 import cn.edu.hzvtc.service.AreaService;
+import cn.edu.hzvtc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,8 @@ import java.util.List;
 public class AreaController {
     @Autowired
     private AreaService areaService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/areaIndex")
     public String areaIndex() {
@@ -114,6 +117,19 @@ public class AreaController {
             areas = areaService.getTree(parentId);
         }
         return ReturnMsg.success().add("areaList", areas);
+    }
+
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnMsg count() {
+        Long userCount = userService.getCount();
+        Long provinceCount = areaService.getCount(1);
+        Long cityCount = areaService.getCount(2);
+        Long schoolCount = areaService.getCount(3);
+        return ReturnMsg.success().add("provinceCount", provinceCount)
+                .add("cityCount", cityCount)
+                .add("schoolCount", schoolCount)
+                .add("userCount", userCount);
     }
 
 }

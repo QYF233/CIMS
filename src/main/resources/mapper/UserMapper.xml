@@ -107,12 +107,12 @@
                 and user_area_id = #{schoolId,jdbcType=INTEGER}
             </when>
             <when test="cityId > 0">
-                and user_area_id in (select id from sys_area where  area_del_state = 0 and area_parent_id = #{cityId} )
+                and user_area_id in (select id from sys_area where area_del_state = 0 and area_parent_id = #{cityId} )
             </when>
             <when test="provinceId > 0">
                 and user_area_id in
-                (select id from sys_area where  area_del_state = 0 and area_parent_id in
-                    (select id from sys_area where area_del_state = 0 and area_parent_id =#{provinceId})
+                (select id from sys_area where area_del_state = 0 and area_parent_id in
+                (select id from sys_area where area_del_state = 0 and area_parent_id =#{provinceId})
                 )
             </when>
         </choose>
@@ -164,4 +164,10 @@
     set user_password = #{pwd,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <!--统计数-->
+    <select id="getCount" parameterType="cn.edu.hzvtc.pojo.User" resultType="java.lang.Long">
+        select count(*)
+        from sys_user
+        where user_del_state = 0
+    </select>
 </mapper>

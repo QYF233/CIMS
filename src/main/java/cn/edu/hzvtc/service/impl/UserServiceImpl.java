@@ -157,4 +157,9 @@ public class UserServiceImpl implements UserService {
     public boolean passwordReset(Integer id, String pwd) {
         return userMapper.resetPwd(id,pwd) > 0;
     }
+
+    @Override
+    public Long getCount() {
+        return userMapper.getCount();
+    }
 }

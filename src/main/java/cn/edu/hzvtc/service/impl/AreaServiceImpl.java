@@ -49,4 +49,8 @@ public class AreaServiceImpl implements AreaService {
         return areaMapper.updateByPrimaryKey(area);
     }
 
+    @Override
+    public Long getCount(Integer type) {
+        return areaMapper.getCount(type);
+    }
 }

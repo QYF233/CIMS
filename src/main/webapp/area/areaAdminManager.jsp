@@ -67,7 +67,7 @@
                             <span class="input-group-btn">
 										<button type="button" class="btn btn-primary" id="search_btn"><span
                                                 class="glyphicon glyphicon-search" aria-hidden="true"></span>搜索</button>
-										<button type="button" class="btn btn-warning"><span
+										<button type="button" class="btn btn-warning" id="reset_btn"><span
                                                 class="glyphicon glyphicon-refresh"
                                                 aria-hidden="true"></span>重置</button>
 									</span>
@@ -180,37 +180,34 @@
                 <h4 class="modal-title" id="editModalLabel">修改院校管理员</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" id="areaAdmin_edit_frm">
+                <form class="form-horizontal" role="form" id="areaAdmin_edit_frm">
                     <div class="form-group">
                         <label class="col-lg-2 control-label" for="userName_edit_modal">用户名</label>
                         <div class="col-lg-10">
-                            <input class="form-control userName_modal" type="text" name="userName"
-                                   id="userName_edit_modal"
+                            <input class="form-control userName_modal" type="text" name="userName" id="userName_edit_modal"
                                    value="张三" onblur="vail_username_modal(this.value);"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label" for="provinceSelect_edit_modal">省</label>
                         <div class="col-lg-10">
-                            <select class="selectpicker" id="provinceSelect_edit_modal" title="请选择省" data-width="100%">
-
+                            <select class="selectpicker provinceSelect_edit_modal" id="provinceSelect_edit_modal" title="请选择省" data-width="100%">
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label" for="citySelect_edit_modal">市</label>
                         <div class="col-lg-10">
-                            <select class="selectpicker" id="citySelect_edit_modal" title="请选择市" data-width="100%">
+                            <select class="selectpicker citySelect_edit_modal" id="citySelect_edit_modal" title="请选择市" data-width="100%">
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label" for="schoolSelect_edit_modal">院校</label>
                         <div class="col-lg-10">
-                            <select class="selectpicker schoolSelect_modal" id="schoolSelect_edit_modal"
-                                    name="userAreaId" title="请选择院校"
-                                    data-width="100%">
+                            <select class="selectpicker form-control schoolSelect_modal" id="schoolSelect_edit_modal" name="userAreaId" title="请选择院校" data-width="100%">
                             </select>
+                            <input type="hidden" id="userAreaIdOld" name="userAreaIdOld">
                         </div>
                     </div>
                     <div class="form-group">
@@ -235,7 +232,7 @@
 <script src="../commons/js/com.js"></script>
 
 <script>
-    var provinceId=0,cityId=0,schoolId=0,userName='',pn;
+    var provinceId = 0, cityId = 0, schoolId = 0, userName = '', pn;
     var flag = false;
     var edit_username;
     var currPage = $("#pn").val();
@@ -358,7 +355,7 @@
     function to_page(pn) {
         $.ajax({
             url: "../user/areaAdmins",
-            data: {"provinceId":provinceId,"cityId":cityId,"schoolId":schoolId,"userName":userName,"pn": pn},
+            data: {"provinceId": provinceId, "cityId": cityId, "schoolId": schoolId, "userName": userName, "pn": pn},
             type: "GET",
             dataType: "json",
             beforeSend: function () {
@@ -470,7 +467,7 @@
                 }
                 $.each(result.extend.areaList, function (index, area) {
                     optionElement = $("<option></option>").append(area.areaName).attr({"value": area.id});
-                    console.log("areaId:"+area.id)
+                    console.log("areaId:" + area.id)
                     optionElement.appendTo($(element));
                 });
                 $(element).removeAttr("disabled");
@@ -542,8 +539,7 @@
                         to_page(1);
                         $("#check_all").prop("checked", false);
                     } else {
-                        //删除失败
-                        alert(result.msg);
+                        alert("添加失败");
                     }
                 }
             })
@@ -552,6 +548,7 @@
         }
     })
 
+    /*验证用户名*/
     function vail_username_modal(val) {
         var userName = val;
         console.log(userName)
@@ -571,6 +568,7 @@
         }
     }
 
+    /*验证密码*/
     function vail_password_modal() {
         var password = $("#password_add_modal").val();
         if (password == '') {
@@ -584,6 +582,7 @@
         }
     }
 
+    /*验证院校*/
     function vail_school_modal() {
         var school = $("#schoolSelect_add_modal").val();
         if (school == '') {
@@ -633,33 +632,34 @@
     /**********************************************************************************************/
     /**********************************************************************************************/
     /**********************************************************************************************/
-
+    /*修改前获取院校*/
     $(document).on("click", ".edit_btn", function () {
+
         $.ajax({
             url: "../user/areaAdmin",
             data: {id: $(this).attr("edit-id")},
             type: "GET",
             dataType: "json",
             success: function (result) {
-                // console.log(result.extend);
                 if (result.code == 100) {
+                    console.log(result)
                     $("#userName_edit_modal").val(result.extend.areaAdmin.userName);
                     edit_username = result.extend.areaAdmin.userName;
                     getAreaList("#provinceSelect_edit_modal", "", "", result.extend.areaAdmin.area.parentArea.parentArea.areaName);
                     getAreaList("#citySelect_edit_modal", "", result.extend.areaAdmin.area.parentArea.parentArea.id, result.extend.areaAdmin.area.parentArea.areaName);
                     getAreaList("#schoolSelect_edit_modal", "", result.extend.areaAdmin.area.parentArea.id, result.extend.areaAdmin.area.areaName);
+                    $("#userAreaIdOld").val(result.extend.areaAdmin.userAreaId)
                 }
             }
         });
         $("#areaAdmin_edit_btn").attr("edit-id", $(this).attr("edit-id"));
         $("#areaAdmin_edit_modal").modal({
-            "backdrop": "static"
+            "backdrop":"static"
         });
     });
-    /*修改*/
+    /*修改更新数据*/
     $("#areaAdmin_edit_btn").click(function () {
         /*数据校验*/
-        // $("#schoolSelect_edit_modal").selectpicker("refresh");
         if (flag) {
             /*新增院校管理员的异步请求*/
             $.ajax({
@@ -674,16 +674,15 @@
                         to_page(1);
                         $("#check_all").prop("checked", false);
                     } else {
-                        //删除失败
-                        alert(result.msg);
+                        alert("修改失败");
                     }
                 }
             })
-        }else{
+        } else {
             alert("您未修改！")
         }
     })
-
+    /*院校联动*/
     $("#provinceSelect_edit_modal").on("changed.bs.select", function () {
         $("#citySelect_edit_modal").empty();
         $("#citySelect_edit_modal").attr("disabled", "disabled");
@@ -715,52 +714,55 @@
                 if (result.code == 100) {
                     alert("密码重置成功")
                 } else {
-                    //删除失败
-                    alert("重制失败");
+                    alert("重置失败");
                 }
             }
         })
     })
 
-    /*************************************************/
+    /**********************************************************************************************/
+    /**********************************************************************************************/
+    /**********************************************************************************************/
 
-
-    $("#provinceSelect").on("changed.bs.select",function () {
-        console.log("5555555555555")
-        $("#citySelect").empty().attr("disabled","disabled").selectpicker("refresh");
-        $("#schoolSelect").empty().attr("disabled","disabled").selectpicker("refresh");
-        if($(this).val()>0){
-            console.log($(this).val())
-            getAreaList("#citySelect","全部城市",$(this).val(),"");
+    /*搜索*/
+    /*院校联动*/
+    $("#provinceSelect").on("changed.bs.select", function () {
+        $("#citySelect").empty().attr("disabled", "disabled").selectpicker("refresh");
+        $("#schoolSelect").empty().attr("disabled", "disabled").selectpicker("refresh");
+        if ($(this).val() > 0) {
+            getAreaList("#citySelect", "全部城市", $(this).val(), "");
         }
     })
-    $("#citySelect").on("changed.bs.select",function () {
-        $("#schoolSelect").empty().attr("disabled","disabled").selectpicker("refresh");
-        if($(this).val()>0){
-            getAreaList("#schoolSelect","全部院校",$(this).val(),"");
+    $("#citySelect").on("changed.bs.select", function () {
+        $("#schoolSelect").empty().attr("disabled", "disabled").selectpicker("refresh");
+        if ($(this).val() > 0) {
+            getAreaList("#schoolSelect", "全部院校", $(this).val(), "");
         }
     })
-
+    /*提交搜索*/
     $("#search_btn").click(function () {
-        if($("#provinceSelect").val() == ""){
+        if ($("#provinceSelect").val() == "") {
             provinceId = 0;
-        }else {
+        } else {
             provinceId = $("#provinceSelect").val();
         }
-        if($("#citySelect").val() == ""){
-             cityId = 0;
-        }else {
+        if ($("#citySelect").val() == "") {
+            cityId = 0;
+        } else {
             cityId = $("#citySelect").val();
         }
-        if($("#schoolSelect").val() == ""){
+        if ($("#schoolSelect").val() == "") {
             schoolId = 0;
-        }else {
+        } else {
             schoolId = $("#schoolSelect").val();
         }
         userName = $("#userName_search_input").val();
         to_page(pn);
     })
-
+    /*重置*/
+    $("#reset_btn").click(function () {
+        window.location.reload();
+    })
 </script>
 
 

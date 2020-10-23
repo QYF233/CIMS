@@ -97,5 +97,10 @@
         and area_del_state = 0
         order by area_sort_num
     </select>
-
+    <select id="getCount" resultType="java.lang.Long">
+        select count(*)
+        from sys_area
+        where area_type = #{type,jdbcType=INTEGER}
+        and area_del_state = 0
+    </select>
 </mapper>
