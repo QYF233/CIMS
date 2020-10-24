@@ -23,4 +23,6 @@ public interface UnitTypeMapper {
     int addUnitType(UnitType unitType);
 
     int modifyUnitType(UnitType unitType);
+
+    UnitType selectName(UnitType unitType);
 }

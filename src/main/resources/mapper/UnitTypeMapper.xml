@@ -72,4 +72,12 @@
     where id = #{id,jdbcType=INTEGER}
     and unit_type_del_state = 0
   </update>
+  <!--验证类型名重复-->
+  <select id="selectName" resultMap="BaseResultMap">
+    select id, unit_type_name
+    from unit_type
+    where unit_type_area_id = #{unitTypeAreaId,jdbcType=INTEGER}
+    and unit_type_name = #{unitTypeName,jdbcType=VARCHAR}
+    and unit_type_del_state = 0
+  </select>
 </mapper>

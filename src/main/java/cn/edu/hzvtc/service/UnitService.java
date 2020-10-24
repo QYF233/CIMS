@@ -23,4 +23,6 @@ public interface UnitService {
     UnitType getUnitTypeById(Integer id);
 
     Boolean modifyUnitType(UnitType unitType);
+
+    UnitType getUnitTypeName(UnitType unitType);
 }

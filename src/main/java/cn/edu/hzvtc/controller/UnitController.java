@@ -93,7 +93,6 @@ public class UnitController {
 
     /**
      * 新增单位类型
-     *
      * @param unitType
      * @param result
      * @param session
@@ -128,4 +127,27 @@ public class UnitController {
         }
         return ReturnMsg.fail();
     }
+
+    /**
+     * 判断用户名是否重复
+     *
+     * @return
+     */
+    @RequestMapping(value = "/validName", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnMsg validName(@RequestParam(value = "unitTypeName") String unitTypeName, HttpSession session) {
+        UnitType unitType = new UnitType();
+        unitType.setUnitTypeName(unitTypeName);
+        User loginUser = (User) session.getAttribute("loginUser");
+        unitType.setUnitTypeAreaId(loginUser.getUserAreaId());
+        System.out.println(loginUser.getUserAreaId());
+        System.out.println(unitTypeName);
+        UnitType unitType1 = unitService.getUnitTypeName(unitType);
+        if (unitType1 != null) {
+            return ReturnMsg.success().add("unitType",unitType1);
+        } else {
+            return ReturnMsg.fail().add("fieldErrors", "用户不存在");
+        }
+    }
+
 }

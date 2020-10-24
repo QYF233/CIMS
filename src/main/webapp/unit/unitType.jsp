@@ -104,7 +104,7 @@
                         <div class="col-lg-10">
                             <input class="form-control unitTypeName_modal" type="text" name="unitTypeName"
                                    id="unitTypeName_add_modal" value=""
-                                   placeholder="请输入类型名称" onblur=""/>
+                                   placeholder="请输入类型名称" onblur="vail_typeName_modal(this.value)"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -113,6 +113,10 @@
                             <input class="form-control sortNum_modal" type="text" name="unitTypeSortNum"
                                    id="sortNum_add_modal"
                                    placeholder="请输入排序号" onblur=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="help-block col-lg-10 col-lg-offset-2" style="color: red">
                         </div>
                     </div>
                 </form>
@@ -140,7 +144,7 @@
                         <div class="col-lg-10">
                             <input class="form-control unitTypeName_modal" type="text" name="unitTypeName"
                                    id="unitTypeName_edit_modal" value=""
-                                   placeholder="请输入类型名称" onblur=""/>
+                                   placeholder="请输入类型名称" onblur="vail_typeName_modal(this.value)"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -149,6 +153,10 @@
                             <input class="form-control sortNum_modal" type="text" name="unitTypeSortNum"
                                    id="sortNum_edit_modal"
                                    placeholder="请输入排序号" onblur=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="help-block col-lg-10 col-lg-offset-2" style="color: red">
                         </div>
                     </div>
                 </form>
@@ -172,11 +180,11 @@
 <script src="../commons/bootstrap-select-1.13.9/dist/js/bootstrap-select.js"></script>
 <script src="../commons/js/com.js"></script>
 <script>
+    var edit_typeName;
     var flag = true;
     $(function () {
         getList();
     });
-
     /*获取数据*/
     function getList() {
         $.ajax({
@@ -194,7 +202,6 @@
             }
         });
     }
-
     /*构建表单*/
     function build_unitTypes_table(result) {
         $("#unitType-table tbody").empty();
@@ -270,7 +277,7 @@
                 }
             })
         } else {
-            alert("请输入数据")
+            alert("数据有误")
         }
     })
     /*修改前获取数据*/
@@ -284,6 +291,7 @@
             success: function (result) {
                 if (result.code == 100) {
                     console.log(result)
+                    edit_typeName = result.extend.unitType.unitTypeName;
                     $("#unitTypeName_edit_modal").val(result.extend.unitType.unitTypeName);
                     $("#sortNum_edit_modal").val(result.extend.unitType.unitTypeSortNum);
                 }
@@ -318,6 +326,64 @@
         } else {
             alert("您未修改！")
         }
+    })
+
+    /*验证用户名*/
+    function vail_typeName_modal(val) {
+        var unitTypeName = val;
+        console.log(unitTypeName)
+        if (unitTypeName == '') {
+            $("#unitTypeName_add_modal").parent().addClass("has-error");
+            $("#unitTypeName_edit_modal").parent().addClass("has-error");
+            $(".help-block").text("不能为空");
+            console.log("用户名不能为空")
+            flag = false;
+        } else {
+            validName(unitTypeName);
+        }
+        if (flag) {
+            $(".modal form").find("*").removeClass("has-error has-success");
+            $(".help-block").text("");
+            console.log("用户名正常")
+        }
+    }
+    /*判断用户名是否重复*/
+    function validName(val) {
+        var unitTypeName = val;
+        console.log("username:" + unitTypeName);
+        $.ajax({
+            url: "validName",
+            data: {unitTypeName: unitTypeName},
+            type: "post",
+            dataType: "json",
+            success: function (result) {
+                console.log(result)
+                if (result.code == 100) {
+                    console.log(edit_typeName)
+                    if (result.extend.unitType.unitTypeName == edit_typeName) {
+                        $(".help-block").text("用户名:" + result.extend.unitType.unitTypeName);
+                        $("#unitTypeName_add_modal").parent().removeClass("has-error");
+                        $(".help-block").text("");
+                        flag = true;
+                    } else {
+                        console.log(result.code)
+                        $("#unitTypeName_add_modal").parent().addClass("has-error");
+                        $(".help-block").text("类型名重复");
+                        flag = false;
+                    }
+                } else {
+                    $("#unitTypeName_add_modal").parent().removeClass("has-error");
+                    $(".help-block").text("");
+                    flag = true;
+                }
+            }
+        })
+    }
+    /*重置模态框*/
+    $(document).on('hidden.bs.modal', '.modal', function () {
+        $(".modal form")[0].reset();
+        $(".modal form").find("*").removeClass("has-error has-success");
+        $(".modal form").find(".help-block").text("");
     })
 </script>
 </body>

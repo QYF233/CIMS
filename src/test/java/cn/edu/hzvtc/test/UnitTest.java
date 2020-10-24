@@ -27,7 +27,11 @@ public UnitTypeMapper unitTypeMapper;
 
     @Test
     public void test() {
-        System.out.println(unitTypeMapper.getCount(7));
+        UnitType unitType = new UnitType();
+        unitType.setUnitTypeName("测试测试");
+        unitType.setUnitTypeAreaId(7);
+        UnitType unitType1 = unitTypeMapper.selectName(unitType);
+        System.out.println(unitType1);
     }
 
 }

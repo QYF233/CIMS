@@ -761,7 +761,15 @@
     })
     /*重置*/
     $("#reset_btn").click(function () {
-        window.location.reload();
+        $("#citySelect").empty().attr("disabled","disabled").selectpicker("refresh");
+        $("#schoolSelect").empty().attr("disabled","disabled").selectpicker("refresh");
+        $("#userName_search_input").val("");
+        getAreaList("#provinceSelect","全部省份","","");
+        provinceId = 0;
+        cityId = 0;
+        schoolId = 0;
+        userName ="";
+        to_page(1);
     })
 </script>
 

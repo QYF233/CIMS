@@ -2,6 +2,7 @@ package cn.edu.hzvtc.service.impl;
 
 import cn.edu.hzvtc.dao.UnitMapper;
 import cn.edu.hzvtc.dao.UnitTypeMapper;
+import cn.edu.hzvtc.pojo.Unit;
 import cn.edu.hzvtc.pojo.UnitType;
 import cn.edu.hzvtc.service.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,10 @@ public class UnitServiceImpl implements UnitService {
     @Override
     public Boolean modifyUnitType(UnitType unitType) {
         return unitTypeMapper.modifyUnitType(unitType) > 0;
+    }
+
+    @Override
+    public UnitType getUnitTypeName(UnitType unitType) {
+        return unitTypeMapper.selectName(unitType);
     }
 }
