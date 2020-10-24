@@ -1,6 +1,8 @@
 package cn.edu.hzvtc.dao;
 
 import cn.edu.hzvtc.pojo.Unit;
+import cn.edu.hzvtc.pojo.UnitType;
+
 import java.util.List;
 
 public interface UnitMapper {
@@ -13,6 +15,5 @@ public interface UnitMapper {
     List<Unit> selectAll();
 
     int updateByPrimaryKey(Unit record);
-
 
 }

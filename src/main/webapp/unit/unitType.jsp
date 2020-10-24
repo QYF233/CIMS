@@ -88,8 +88,78 @@
         </table>
     </div>
 </div>
-
-
+<%--模态框--%>
+<div class="modal fade" id="unitType_add_modal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="addModalLabel">新增单位类型</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="unitType_add_frm">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="unitTypeName_add_modal">类型名称</label>
+                        <div class="col-lg-10">
+                            <input class="form-control unitTypeName_modal" type="text" name="unitTypeName"
+                                   id="unitTypeName_add_modal" value=""
+                                   placeholder="请输入类型名称" onblur=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="sortNum_add_modal">排序号</label>
+                        <div class="col-lg-10">
+                            <input class="form-control sortNum_modal" type="text" name="unitTypeSortNum"
+                                   id="sortNum_add_modal"
+                                   placeholder="请输入排序号" onblur=""/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="unitType_save_btn">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<%--修改--%>
+<div class="modal fade" id="unitType_edit_modal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="editModalLabel">修改单位类型</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="unitType_edit_frm">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="unitTypeName_edit_modal">类型名称</label>
+                        <div class="col-lg-10">
+                            <input class="form-control unitTypeName_modal" type="text" name="unitTypeName"
+                                   id="unitTypeName_edit_modal" value=""
+                                   placeholder="请输入类型名称" onblur=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="sortNum_edit_modal">排序号</label>
+                        <div class="col-lg-10">
+                            <input class="form-control sortNum_modal" type="text" name="unitTypeSortNum"
+                                   id="sortNum_edit_modal"
+                                   placeholder="请输入排序号" onblur=""/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="unitType_edit_btn">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 <footer class="footer">
     <p class="text-center">@2020 杭州职业技术学院 软件技术专业 软件1811 求琰锋</p>
 </footer>
@@ -102,10 +172,12 @@
 <script src="../commons/bootstrap-select-1.13.9/dist/js/bootstrap-select.js"></script>
 <script src="../commons/js/com.js"></script>
 <script>
+    var flag = true;
     $(function () {
         getList();
     });
 
+    /*获取数据*/
     function getList() {
         $.ajax({
             url: "unitTypes",
@@ -123,6 +195,7 @@
         });
     }
 
+    /*构建表单*/
     function build_unitTypes_table(result) {
         $("#unitType-table tbody").empty();
 
@@ -133,8 +206,7 @@
             var number = $("<td></td>").append(unitType.id);
             var unitTypeName = $("<td></td>").append(unitType.unitTypeName);
             var unitTypeSortNum = $("<td></td>").append(unitType.unitTypeSortNum);
-
-            var updateBtn = $("<button></button>").addClass("btn btn-primary edit_btn").attr("data-toggle", "modal").attr("data-target", "#areaAdmin_edit_modal").attr("edit-id", unitType.id)
+            var updateBtn = $("<button></button>").addClass("btn btn-primary edit_btn").attr("data-toggle", "modal").attr("data-target", "#unitType_edit_modal").attr("edit-id", unitType.id)
                 .append($("<span></span>").addClass("glyphicon glyphicon-edit").attr("aria-hidden", "true")).append("修改");
             var delBtn = $("<button></button>").addClass("btn btn-danger delete_btn").attr("delete-id", unitType.id)
                 .append($("<span></span>").addClass("glyphicon glyphicon-remove").attr("aria-hidden", "true")).append("删除");
@@ -148,7 +220,7 @@
 
     function build_page_nav(result) {
         $("#unitType-table tfoot").empty();
-        var addBtn = $("<button></button>").addClass("btn btn-default").attr("id", "areaAdmin_add_btn").attr("data-toggle", "modal").attr("data-target", "#areaAdmin_add_modal")
+        var addBtn = $("<button></button>").addClass("btn btn-default").attr("id", "areaAdmin_add_btn").attr("data-toggle", "modal").attr("data-target", "#unitType_add_modal")
             .append($("<span></span>").addClass("glyphicon glyphicon-plus").attr("aria-hidden", "true")).append("添加");
         var left = $("<div></div>").addClass("left col-lg-6 text-left").append($("<div class=\"btn-group\"></div>").append(addBtn));
         var right = $("<div></div>").addClass("right col-lg-6 text-right").append($("<span></span>").append("总" + result.extend.unitTypeCount + "条记录"));
@@ -157,6 +229,96 @@
         $("#unitType-table tfoot").append(base);
 
     }
+
+    /*删除*/
+    $(document).on("click", ".delete_btn", function () {
+        var unitTypeName = $(this).parents("tr").find("td:eq(1)").text();
+        if (confirm("确认删除[" + unitTypeName + "]吗?")) {
+            $.ajax({
+                url: "unitType/" + $(this).attr("delete-id"),
+                type: "DELETE",
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == 100) {
+                        alert("删除成功")
+                        getList();
+                    } else {
+                        alert("删除失败")
+                    }
+                }
+            });
+        }
+    })
+    /*添加*/
+    $("#unitType_save_btn").click(function () {
+        /*数据校验*/
+        if (flag) {
+            /*新增院校管理员的异步请求*/
+            $.ajax({
+                url: "unitType",
+                data: $("#unitType_add_frm").serialize(),
+                type: "post",
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == 100) {
+                        $("#unitType_add_modal").modal('hide');
+                        alert("单位类型添加成功！");
+                        getList();
+                    } else {
+                        alert("添加失败");
+                    }
+                }
+            })
+        } else {
+            alert("请输入数据")
+        }
+    })
+    /*修改前获取数据*/
+    $(document).on("click", ".edit_btn", function () {
+
+        $.ajax({
+            url: "getUnitType",
+            data: {id: $(this).attr("edit-id")},
+            type: "GET",
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 100) {
+                    console.log(result)
+                    $("#unitTypeName_edit_modal").val(result.extend.unitType.unitTypeName);
+                    $("#sortNum_edit_modal").val(result.extend.unitType.unitTypeSortNum);
+                }
+            }
+        });
+        $("#unitType_edit_btn").attr("edit-id", $(this).attr("edit-id"));
+        $("#unitType_edit_modal").modal({
+            "backdrop": "static"
+        });
+    });
+
+    /*修改数据*/
+    $("#unitType_edit_btn").click(function () {
+        /*数据校验*/
+        if (flag) {
+            /*新增院校管理员的异步请求*/
+            $.ajax({
+                url: "unitType/" + $(this).attr("edit-id"),
+                data: $("#unitType_edit_frm").serialize(),
+                type: "put",
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == 100) {
+                        $("#unitType_edit_modal").modal('hide');
+                        alert("单位类型修改成功！");
+                        getList();
+                    } else {
+                        alert("修改失败");
+                    }
+                }
+            })
+        } else {
+            alert("您未修改！")
+        }
+    })
 </script>
 </body>
 </html>

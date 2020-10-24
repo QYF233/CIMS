@@ -15,4 +15,12 @@ public interface UnitService {
     List<UnitType> getUnitTypesByAreaId(Integer id);
 
     Long getCount(Integer id);
+
+    Boolean delUnitType(Integer id);
+
+    Boolean addUnitType(UnitType unitType);
+
+    UnitType getUnitTypeById(Integer id);
+
+    Boolean modifyUnitType(UnitType unitType);
 }

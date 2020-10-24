@@ -17,4 +17,10 @@ public interface UnitTypeMapper {
     List<UnitType> selectAllByType(Integer id);
 
     Long getCount(Integer id);
+
+    int delUnitType(Integer id);
+
+    int addUnitType(UnitType unitType);
+
+    int modifyUnitType(UnitType unitType);
 }

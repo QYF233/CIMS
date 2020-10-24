@@ -18,6 +18,7 @@ public class UnitServiceImpl implements UnitService {
     private UnitMapper unitMapper;
     @Autowired
     private UnitTypeMapper unitTypeMapper;
+
     @Override
     public void index() {
 
@@ -31,5 +32,25 @@ public class UnitServiceImpl implements UnitService {
     @Override
     public Long getCount(Integer id) {
         return unitTypeMapper.getCount(id);
+    }
+
+    @Override
+    public Boolean delUnitType(Integer id) {
+        return unitTypeMapper.delUnitType(id) > 0;
+    }
+
+    @Override
+    public Boolean addUnitType(UnitType unitType) {
+        return unitTypeMapper.addUnitType(unitType) > 0;
+    }
+
+    @Override
+    public UnitType getUnitTypeById(Integer id) {
+        return unitTypeMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public Boolean modifyUnitType(UnitType unitType) {
+        return unitTypeMapper.modifyUnitType(unitType) > 0;
     }
 }

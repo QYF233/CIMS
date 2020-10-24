@@ -8,12 +8,13 @@ import cn.edu.hzvtc.pojo.User;
 import cn.edu.hzvtc.service.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +37,20 @@ public class UnitController {
     public String unitType() {
         return "unit/unitType";
     }
+
+    @RequestMapping("/unitManager")
+    public String unitManager() {
+        return "unit/unitManager";
+    }
+
+    @RequestMapping("/userManager")
+    public String userManager() {
+        return "unit/userManager";
+    }
+
     /**
-     * 获取所有院校管理员信息
+     * 获取列表
+     *
      * @param session
      * @return
      */
@@ -50,20 +63,69 @@ public class UnitController {
         return ReturnMsg.success().add("unitTypes", unitTypes).add("unitTypeCount", unitTypeCount);
     }
 
-    @RequestMapping("/unitManager")
-    public String unitManager() {
-        return "unit/unitManager";
-    }
-
-    @RequestMapping("/userManager")
-    public String userManager() {
-        return "unit/userManager";
-    }
-
-/*    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    /**
+     * 获取单个
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping("/getUnitType")
     @ResponseBody
-    public ReturnMsg count() {
-        Long unitTypeCount = unitService.getCount(3);
-        return ReturnMsg.success().add("unitTypeCount", unitTypeCount);
-    }*/
+    public ReturnMsg getUnitType(@RequestParam(value = "id") Integer id) {
+        UnitType unitType = unitService.getUnitTypeById(id);
+        return ReturnMsg.success().add("unitType", unitType);
+    }
+
+    /**
+     * 删除单位类型
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/unitType/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ReturnMsg delUnitTypes(@PathVariable("id") Integer id) {
+        if (unitService.delUnitType(id)) {
+            return ReturnMsg.success();
+        }
+        return ReturnMsg.fail();
+    }
+
+    /**
+     * 新增单位类型
+     *
+     * @param unitType
+     * @param result
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/unitType", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnMsg save(@Valid UnitType unitType, BindingResult result, HttpSession session) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        unitType.setUnitTypeAreaId(loginUser.getUserAreaId());
+        if (unitService.addUnitType(unitType)) {
+            return ReturnMsg.success();
+        }
+
+        return ReturnMsg.fail();
+    }
+
+    /**
+     * 修改单位类型
+     *
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/unitType/{id}", method = RequestMethod.PUT)
+    @ResponseBody
+    public ReturnMsg update(@Valid UnitType unitType, @PathVariable("id") Integer id, HttpSession session) {
+        User loginUser = (User) session.getAttribute("loginUser");
+        unitType.setUnitTypeAreaId(loginUser.getUserAreaId());
+        unitType.setId(id);
+        if (unitService.modifyUnitType(unitType)) {
+            return ReturnMsg.success();
+        }
+        return ReturnMsg.fail();
+    }
 }
