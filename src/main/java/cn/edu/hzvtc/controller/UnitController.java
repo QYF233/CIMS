@@ -6,6 +6,8 @@ import cn.edu.hzvtc.pojo.Unit;
 import cn.edu.hzvtc.pojo.UnitType;
 import cn.edu.hzvtc.pojo.User;
 import cn.edu.hzvtc.service.UnitService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -150,4 +152,29 @@ public class UnitController {
         }
     }
 
+    /**
+     * 获取单位管理列表
+     * @param unitTypeId
+     * @param unitName
+     * @param pn
+     * @param session
+     * @return
+     */
+    @RequestMapping("/units")
+    @ResponseBody
+    public ReturnMsg getUnits(@RequestParam(value = "unitTypeId",defaultValue = "0") Integer unitTypeId,
+                              @RequestParam(value = "unitName",defaultValue = "") String unitName,
+                              @RequestParam(value = "pn",defaultValue = "1") Integer pn,
+                              HttpSession session) {
+        User user = (User) session.getAttribute("loginUser");
+        //引入PageHelper分页插件
+        //在查询之前只需要传入页码以及每页的大小
+        PageHelper.startPage(pn, 5);
+        //startPage方法紧跟第一个select查询就是一个分页查询
+        List<Unit> units = unitService.getUnits(unitTypeId, unitName, user.getUserAreaId());
+        //使用PageInfo包装查询结果，封装了分页信息和查询出的数据，只需将pageInfo交给页面即可
+        PageInfo pageInfo = new PageInfo(units, 5);
+
+        return ReturnMsg.success().add("pageInfo", pageInfo);
+    }
 }

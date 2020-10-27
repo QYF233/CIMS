@@ -1,5 +1,6 @@
 package cn.edu.hzvtc.service;
 
+import cn.edu.hzvtc.pojo.Unit;
 import cn.edu.hzvtc.pojo.UnitType;
 
 import java.util.List;
@@ -25,4 +26,6 @@ public interface UnitService {
     Boolean modifyUnitType(UnitType unitType);
 
     UnitType getUnitTypeName(UnitType unitType);
+
+    List<Unit> getUnits(Integer unitTypeId,String unitName, Integer areaId);
 }

@@ -5,6 +5,7 @@ import cn.edu.hzvtc.dao.UnitTypeMapper;
 import cn.edu.hzvtc.dao.UserMapper;
 import cn.edu.hzvtc.pojo.UnitType;
 import cn.edu.hzvtc.pojo.User;
+import cn.edu.hzvtc.service.UnitService;
 import cn.edu.hzvtc.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +23,8 @@ public class UnitTest {
     public UserMapper userMapper;
     @Autowired
     public UserService userService;
+    @Autowired
+    public UnitService unitService;
 @Autowired
 public UnitTypeMapper unitTypeMapper;
 
@@ -32,6 +35,11 @@ public UnitTypeMapper unitTypeMapper;
         unitType.setUnitTypeAreaId(7);
         UnitType unitType1 = unitTypeMapper.selectName(unitType);
         System.out.println(unitType1);
+    }
+
+    @Test
+    public void test2(){
+        System.out.println(unitService.getUnits(1,"",7));
     }
 
 }

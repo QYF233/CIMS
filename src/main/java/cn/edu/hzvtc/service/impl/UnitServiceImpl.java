@@ -26,8 +26,8 @@ public class UnitServiceImpl implements UnitService {
     }
 
     @Override
-    public List<UnitType> getUnitTypesByAreaId(Integer id) {
-        return unitTypeMapper.selectAllByType(id);
+    public List<UnitType> getUnitTypesByAreaId(Integer areaId) {
+        return unitTypeMapper.selectAllByAreaId(areaId);
     }
 
     @Override
@@ -58,5 +58,11 @@ public class UnitServiceImpl implements UnitService {
     @Override
     public UnitType getUnitTypeName(UnitType unitType) {
         return unitTypeMapper.selectName(unitType);
+    }
+
+    @Override
+    public List<Unit> getUnits(Integer unitTypeId, String unitName, Integer areaId) {
+        unitName = "%" + unitName + "%";
+        return unitMapper.getUnits(unitTypeId, unitName, areaId);
     }
 }

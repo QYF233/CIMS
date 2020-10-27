@@ -37,17 +37,17 @@
     from unit_type
     and unit_type_del_state = 0
   </select>
-  <select id="selectAllByType" resultMap="BaseResultMap">
+  <select id="selectAllByAreaId" resultMap="BaseResultMap">
     select id, unit_type_name, unit_type_sort_num, unit_type_area_id
     from unit_type
-    where unit_type_area_id = #{id,jdbcType=INTEGER}
+    where unit_type_area_id = #{areaId,jdbcType=INTEGER}
     and unit_type_del_state = 0
   </select>
   <!--获取总数-->
   <select id="getCount" resultType="java.lang.Long">
     select count(*)
     from unit_type
-    where unit_type_area_id = #{id,jdbcType=INTEGER}
+    where unit_type_area_id = #{areaId,jdbcType=INTEGER}
     and unit_type_del_state = 0
   </select>
   <!--删除-->
@@ -80,4 +80,5 @@
     and unit_type_name = #{unitTypeName,jdbcType=VARCHAR}
     and unit_type_del_state = 0
   </select>
+
 </mapper>

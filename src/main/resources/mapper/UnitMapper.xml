@@ -1,36 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.hzvtc.dao.UnitMapper">
-  <resultMap id="BaseResultMap" type="cn.edu.hzvtc.pojo.Unit">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="unit_name" jdbcType="VARCHAR" property="unitName" />
-    <result column="unit_type_id" jdbcType="INTEGER" property="unitTypeId" />
-    <result column="unit_sort_num" jdbcType="INTEGER" property="unitSortNum" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <resultMap id="BaseResultMap" type="cn.edu.hzvtc.pojo.Unit">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="unit_name" jdbcType="VARCHAR" property="unitName"/>
+        <result column="unit_type_id" jdbcType="INTEGER" property="unitTypeId"/>
+        <result column="unit_sort_num" jdbcType="INTEGER" property="unitSortNum"/>
+    </resultMap>
+    <resultMap id="TypeResultMap" type="cn.edu.hzvtc.pojo.Unit">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="unit_name" jdbcType="VARCHAR" property="unitName"/>
+        <result column="unit_type_id" jdbcType="INTEGER" property="unitTypeId"/>
+        <result column="unit_sort_num" jdbcType="INTEGER" property="unitSortNum"/>
+        <collection property="unitType" select="cn.edu.hzvtc.dao.UnitTypeMapper.selectByPrimaryKey"
+                    column="unit_type_id"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from unit_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.edu.hzvtc.pojo.Unit">
+    <insert id="insert" parameterType="cn.edu.hzvtc.pojo.Unit">
     insert into unit_info (id, unit_name, unit_type_id, 
       unit_sort_num)
     values (#{id,jdbcType=INTEGER}, #{unitName,jdbcType=VARCHAR}, #{unitTypeId,jdbcType=INTEGER}, 
       #{unitSortNum,jdbcType=INTEGER})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.pojo.Unit">
+    <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.pojo.Unit">
     update unit_info
     set unit_name = #{unitName,jdbcType=VARCHAR},
       unit_type_id = #{unitTypeId,jdbcType=INTEGER},
       unit_sort_num = #{unitSortNum,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, unit_name, unit_type_id, unit_sort_num
     from unit_info
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectAll" resultMap="BaseResultMap">
     select id, unit_name, unit_type_id, unit_sort_num
     from unit_info
   </select>
+    <!--获取单位列表-->
+    <select id="getUnits" resultType="cn.edu.hzvtc.pojo.Unit" resultMap="TypeResultMap">
+        select id, unit_name, unit_type_id, unit_sort_num
+        from unit_info
+        where unit_del_state = 0
+        and id in ( select id from unit_type where unit_type_area_id = #{areaId,jdbcType=INTEGER})
+        <if test="unitName != null &amp;&amp; unitName != &quot;&quot;">
+            and unit_name like #{unitName,jdbcType=VARCHAR}
+        </if>
+        <if test="unitTypeId != 0">
+            and unit_type_id = #{unitTypeId,jdbcType=INTEGER}
+        </if>
+    </select>
 </mapper>

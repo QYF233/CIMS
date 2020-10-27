@@ -1,6 +1,8 @@
 package cn.edu.hzvtc.dao;
 
 import cn.edu.hzvtc.pojo.UnitType;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface UnitTypeMapper {
@@ -14,9 +16,9 @@ public interface UnitTypeMapper {
 
     int updateByPrimaryKey(UnitType record);
 
-    List<UnitType> selectAllByType(Integer id);
+    List<UnitType> selectAllByAreaId(Integer areaId);
 
-    Long getCount(Integer id);
+    Long getCount(Integer areaId);
 
     int delUnitType(Integer id);
 
@@ -25,4 +27,5 @@ public interface UnitTypeMapper {
     int modifyUnitType(UnitType unitType);
 
     UnitType selectName(UnitType unitType);
+
 }

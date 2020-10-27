@@ -184,28 +184,32 @@
                     <div class="form-group">
                         <label class="col-lg-2 control-label" for="userName_edit_modal">用户名</label>
                         <div class="col-lg-10">
-                            <input class="form-control userName_modal" type="text" name="userName" id="userName_edit_modal"
+                            <input class="form-control userName_modal" type="text" name="userName"
+                                   id="userName_edit_modal"
                                    value="张三" onblur="vail_username_modal(this.value);"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label" for="provinceSelect_edit_modal">省</label>
                         <div class="col-lg-10">
-                            <select class="selectpicker provinceSelect_edit_modal" id="provinceSelect_edit_modal" title="请选择省" data-width="100%">
+                            <select class="selectpicker provinceSelect_edit_modal" id="provinceSelect_edit_modal"
+                                    title="请选择省" data-width="100%">
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label" for="citySelect_edit_modal">市</label>
                         <div class="col-lg-10">
-                            <select class="selectpicker citySelect_edit_modal" id="citySelect_edit_modal" title="请选择市" data-width="100%">
+                            <select class="selectpicker citySelect_edit_modal" id="citySelect_edit_modal" title="请选择市"
+                                    data-width="100%">
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label" for="schoolSelect_edit_modal">院校</label>
                         <div class="col-lg-10">
-                            <select class="selectpicker form-control schoolSelect_modal" id="schoolSelect_edit_modal" name="userAreaId" title="请选择院校" data-width="100%">
+                            <select class="selectpicker form-control schoolSelect_modal" id="schoolSelect_edit_modal"
+                                    name="userAreaId" title="请选择院校" data-width="100%">
                             </select>
                             <input type="hidden" id="userAreaIdOld" name="userAreaIdOld">
                         </div>
@@ -245,7 +249,7 @@
     function build_page_nav(result) {
         $("#areaAdmins-table tfoot").empty();
         /*左边的操作按钮组*/
-        var addBtn = $("<button></button>").addClass("btn btn-default").attr("id", "areaAdmin_add_btn").attr("data-toggle", "modal").attr("data-target", "#areaAdmin_add_modal")
+        var addBtn = $("<button></button>").addClass("btn btn-default").attr("id", "areaAdmin_add_btn")
             .append($("<span></span>").addClass("glyphicon glyphicon-plus").attr("aria-hidden", "true")).append("添加");
         var delAllBtn = $("<button></button>").addClass("btn btn-default").attr("id", "areaAdmin_delete_all_btn")
             .append($("<span></span>").addClass("glyphicon glyphicon-remove").attr("aria-hidden", "true")).append("删除");
@@ -338,7 +342,7 @@
             var userOperator = $("<td></td>").append(areaAdmin.userOperator.userName);
             var userOperatorTime = $("<td></td>").append(areaAdmin.userOperatorTime);
 
-            var updateBtn = $("<button></button>").addClass("btn btn-primary edit_btn").attr("data-toggle", "modal").attr("data-target", "#areaAdmin_edit_modal").attr("edit-id", areaAdmin.id)
+            var updateBtn = $("<button></button>").addClass("btn btn-primary edit_btn").attr("edit-id", areaAdmin.id)
                 .append($("<span></span>").addClass("glyphicon glyphicon-edit").attr("aria-hidden", "true")).append("修改");
             var resetBtn = $("<button></button>").addClass("btn btn-lock reset_btn").attr("reset-id", areaAdmin.id)
                 .append($("<span></span>").addClass("glyphicon glyphicon-edit").attr("aria-hidden", "true")).append("重置密码");
@@ -395,14 +399,14 @@
     /**********************************************************************************************/
     /**********************************************************************************************/
 
-    /*全选*/
-    $("#check_all").click(function () {
-        $(".check_item").prop("checked", $(this).prop("checked"));
-    });
-    $(document).on("click", ".check_item", function () {
-        var flag = $(".check_item").length == $(".check_item:checked").length;
-        $("#check_all").prop("checked", flag)
-    })
+    /*全选-此处注释是因为写在了com.js里面*/
+    /*    $("#check_all").click(function () {
+            $(".check_item").prop("checked", $(this).prop("checked"));
+        });
+        $(document).on("click", ".check_item", function () {
+            var flag = $(".check_item").length == $(".check_item:checked").length;
+            $("#check_all").prop("checked", flag)
+        })*/
     /*删除院校管理员*/
     $(document).on("click", ".delete_btn", function () {
         var userName = $(this).parents("tr").find("td:eq(1)").text();
@@ -654,7 +658,7 @@
         });
         $("#areaAdmin_edit_btn").attr("edit-id", $(this).attr("edit-id"));
         $("#areaAdmin_edit_modal").modal({
-            "backdrop":"static"
+            "backdrop": "static"
         });
     });
     /*修改更新数据*/
@@ -761,14 +765,14 @@
     })
     /*重置*/
     $("#reset_btn").click(function () {
-        $("#citySelect").empty().attr("disabled","disabled").selectpicker("refresh");
-        $("#schoolSelect").empty().attr("disabled","disabled").selectpicker("refresh");
+        $("#citySelect").empty().attr("disabled", "disabled").selectpicker("refresh");
+        $("#schoolSelect").empty().attr("disabled", "disabled").selectpicker("refresh");
         $("#userName_search_input").val("");
-        getAreaList("#provinceSelect","全部省份","","");
+        getAreaList("#provinceSelect", "全部省份", "", "");
         provinceId = 0;
         cityId = 0;
         schoolId = 0;
-        userName ="";
+        userName = "";
         to_page(1);
     })
 </script>
