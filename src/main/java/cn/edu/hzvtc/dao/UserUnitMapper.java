@@ -19,4 +19,8 @@ public interface UserUnitMapper {
     int deleteByUserKey(Integer userId);
 
     int deleteByUserKeyList(List<Integer> ids);
+
+    int deleteByUnitId(Integer id);
+
+    int deleteByUnitIdList(List<Integer> ids);
 }

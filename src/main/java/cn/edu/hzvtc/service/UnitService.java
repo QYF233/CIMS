@@ -10,6 +10,7 @@ public interface UnitService {
 
     /**
      * 获取所有院校管理员信息
+     *
      * @param id 院校id
      * @return
      */
@@ -27,5 +28,13 @@ public interface UnitService {
 
     UnitType getUnitTypeName(UnitType unitType);
 
-    List<Unit> getUnits(Integer unitTypeId,String unitName, Integer areaId);
+    List<Unit> getUnits(Integer unitTypeId, String unitName, Integer areaId);
+
+    Boolean delUnit(String id);
+
+    Boolean addUnit(Unit unit);
+
+    Unit getUnit(Integer id);
+
+    Boolean modifyUnit(Unit unit);
 }

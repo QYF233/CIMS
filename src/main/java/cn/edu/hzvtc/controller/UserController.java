@@ -254,8 +254,8 @@ public class UserController {
     @RequestMapping(value = "/passwordReset", method = RequestMethod.POST)
     @ResponseBody
     public ReturnMsg passwordReset(@RequestParam(value = "id") Integer id) {
-        String pwd = DigestUtils.md5DigestAsHex("123456".getBytes());
-        if (userService.passwordReset(id, pwd)) {
+
+        if (userService.passwordReset(id)) {
             return ReturnMsg.success();
         } else {
             return ReturnMsg.fail();

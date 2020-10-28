@@ -59,7 +59,7 @@ public interface UserService {
 
     public boolean modifyAreaAdmin(User user);
 
-    public boolean passwordReset(Integer id,String pwd);
+    public boolean passwordReset(Integer id);
 
     public Long getCount();
 }

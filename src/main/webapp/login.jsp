@@ -120,7 +120,7 @@
                         $("#login-btn").html("正在登录中...");
                         setTimeout(function () {
                             window.location.href = result.target;
-                        }, 1000)
+                        }, 500)
                     } else {
                         if (result.extend.fieldErrors== "密码错误") {
                             show_validation_msg(".password-input", "error", "密码错误");

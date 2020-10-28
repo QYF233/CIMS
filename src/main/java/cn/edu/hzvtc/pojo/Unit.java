@@ -22,4 +22,6 @@ public class Unit {
     private Integer unitSortNum;
 
     private UnitType unitType;
+
+    private String unitTypeName;
 }

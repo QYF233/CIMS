@@ -50,7 +50,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     /**
      * 用获取用户
      *
@@ -68,9 +67,9 @@ public class UserServiceImpl implements UserService {
      * @return 院校管理员用户列表
      */
     @Override
-    public List<User> getAreaAdmins(Integer provinceId,Integer cityId,Integer schoolId,String userName) {
-        userName = "%" + userName +"%";
-        return userMapper.selectAreaAdmins(provinceId,cityId,schoolId,userName);
+    public List<User> getAreaAdmins(Integer provinceId, Integer cityId, Integer schoolId, String userName) {
+        userName = "%" + userName + "%";
+        return userMapper.selectAreaAdmins(provinceId, cityId, schoolId, userName);
     }
 
     /**
@@ -136,6 +135,7 @@ public class UserServiceImpl implements UserService {
     public boolean modifyAreaAdmin(User user) {
         return userMapper.updateById(user) > 0;
     }
+
     /**
      * 用获取用户
      *
@@ -147,15 +147,17 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.selectPwdByName(username);
     }
+
     /**
      * 重置密码
+     *
      * @param id
-     * @param pwd
      * @return
      */
     @Override
-    public boolean passwordReset(Integer id, String pwd) {
-        return userMapper.resetPwd(id,pwd) > 0;
+    public boolean passwordReset(Integer id) {
+        String pwd = DigestUtils.md5DigestAsHex("123456".getBytes());
+        return userMapper.resetPwd(id, pwd) > 0;
     }
 
     @Override

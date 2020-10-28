@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author kiko
@@ -93,6 +91,7 @@ public class UnitController {
         return ReturnMsg.fail();
     }
 
+
     /**
      * 新增单位类型
      * @param unitType
@@ -102,7 +101,7 @@ public class UnitController {
      */
     @RequestMapping(value = "/unitType", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnMsg save(@Valid UnitType unitType, BindingResult result, HttpSession session) {
+    public ReturnMsg saveUnitType(@Valid UnitType unitType, BindingResult result, HttpSession session) {
         User loginUser = (User) session.getAttribute("loginUser");
         unitType.setUnitTypeAreaId(loginUser.getUserAreaId());
         if (unitService.addUnitType(unitType)) {
@@ -167,14 +166,70 @@ public class UnitController {
                               @RequestParam(value = "pn",defaultValue = "1") Integer pn,
                               HttpSession session) {
         User user = (User) session.getAttribute("loginUser");
-        //引入PageHelper分页插件
-        //在查询之前只需要传入页码以及每页的大小
         PageHelper.startPage(pn, 5);
-        //startPage方法紧跟第一个select查询就是一个分页查询
         List<Unit> units = unitService.getUnits(unitTypeId, unitName, user.getUserAreaId());
-        //使用PageInfo包装查询结果，封装了分页信息和查询出的数据，只需将pageInfo交给页面即可
         PageInfo pageInfo = new PageInfo(units, 5);
 
         return ReturnMsg.success().add("pageInfo", pageInfo);
     }
+
+    /**
+     * 新增单位
+     * @param unit
+     * @return
+     */
+    @RequestMapping(value = "/unit", method = RequestMethod.POST)
+    @ResponseBody
+    public ReturnMsg saveUnit(@Valid Unit unit) {
+        System.out.println(unit.toString());
+        if (unitService.addUnit(unit)) {
+            return ReturnMsg.success();
+        }
+        return ReturnMsg.fail();
+    }
+
+    /**
+     * 删除单位
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value = "/delUnit/{ids}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ReturnMsg delUnit(@PathVariable("ids") String ids) {
+        if (unitService.delUnit(ids)) {
+            return ReturnMsg.success();
+        }
+        return ReturnMsg.fail();
+    }
+    /**
+     * 修改前获取单位信息
+     * @param id
+     */
+    @RequestMapping(value = "/getUnit", method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnMsg getAreaAdmin(@RequestParam(value = "id") Integer id) {
+        Unit unit = unitService.getUnit(id);
+        if (unit != null) {
+            return ReturnMsg.success().add("unit", unit);
+        }
+        return ReturnMsg.fail();
+    }
+    /**
+     * 修改单位
+     * @param unitTypeIdOld 原单位类型
+     */
+    @RequestMapping(value = "/unit/{id}", method = RequestMethod.PUT)
+    @ResponseBody
+    public ReturnMsg update(@PathVariable("id") Integer id,
+                            @RequestParam(value = "unitTypeIdOld") Integer unitTypeIdOld,
+                            @Valid Unit unit) {
+        if(unit.getUnitTypeId()==null){
+            unit.setUnitTypeId(unitTypeIdOld);
+        }
+        if (unitService.modifyUnit(unit)) {
+            return ReturnMsg.success();
+        }
+        return ReturnMsg.fail();
+    }
+
 }

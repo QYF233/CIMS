@@ -7,6 +7,31 @@
         <result column="unit_type_id" jdbcType="INTEGER" property="unitTypeId"/>
         <result column="unit_sort_num" jdbcType="INTEGER" property="unitSortNum"/>
     </resultMap>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from unit_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="cn.edu.hzvtc.pojo.Unit">
+    insert into unit_info (unit_name, unit_type_id,
+      unit_sort_num)
+    values (#{unitName,jdbcType=VARCHAR}, #{unitTypeId,jdbcType=INTEGER},
+      #{unitSortNum,jdbcType=INTEGER})
+  </insert>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select ui.id, unit_name, unit_type_id, unit_sort_num,ut.id tid, ut.unit_type_name
+    from unit_info ui
+    left join
+    unit_type ut
+    on ui.unit_type_id = ut.id
+    where ui.id = #{id,jdbcType=INTEGER}
+    and unit_del_state = 0
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, unit_name, unit_type_id, unit_sort_num
+    from unit_info
+  </select>
     <resultMap id="TypeResultMap" type="cn.edu.hzvtc.pojo.Unit">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="unit_name" jdbcType="VARCHAR" property="unitName"/>
@@ -15,33 +40,7 @@
         <collection property="unitType" select="cn.edu.hzvtc.dao.UnitTypeMapper.selectByPrimaryKey"
                     column="unit_type_id"/>
     </resultMap>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from unit_info
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-    <insert id="insert" parameterType="cn.edu.hzvtc.pojo.Unit">
-    insert into unit_info (id, unit_name, unit_type_id, 
-      unit_sort_num)
-    values (#{id,jdbcType=INTEGER}, #{unitName,jdbcType=VARCHAR}, #{unitTypeId,jdbcType=INTEGER}, 
-      #{unitSortNum,jdbcType=INTEGER})
-  </insert>
-    <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.pojo.Unit">
-    update unit_info
-    set unit_name = #{unitName,jdbcType=VARCHAR},
-      unit_type_id = #{unitTypeId,jdbcType=INTEGER},
-      unit_sort_num = #{unitSortNum,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, unit_name, unit_type_id, unit_sort_num
-    from unit_info
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-    <select id="selectAll" resultMap="BaseResultMap">
-    select id, unit_name, unit_type_id, unit_sort_num
-    from unit_info
-  </select>
-    <!--获取单位列表-->
+    <!--获取单位列表  子查询的方法-->
     <select id="getUnits" resultType="cn.edu.hzvtc.pojo.Unit" resultMap="TypeResultMap">
         select id, unit_name, unit_type_id, unit_sort_num
         from unit_info
@@ -53,5 +52,46 @@
         <if test="unitTypeId != 0">
             and unit_type_id = #{unitTypeId,jdbcType=INTEGER}
         </if>
+        order by unit_type_id,unit_sort_num
     </select>
+    <!--表关联的方法-->
+    <select id="getUnitsResult" resultType="cn.edu.hzvtc.pojo.Unit">
+        select ui.id, unit_name, unit_type_id, unit_sort_num,ut.id tid, ut.unit_type_name
+        from unit_info ui
+        left join
+        unit_type ut
+        on ui.unit_type_id = ut.id
+        where ut.unit_type_area_id = #{areaId,jdbcType=INTEGER}
+        <if test="unitName != null &amp;&amp; unitName != &quot;&quot;">
+            and unit_name like #{unitName,jdbcType=VARCHAR}
+        </if>
+        <if test="unitTypeId != 0">
+            and unit_type_id = #{unitTypeId,jdbcType=INTEGER}
+        </if>
+        and unit_del_state = 0
+        order by unit_type_id,unit_sort_num
+    </select>
+    <!--删除-->
+    <update id="deleteById" parameterType="cn.edu.hzvtc.pojo.Unit">
+    update unit_info
+    set unit_del_state = 1
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <!--批量删除-->
+    <update id="deleteByIdList" parameterType="cn.edu.hzvtc.pojo.Unit">
+        update unit_info
+        set unit_del_state = 1
+        <foreach collection="list" item="id" separator="," open="where id in (" close=")">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+    <!--修改-->
+    <update id="updateByPrimaryKey" parameterType="cn.edu.hzvtc.pojo.Unit">
+    update unit_info
+    set unit_name = #{unitName,jdbcType=VARCHAR},
+      unit_type_id = #{unitTypeId,jdbcType=INTEGER},
+      unit_sort_num = #{unitSortNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
 </mapper>

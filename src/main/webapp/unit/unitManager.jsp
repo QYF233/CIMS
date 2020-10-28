@@ -106,6 +106,131 @@
     <p class="text-center">@2020 杭州职业技术学院 软件技术专业 软件1811 求琰锋</p>
 </footer>
 
+<!-- 新增 -->
+<div class="modal fade" id="unit_add_modal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="addModalLabel">添加单位</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="unit_add_frm">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="unitName_add_modal">单位名称</label>
+                        <div class="col-lg-10">
+                            <input class="form-control unitName_modal" type="text" name="unitName"
+                                   id="unitName_add_modal"
+                                   value="" onblur=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="unitSelect_add_modal">单位类型</label>
+                        <div class="col-lg-10">
+                            <select class="selectpicker" id="unitSelect_add_modal" name="unitTypeId"
+                                    title="请选择单位类型" data-width="100%">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="sortNum_add_modal">排序号</label>
+                        <div class="col-lg-10">
+                            <input class="form-control sortNum_modal" type="text" name="unitSortNum"
+                                   id="sortNum_add_modal"
+                                   value="" onblur=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="help-block col-lg-10 col-lg-offset-2" style="color: red">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="unit_save_btn">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<%--修改--%>
+<div class="modal fade" id="unit_edit_modal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="editModalLabel">修改单位</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="unit_edit_frm">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="unitName_edit_modal">单位名称</label>
+                        <div class="col-lg-10">
+                            <input class="form-control unitName_modal" type="text" name="unitName"
+                                   id="unitName_edit_modal"
+                                   value="" onblur=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="unitSelect_edit_modal">单位类型</label>
+                        <div class="col-lg-10">
+                            <input type="hidden" name="unitTypeIdOld" id="unitTypeIdOld">
+                            <select class="selectpicker" id="unitSelect_edit_modal" name="unitTypeId"
+                                    title="请选择单位类型" data-width="100%">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="sortNum_edit_modal">排序号</label>
+                        <div class="col-lg-10">
+                            <input class="form-control sortNum_modal" type="text" name="unitSortNum"
+                                   id="sortNum_edit_modal"
+                                   value="" onblur=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="help-block col-lg-10 col-lg-offset-2" style="color: red">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="unit_edit_btn">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<%--上传文件--%>
+<div class="modal fade" id="unit_upload_modal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="uploadModalLabel">上传附件：</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="unit_import_frm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="unitFile_import_modal" class="col-lg-3 control-label">上传附件</label>
+                        <div class="col-sm-9">
+                            <input type="file" id="unitFile_import_modal" name="unitFile">
+                            <p class="help-block">文件类型限定为csv文件，大小不超过2M</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="unit_upload_btn">保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 
 <!-- js导入 -->
 <script src="../commons/js/jquery-3.5.1.min.js"></script>
@@ -116,7 +241,7 @@
 <script src="../commons/js/com.js"></script>
 
 <script>
-    var unitTypeId, unitName, pn;
+    var unitTypeId, unitName, pn, flag = true, currPage, edit_unitName;
 
     $(function () {
         to_page(pn);
@@ -168,7 +293,7 @@
         $.each(unitTypes, function (index, unitType) {
             var checkbox = $("<td></td>").append($("<input>").attr({"type": "checkbox"}).addClass("check_item").val(unitType.id));
             var unitName = $("<td></td>").append(unitType.unitName);
-            var unitTypeName = $("<td></td>").append(unitType.unitType.unitTypeName);
+            var unitTypeName = $("<td></td>").append(unitType.unitTypeName);
             var unitSortNum = $("<td></td>").append(unitType.unitSortNum);
             var updateBtn = $("<button></button>").addClass("btn btn-primary edit_btn").attr("edit-id", unitType.id)
                 .append($("<span></span>").addClass("glyphicon glyphicon-edit").attr("aria-hidden", "true")).append("修改");
@@ -187,7 +312,7 @@
             .append($("<span></span>").addClass("glyphicon glyphicon-plus").attr("aria-hidden", "true")).append("添加");
         var delAllBtn = $("<button></button>").addClass("btn btn-default").attr("id", "unit_delete_all_btn")
             .append($("<span></span>").addClass("glyphicon glyphicon-remove").attr("aria-hidden", "true")).append("批量删除");
-        var addMoreBtn = $("<button></button>").addClass("btn btn-default").attr("id", "unit_delete_all_btn")
+        var addMoreBtn = $("<button></button>").addClass("btn btn-default").attr("id", "unit_add_all_btn")
             .append($("<span></span>").addClass("glyphicon glyphicon-download").attr("aria-hidden", "true")).append("批量导入");
 
         var left = $("<div></div>").addClass("left col-lg-4 text-left").append($("<div class=\"btn-group\"></div>").append(addBtn).append(delAllBtn).append(addMoreBtn));
@@ -281,7 +406,6 @@
                     $(element).next().removeClass("bs-placeholder");
                 }
             }
-
         })
     }
 
@@ -302,6 +426,197 @@
         unitTypeId = 0;
         unitName = "";
         to_page(pn);
+    })
+
+    /*删除院校管理员*/
+    $(document).on("click", ".delete_btn", function () {
+        var unitName = $(this).parents("tr").find("td:eq(1)").text();
+        if (confirm("确认删除[" + unitName + "]吗?")) {
+            $.ajax({
+                url: "../unit/delUnit/" + $(this).attr("delete-id"),
+                type: "DELETE",
+                dataType: "json",
+                success: function (result) {
+                    alert(result.msg);
+                    if (result.code == 100) {
+                        to_page(1);
+                        console.log("删除成功")
+                    } else {
+                        console.log("删除失败")
+                    }
+                }
+            });
+        }
+    })
+
+    /*删除所有选中管理员*/
+    $(document).on("click", "#unit_delete_all_btn", function () {
+        var unitNames = "", ids = "";
+        $.each($(".check_item:checked"), function () {
+            unitNames = unitNames + $(this).parents("tr").find("td:eq(1)").text() + ",";
+            ids = ids + $(this).parents("tr").find("td:eq(4)").find(".delete_btn").attr("delete-id") + "-";
+        })
+        console.log(ids)
+        unitNames = unitNames.substring(0, unitNames.length - 1);
+        ids = ids.substring(0, ids.length - 1);
+        if (confirm("确认删除[" + unitNames + "]吗?")) {
+            $.ajax({
+                url: "../unit/delUnit/" + ids,
+                type: "DELETE",
+                dataType: "json",
+                success: function (result) {
+                    alert(result.msg);
+                    if (result.code == 100) {
+                        to_page(1);
+                        $("#check_all").prop("checked", false);
+                        console.log("删除成功")
+                    } else {
+                        console.log("删除失败")
+                    }
+                }
+            });
+        }
+    })
+
+    /*增加*/
+    $(document).on("click", "#unit_add_btn", function () {
+        getUnitTypeList("#unitSelect_add_modal", "", "");
+        $("#unit_add_modal").modal({
+            "backdrop": "static"
+        });
+    });
+
+    /*模态框隐藏，重置窗体*/
+    $(document).on('hidden.bs.modal', '.modal', function () {
+        $(".modal form")[0].reset();
+        $(".modal form").find("*").removeClass("has-error has-success");
+        $(".modal form").find(".help-block").text("");
+        $(".modal .selectpicker").empty();
+        $(".modal .selectpicker").attr("disabled", "disabled");
+        $(".modal .selectpicker").selectpicker("refresh");
+    });
+    /*添加*/
+    $("#unit_save_btn").click(function () {
+        var unit_name = $("#unitName_add_modal").val();
+        var sortNum = $("#sortNum_add_modal").val();
+        var unitSelect = $("#unitSelect_add_modal").val();
+        if(unit_name == '' || sortNum == '' || unitSelect == ""){
+            flag = false;
+        }else{
+            flag = true;
+        }
+        /*数据校验*/
+        if (flag) {
+            /*新增院校管理员的异步请求*/
+            $.ajax({
+                url: "unit",
+                data: $("#unit_add_frm").serialize(),
+                type: "post",
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == 100) {
+                        $("#unit_add_modal").modal('hide');
+                        alert("单位添加成功！");
+                        to_page(1);
+                        $("#check_all").prop("checked", false);
+                    } else {
+                        alert("添加失败");
+                    }
+                }
+            })
+        } else {
+            alert("请输入数据")
+        }
+    })
+
+    /*修改前获取数据*/
+    $(document).on("click", ".edit_btn", function () {
+        $.ajax({
+            url: "getUnit",
+            data: {id: $(this).attr("edit-id")},
+            type: "GET",
+            dataType: "json",
+            success: function (result) {
+                console.log(result)
+                if (result.code == 100) {
+                    console.log(result)
+                    $("#unitName_edit_modal").val(result.extend.unit.unitName);
+                    edit_unitName = result.extend.unit.unitName;
+                    $("#unitTypeIdOld").val(result.extend.unit.unitTypeId)
+                    getUnitTypeList("#unitSelect_edit_modal", "", result.extend.unit.unitTypeName);
+                    $("#sortNum_edit_modal").val(result.extend.unit.unitSortNum)
+                }
+            }
+        });
+        $("#unit_edit_btn").attr("edit-id", $(this).attr("edit-id"));
+        $("#unit_edit_modal").modal({
+            "backdrop": "static"
+        });
+    });
+    /*修改*/
+    $("#unit_edit_btn").click(function () {
+        var unit_name = $("#unitName_edit_modal").val();
+        var sortNum = $("#sortNum_edit_modal").val();
+        if(unit_name == '' || sortNum == ''){
+            flag = false;
+        }else{
+            flag = true;
+        }
+        /*数据校验*/
+        if (flag) {
+            /*新增院校管理员的异步请求*/
+            $.ajax({
+                url: "unit/" + $(this).attr("edit-id"),
+                data: $("#unit_edit_frm").serialize(),
+                type: "put",
+                dataType: "json",
+                success: function (result) {
+                    if (result.code == 100) {
+                        $("#unit_edit_modal").modal('hide');
+                        alert("单位修改成功！");
+                        to_page(1);
+                        $("#check_all").prop("checked", false);
+                    } else {
+                        alert("修改失败");
+                    }
+                }
+            })
+        } else {
+            alert("您未修改！")
+        }
+    })
+
+    /*上传*/
+    /*修改前获取数据*/
+    $(document).on("click", "#unit_add_all_btn", function () {
+        $("#unit_upload_modal").modal({
+            "backdrop": "static"
+        });
+    });
+
+    $("#unitFile_import_modal").click(function () {
+        $("#progress_import_frm").show();
+
+        var formData = new FormData($("#unit_import_frm"))
+        $.ajax({
+            url: "fileImport",
+            type: "POST",
+            data: formData,
+            dataType: "json",
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if(result.code == 100){
+                    alert("上传成功")
+                    $("#unit_upload_modal").modal("hide");
+                    alert("单位信息批量导入成功！")
+                    to_page(1)
+                    $("#check_all").prop("checked", false);
+                }
+            }
+        })
     })
 </script>
 

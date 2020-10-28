@@ -40,11 +40,25 @@
     set user_unit_del_state = 1
     where user_id = #{user_id,jdbcType=INTEGER}
   </update>
+  <!--按unit_id删除信息--><!--关联删除-->
+  <update id="deleteByUnitId" parameterType="cn.edu.hzvtc.pojo.UserUnit">
+    update sys_user_unit
+    set user_unit_del_state = 1
+    where unit_id = #{id,jdbcType=INTEGER}
+  </update>
   <!--批量删除-->
   <update id="deleteByUserKeyList" parameterType="cn.edu.hzvtc.pojo.UserUnit">
     update sys_user_unit
     set user_unit_del_state = 1
     <foreach collection="list" item="id" separator="," open="where user_id in (" close=")">
+      #{id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <!--批量删除--><!--关联删除-->
+  <update id="deleteByUnitIdList" parameterType="cn.edu.hzvtc.pojo.UserUnit">
+    update sys_user_unit
+    set user_unit_del_state = 1
+    <foreach collection="list" item="id" separator="," open="where unit_id in (" close=")">
       #{id,jdbcType=INTEGER}
     </foreach>
   </update>

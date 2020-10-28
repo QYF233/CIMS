@@ -18,7 +18,30 @@ public interface UnitMapper {
 
     int updateByPrimaryKey(Unit record);
 
-    List<Unit>  getUnits(@Param("unitTypeId") Integer unitTypeId,
+    /**
+     * 子查询
+     * @param unitTypeId
+     * @param unitName
+     * @param areaId
+     * @return
+     */
+    List<Unit> getUnits(@Param("unitTypeId") Integer unitTypeId,
                         @Param("unitName") String unitName,
                         @Param("areaId") Integer areaId);
+
+    /**
+     * 关联查询
+     * @param unitTypeId
+     * @param unitName
+     * @param areaId
+     * @return
+     */
+    List<Unit> getUnitsResult(@Param("unitTypeId") Integer unitTypeId,
+                              @Param("unitName") String unitName,
+                              @Param("areaId") Integer areaId);
+
+    int deleteById(Integer id);
+
+    int deleteByIdList(List<Integer> ids);
+
 }
