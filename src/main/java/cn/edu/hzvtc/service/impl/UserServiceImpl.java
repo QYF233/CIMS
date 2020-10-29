@@ -164,4 +164,9 @@ public class UserServiceImpl implements UserService {
     public Long getCount() {
         return userMapper.getCount();
     }
+
+    @Override
+    public List<User> getUsers(Integer unitTypeId, Integer unitId, String userName,Integer areaId) {
+        return null;
+    }
 }

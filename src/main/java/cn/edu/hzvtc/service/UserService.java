@@ -22,6 +22,7 @@ public interface UserService {
 
     /**
      * 用获取用户
+     *
      * @param username 用户姓名
      * @return
      */
@@ -29,6 +30,7 @@ public interface UserService {
 
     /**
      * 用获取用户
+     *
      * @param id 用户id
      * @return
      */
@@ -39,7 +41,7 @@ public interface UserService {
      *
      * @return 院校管理员用户列表
      */
-    public List<User> getAreaAdmins(Integer provinceId,Integer cityId,Integer schoolId,String userName);
+    public List<User> getAreaAdmins(Integer provinceId, Integer cityId, Integer schoolId, String userName);
 
     /**
      * 删除院校管理员账号
@@ -52,6 +54,7 @@ public interface UserService {
 
     /**
      * 添加院校管理员
+     *
      * @param user
      * @return
      */
@@ -62,4 +65,6 @@ public interface UserService {
     public boolean passwordReset(Integer id);
 
     public Long getCount();
+
+    public List<User> getUsers(Integer unitTypeId, Integer unitId, String userName, Integer areaId);
 }

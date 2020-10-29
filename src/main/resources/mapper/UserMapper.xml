@@ -47,7 +47,21 @@
         <collection property="area" select="cn.edu.hzvtc.dao.AreaMapper.selectByPrimaryKey"
                     column="user_area_id"/>
     </resultMap>
-
+    <!--查询院校用户列表-->
+    <resultMap id="UserResultMap" type="cn.edu.hzvtc.pojo.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_password" jdbcType="VARCHAR" property="userPassword"/>
+        <result column="user_operator_id" jdbcType="INTEGER" property="userOperatorId"/>
+        <result column="user_operator_time" jdbcType="TIMESTAMP" property="userOperatorTime"/>
+        <result column="user_type" jdbcType="INTEGER" property="userType"/>
+        <result column="user_area_id" jdbcType="INTEGER" property="userAreaId"/>
+        <result column="user_del_state" jdbcType="INTEGER" property="userDelState"/>
+        <collection property="userOperator" select="cn.edu.hzvtc.dao.UserMapper.selectByPrimaryKey"
+                    column="user_operator_id"/>
+        <collection property="units" select="cn.edu.hzvtc.dao.UnitMapper.selectById"
+                    column="id"/>
+    </resultMap>
     <!--    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">-->
     <!--    delete from sys_user-->
     <!--    where id = #{id,jdbcType=INTEGER}-->
@@ -170,4 +184,7 @@
         from sys_user
         where user_del_state = 0
     </select>
+
+    <!--获取用户列表-->
+
 </mapper>

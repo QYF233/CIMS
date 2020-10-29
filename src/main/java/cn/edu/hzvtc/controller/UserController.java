@@ -2,6 +2,7 @@ package cn.edu.hzvtc.controller;
 
 import cn.edu.hzvtc.pojo.Area;
 import cn.edu.hzvtc.pojo.ReturnMsg;
+import cn.edu.hzvtc.pojo.Unit;
 import cn.edu.hzvtc.pojo.User;
 import cn.edu.hzvtc.service.AreaService;
 import cn.edu.hzvtc.service.UserService;
@@ -262,5 +263,24 @@ public class UserController {
         }
     }
 
+    /**
+     * 获取用户列表
+     *
+     * @param pn
+     * @param session
+     * @return
+     */
+    @RequestMapping("/user")
+    @ResponseBody
+    public ReturnMsg getUser(@RequestParam(value = "unitTypeId", defaultValue = "0") Integer unitTypeId,
+                             @RequestParam(value = "unitId", defaultValue = "0") Integer unitId,
+                             @RequestParam(value = "userName", defaultValue = "") String userName,
+                             @RequestParam(value = "pn", defaultValue = "1") Integer pn, HttpSession session) {
+        User user = (User) session.getAttribute("loginUser");
+        PageHelper.startPage(pn, 5);
+        List<User> users = userService.getUsers(unitTypeId, unitId, userName, user.getUserAreaId());
+        PageInfo pageInfo = new PageInfo(users, 5);
 
+        return ReturnMsg.success().add("pageInfo", pageInfo);
+    }
 }

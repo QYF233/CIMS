@@ -12,10 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.rmi.CORBA.Util;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -94,6 +99,7 @@ public class UnitController {
 
     /**
      * 新增单位类型
+     *
      * @param unitType
      * @param result
      * @param session
@@ -145,7 +151,7 @@ public class UnitController {
         System.out.println(unitTypeName);
         UnitType unitType1 = unitService.getUnitTypeName(unitType);
         if (unitType1 != null) {
-            return ReturnMsg.success().add("unitType",unitType1);
+            return ReturnMsg.success().add("unitType", unitType1);
         } else {
             return ReturnMsg.fail().add("fieldErrors", "用户不存在");
         }
@@ -153,6 +159,7 @@ public class UnitController {
 
     /**
      * 获取单位管理列表
+     *
      * @param unitTypeId
      * @param unitName
      * @param pn
@@ -161,9 +168,9 @@ public class UnitController {
      */
     @RequestMapping("/units")
     @ResponseBody
-    public ReturnMsg getUnits(@RequestParam(value = "unitTypeId",defaultValue = "0") Integer unitTypeId,
-                              @RequestParam(value = "unitName",defaultValue = "") String unitName,
-                              @RequestParam(value = "pn",defaultValue = "1") Integer pn,
+    public ReturnMsg getUnits(@RequestParam(value = "unitTypeId", defaultValue = "0") Integer unitTypeId,
+                              @RequestParam(value = "unitName", defaultValue = "") String unitName,
+                              @RequestParam(value = "pn", defaultValue = "1") Integer pn,
                               HttpSession session) {
         User user = (User) session.getAttribute("loginUser");
         PageHelper.startPage(pn, 5);
@@ -175,6 +182,7 @@ public class UnitController {
 
     /**
      * 新增单位
+     *
      * @param unit
      * @return
      */
@@ -190,6 +198,7 @@ public class UnitController {
 
     /**
      * 删除单位
+     *
      * @param ids
      * @return
      */
@@ -201,8 +210,10 @@ public class UnitController {
         }
         return ReturnMsg.fail();
     }
+
     /**
      * 修改前获取单位信息
+     *
      * @param id
      */
     @RequestMapping(value = "/getUnit", method = RequestMethod.GET)
@@ -214,8 +225,10 @@ public class UnitController {
         }
         return ReturnMsg.fail();
     }
+
     /**
      * 修改单位
+     *
      * @param unitTypeIdOld 原单位类型
      */
     @RequestMapping(value = "/unit/{id}", method = RequestMethod.PUT)
@@ -223,7 +236,7 @@ public class UnitController {
     public ReturnMsg update(@PathVariable("id") Integer id,
                             @RequestParam(value = "unitTypeIdOld") Integer unitTypeIdOld,
                             @Valid Unit unit) {
-        if(unit.getUnitTypeId()==null){
+        if (unit.getUnitTypeId() == null) {
             unit.setUnitTypeId(unitTypeIdOld);
         }
         if (unitService.modifyUnit(unit)) {
@@ -232,4 +245,58 @@ public class UnitController {
         return ReturnMsg.fail();
     }
 
+    @RequestMapping(value = "/fileImport")
+    @ResponseBody
+    public ReturnMsg fileImport(@RequestParam("unitFile") MultipartFile multipartFile,
+                                HttpSession session) {
+        String originalFilename = multipartFile.getOriginalFilename();
+        String[] filename = new String[0];
+        if (originalFilename != null) {
+            filename = originalFilename.split("\\.");
+        }
+        if (!"csv".equals(filename[filename.length - 1])) {
+            return ReturnMsg.fail().add("msg", "文件类型不正确");
+        }
+        File file = new File(session.getServletContext().getRealPath("/upload/") + originalFilename);
+        try {
+            multipartFile.transferTo(file);
+            List<Unit> units = new ArrayList<>();
+            DataInputStream in = new DataInputStream(new FileInputStream(file));
+            BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+                String[] str = line.split(",");
+                Unit unit = new Unit();
+                try{
+                    unit.setUnitName(str[0]);
+                    unit.setUnitTypeId(Integer.parseInt(str[1]));
+                    unit.setUnitSortNum(Integer.parseInt(str[2]));
+                }catch (Exception e){
+                    return ReturnMsg.fail().add("msg","数据有误！");
+                }
+                units.add(unit);
+            }
+            if (in != null) {
+                in.close();
+            }
+            if (br != null) {
+                br.close();
+            }
+            System.out.println(units);
+            if (units != null) {
+                for (Unit u : units) {
+                    unitService.addUnit(u);
+                }
+                return ReturnMsg.success();
+
+            } else {
+                return ReturnMsg.fail().add("msg","导入失败！");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ReturnMsg.fail().add("msg","报错！");
+        }
+    }
 }

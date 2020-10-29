@@ -226,7 +226,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" id="unit_upload_btn">保存</button>
+                <button type="button" class="btn btn-primary" id="unit_upload_btn">导入</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
@@ -594,10 +594,10 @@
         });
     });
 
-    $("#unitFile_import_modal").click(function () {
+    $("#unit_upload_btn").click(function () {
         $("#progress_import_frm").show();
 
-        var formData = new FormData($("#unit_import_frm"))
+        const formData = new FormData($("#unit_import_frm")[0]);
         $.ajax({
             url: "fileImport",
             type: "POST",
@@ -608,12 +608,14 @@
             contentType: false,
             processData: false,
             success: function (result) {
+                console.log(result)
                 if(result.code == 100){
-                    alert("上传成功")
                     $("#unit_upload_modal").modal("hide");
                     alert("单位信息批量导入成功！")
                     to_page(1)
                     $("#check_all").prop("checked", false);
+                }else{
+                    alert(result.extend.msg)
                 }
             }
         })
