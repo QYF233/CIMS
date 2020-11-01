@@ -48,11 +48,6 @@
         </discriminator>
     </resultMap>
     <!--删除-->
-    <!--  <delete id="deleteByParentId" parameterType="java.lang.Integer">
-        delete from sys_area
-        where area_parent_id = #{id,jdbcType=INTEGER}
-      </delete>-->
-    <!--删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_area
     where id = #{id,jdbcType=INTEGER}

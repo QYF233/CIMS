@@ -245,6 +245,13 @@ public class UnitController {
         return ReturnMsg.fail();
     }
 
+    /**
+     * 上传文件
+     *
+     * @param multipartFile
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/fileImport")
     @ResponseBody
     public ReturnMsg fileImport(@RequestParam("unitFile") MultipartFile multipartFile,
@@ -252,6 +259,7 @@ public class UnitController {
         String originalFilename = multipartFile.getOriginalFilename();
         String[] filename = new String[0];
         if (originalFilename != null) {
+            /*截取后缀名*/
             filename = originalFilename.split("\\.");
         }
         if (!"csv".equals(filename[filename.length - 1])) {
@@ -268,35 +276,24 @@ public class UnitController {
                 System.out.println(line);
                 String[] str = line.split(",");
                 Unit unit = new Unit();
-                try{
+                try {
                     unit.setUnitName(str[0]);
                     unit.setUnitTypeId(Integer.parseInt(str[1]));
                     unit.setUnitSortNum(Integer.parseInt(str[2]));
-                }catch (Exception e){
-                    return ReturnMsg.fail().add("msg","数据有误！");
+                } catch (Exception e) {
+                    return ReturnMsg.fail().add("msg", "数据有误！");
                 }
                 units.add(unit);
             }
-            if (in != null) {
-                in.close();
+            in.close();
+            br.close();
+            for (Unit u : units) {
+                unitService.addUnit(u);
             }
-            if (br != null) {
-                br.close();
-            }
-            System.out.println(units);
-            if (units != null) {
-                for (Unit u : units) {
-                    unitService.addUnit(u);
-                }
-                return ReturnMsg.success();
-
-            } else {
-                return ReturnMsg.fail().add("msg","导入失败！");
-            }
-
+            return ReturnMsg.success();
         } catch (IOException e) {
             e.printStackTrace();
-            return ReturnMsg.fail().add("msg","报错！");
+            return ReturnMsg.fail().add("msg", "报错！");
         }
     }
 }

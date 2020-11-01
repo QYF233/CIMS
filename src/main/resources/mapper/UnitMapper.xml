@@ -12,6 +12,7 @@
     delete from unit_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
+    <!--新增数据-->
     <insert id="insert" parameterType="cn.edu.hzvtc.pojo.Unit">
     insert into unit_info (unit_name, unit_type_id,
       unit_sort_num)

@@ -226,7 +226,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" id="unit_upload_btn">导入</button>
+                <button type="button" class="btn btn-primary" id="upload_btn">导入</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
@@ -312,7 +312,7 @@
             .append($("<span></span>").addClass("glyphicon glyphicon-plus").attr("aria-hidden", "true")).append("添加");
         var delAllBtn = $("<button></button>").addClass("btn btn-default").attr("id", "unit_delete_all_btn")
             .append($("<span></span>").addClass("glyphicon glyphicon-remove").attr("aria-hidden", "true")).append("批量删除");
-        var addMoreBtn = $("<button></button>").addClass("btn btn-default").attr("id", "unit_add_all_btn")
+        var addMoreBtn = $("<button></button>").addClass("btn btn-default").attr("id", "unit_upload_btn")
             .append($("<span></span>").addClass("glyphicon glyphicon-download").attr("aria-hidden", "true")).append("批量导入");
 
         var left = $("<div></div>").addClass("left col-lg-4 text-left").append($("<div class=\"btn-group\"></div>").append(addBtn).append(delAllBtn).append(addMoreBtn));
@@ -587,15 +587,13 @@
     })
 
     /*上传*/
-    /*修改前获取数据*/
-    $(document).on("click", "#unit_add_all_btn", function () {
+    $(document).on("click", "#unit_upload_btn", function () {
         $("#unit_upload_modal").modal({
             "backdrop": "static"
         });
     });
 
-    $("#unit_upload_btn").click(function () {
-        $("#progress_import_frm").show();
+    $("#upload_btn").click(function () {
 
         const formData = new FormData($("#unit_import_frm")[0]);
         $.ajax({
